@@ -1,0 +1,17 @@
+' Gambas module file 
+PUBLIC FUNCTION abrir(conexion AS Connection,optional ruta as string) AS Connection
+' hace la conexion a la base de datos
+ if ruta<>"" or ruta<>null then 
+ conexion.name= ruta 
+ conexion.host= ruta 
+else 
+IF NOT Exist(user.home & "/CursosAlumnos") THEN 
+   COPY "CursosAlumnos" TO user.home & "/CursosAlumnos
+ENDIF 
+  conexion.Name = user.home & "/CursosAlumnos"
+  conexion.host = user.home & "/CursosAlumnos"
+endif 
+  conexion.Type ="Sqlite3"
+  conexion.open
+RETURN conexion
+END

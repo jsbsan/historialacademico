@@ -1,0 +1,34 @@
+' Gambas class file
+
+Inherits TextBox
+
+Property valido As String
+Private hvalido As String
+
+Private Function valido_Read() As String
+  
+  Return hvalido
+  
+End
+
+Private Sub valido_Write(Value As String)
+  
+  hvalido = Value
+  
+End
+
+Public Sub _new()
+  
+  hvalido = "0123456789,.:;ªº!$%&()={}[]ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcefghijklmñopqurstuvwyxzáéíóúÁÉÍÓÚÖöüÜ"
+  
+End
+
+Public Sub _KeyPress()
+  
+  If InStr("0123456789,.:;ªº!$%&()={}[]ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcefghijklmñopqurstuvwyxzáéíóúÁÉÍÓÚÖöüÜ", Key.code) <> 0 Then 
+    Me.text = Mid$(Me.text, 1, Len(Me.tex) - 1)
+    Message.Info("Caracter no valido")
+    Stop Event
+  Endif
+  
+End

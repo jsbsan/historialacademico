@@ -1,0 +1,180 @@
+' Gambas class file
+
+Inherits BDCursosAlumnosRegistro
+Private t1 As Object
+Private mRs As Result  
+Private mBase As Connection 
+
+Public Sub resultObject(resultado As Result) As Object[]
+  
+  Dim hField As ResultField
+  Dim a As Integer
+  Dim tarray As New Object[resultado.count]
+  
+  For a = 0 To resultado.count - 1
+    tarray[a] = New BDCursosAlumnosRegistro 
+  Next 
+  a = -1 
+  'por cada resultado desponible
+  Do While resultado.Available
+    'va creando y añadiendo valores al nuevo objeto
+    Inc a
+    t1 = New BDCursosAlumnosRegistro 
+    Try t1.Alumno_RutaFoto = resultado["Alumno.RutaFoto"]
+    Try t1.Alumno_idAlumno = resultado["Alumno.idAlumno"]
+    Try t1.Alumno_Apellido = resultado["Alumno.Apellido"]
+    Try t1.Alumno_Nombre = resultado["Alumno.Nombre"]
+    Try t1.Alumno_Documento = resultado["Alumno.Documento"]
+    Try t1.Alumno_FechaNacimiento = resultado["Alumno.FechaNacimiento"]
+    Try t1.Alumno_Domicilio = resultado["Alumno.Domicilio"]
+    Try t1.Alumno_Telefono = resultado["Alumno.Telefono"]
+    Try t1.Alumno_Nacionalidad = resultado["Alumno.Nacionalidad"]
+    Try t1.Alumno_EscOrigen = resultado["Alumno.EscOrigen"]
+    Try t1.Alumno_Legajo = resultado["Alumno.Legajo"]
+    Try t1.Curso_idCurso = resultado["Curso.idCurso"]
+    Try t1.Curso_Nombre = resultado["Curso.Nombre"]
+    Try t1.Curso_Detalle = resultado["Curso.Detalle"]
+    Try t1.Relacion_idRelacion = resultado["Relacion.idRelacion"]
+    Try t1.Relacion_idAlumno = resultado["Relacion.idAlumno"]
+    Try t1.Relacion_idCurso = resultado["Relacion.idCurso"]
+    Try t1.Relacion_Observacion = resultado["Relacion.Observacion"]
+    
+    For Each hfield In resultado.fields
+      t1.campovisible.add(Str$(hfield.name))
+    Next
+    
+    tarray[a] = T1
+    resultado.MoveNext()
+    
+  Loop
+  Return tarray
+  
+End
+
+Public Sub EscribeObjetos(t As Object[])
+  
+  Dim a As Integer
+  
+  Print "Listado:" 
+  Print "****************************************"
+  For a = 0 To t.Count - 1
+    Print t.count & " -> " & a
+    Print "Alumno_RutaFoto: ", t[a].Alumno_RutaFoto
+    Print "Alumno_idAlumno: ", t[a].Alumno_idAlumno
+    Print "Alumno_Apellido: ", t[a].Alumno_Apellido
+    Print "Alumno_Nombre: ", t[a].Alumno_Nombre
+    Print "Alumno_Documento: ", t[a].Alumno_Documento
+    Print "Alumno_FechaNacimiento: ", t[a].Alumno_FechaNacimiento
+    Print "Alumno_Domicilio: ", t[a].Alumno_Domicilio
+    Print "Alumno_Telefono: ", t[a].Alumno_Telefono
+    Print "Alumno_Nacionalidad: ", t[a].Alumno_Nacionalidad
+    Print "Alumno_EscOrigen: ", t[a].Alumno_EscOrigen
+    Print "Alumno_Legajo: ", t[a].Alumno_Legajo
+    Print "Curso_idCurso: ", t[a].Curso_idCurso
+    Print "Curso_Nombre: ", t[a].Curso_Nombre
+    Print "Curso_Detalle: ", t[a].Curso_Detalle
+    Print "Relacion_idRelacion: ", t[a].Relacion_idRelacion
+    Print "Relacion_idAlumno: ", t[a].Relacion_idAlumno
+    Print "Relacion_idCurso: ", t[a].Relacion_idCurso
+    Print "Relacion_Observacion: ", t[a].Relacion_Observacion
+    Print "-----------------------------------------"
+  Next
+  
+End
+
+Public Function GridObjetos(t As Object[], grid As Gridview) As Gridview
+  
+  Dim columnas As Integer
+  Dim a As Integer
+  Dim b As Integer
+  Dim fila As Integer
+  Dim cabecera As New String[]
+  Dim pos As Integer
+  'defino regilla
+  With grid
+    .header = 3
+    .rows.count = t.count
+    Try .columns.count = t[0].campovisible.count
+    .font.name = "Sans"
+    .font.size = 10
+  End With
+  'asignar titulos a columnas
+  columnas = t[0].campovisible.count
+  For a = 0 To columnas - 1
+    Try grid.columns[a].title = t[0].campovisible[a]
+  Next
+  pos = -1
+  For a = 0 To t.count - 1
+    For b = 0 To columnas - 1
+      Select Case t[0].campovisible[b]
+        Case "Alumno.RutaFoto"
+          grid[a, b].text = t[a].Alumno_RutaFoto
+        Case "Alumno.idAlumno"
+          grid[a, b].text = t[a].Alumno_idAlumno
+        Case "Alumno.Apellido"
+          grid[a, b].text = t[a].Alumno_Apellido
+        Case "Alumno.Nombre"
+          grid[a, b].text = t[a].Alumno_Nombre
+        Case "Alumno.Documento"
+          grid[a, b].text = t[a].Alumno_Documento
+        Case "Alumno.FechaNacimiento"
+          grid[a, b].text = t[a].Alumno_FechaNacimiento
+        Case "Alumno.Domicilio"
+          grid[a, b].text = t[a].Alumno_Domicilio
+        Case "Alumno.Telefono"
+          grid[a, b].text = t[a].Alumno_Telefono
+        Case "Alumno.Nacionalidad"
+          grid[a, b].text = t[a].Alumno_Nacionalidad
+        Case "Alumno.EscOrigen"
+          grid[a, b].text = t[a].Alumno_EscOrigen
+        Case "Alumno.Legajo"
+          grid[a, b].text = t[a].Alumno_Legajo
+        Case "Curso.idCurso"
+          grid[a, b].text = t[a].Curso_idCurso
+        Case "Curso.Nombre"
+          grid[a, b].text = t[a].Curso_Nombre
+        Case "Curso.Detalle"
+          grid[a, b].text = t[a].Curso_Detalle
+        Case "Relacion.idRelacion"
+          grid[a, b].text = t[a].Relacion_idRelacion
+        Case "Relacion.idAlumno"
+          grid[a, b].text = t[a].Relacion_idAlumno
+        Case "Relacion.idCurso"
+          grid[a, b].text = t[a].Relacion_idCurso
+        Case "Relacion.Observacion"
+          grid[a, b].text = t[a].Relacion_Observacion
+        Case Else
+          Message.info("Columna desconocida:" & t[0].campovisible[b])
+      End Select
+    Next
+  Next
+  Return grid
+  
+End
+
+Public Function sql(consulta As String) As Result
+  
+  Try mRs = mbase.Exec(consulta) 
+  If Error Then message.info("Consulta erronea, revisela")
+  Return mRs 
+  
+End 
+
+Public Sub Abrir(Optional ruta As String) 
+  
+  Dim conexion As New Connection
+  
+  If ruta <> "" Or ruta <> Null Then 
+    mBase = conectar.abrir(conexion, ruta) 
+  Else 
+    mBase = conectar.abrir(conexion) 
+  Endif 
+  
+End Sub 
+
+Public Sub Cerrar() 
+  
+  mRs = Null
+  mBase.close 
+  
+End Sub 
