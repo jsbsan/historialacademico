@@ -1,0 +1,488 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-01 04:27+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: .project:1 FormPrincipal.form:146
+msgid "Historial Academico"
+msgstr ""
+
+#: .project:2
+msgid "Para llevar el historial académico para de estudiantes"
+msgstr ""
+
+#: FControlAcceso.form:26
+msgid "Usuario:"
+msgstr ""
+
+#: FControlAcceso.form:33
+msgid "Contraseña:"
+msgstr ""
+
+#: FControlAcceso.form:39 FormAlumno.form:155 FormCalendario.form:18
+#: FormCurso.form:40 FormElegirFichero.form:23 FormEligeAlumno.form:33
+#: FormEligeCurso.form:26 FormExpedienteAlumno.form:98
+#: FormExpedienteCurso.form:84 FormInput.form:23
+msgid "Aceptar"
+msgstr ""
+
+#: FControlAcceso.form:46 FormAlumno.form:148 FormCurso.form:33
+#: FormElegirFichero.form:31 FormEligeAlumno.form:40 FormEligeCurso.form:33
+#: FormInput.form:31
+msgid "Cancelar"
+msgstr ""
+
+#: FControlAcceso.form:69 FormPrincipal.class:14
+msgid "Historial Académico"
+msgstr ""
+
+#: FControlAcceso.form:88
+msgid "Label3"
+msgstr ""
+
+#: FControlAcceso.class:16
+msgid "versión: "
+msgstr ""
+
+#: FormAlumno.form:36 FormExpedienteAlumno.form:28
+msgid "Nombre:"
+msgstr ""
+
+#: FormAlumno.form:50 FormExpedienteAlumno.form:39
+msgid "Apellidos:"
+msgstr ""
+
+#: FormAlumno.form:60 FormExpedienteAlumno.form:50
+msgid "Documento:"
+msgstr ""
+
+#: FormAlumno.form:72
+msgid "Fecha Nacimiento:"
+msgstr ""
+
+#: FormAlumno.form:81
+msgid "Domicilio:"
+msgstr ""
+
+#: FormAlumno.form:90
+msgid "Télefono:"
+msgstr ""
+
+#: FormAlumno.form:100
+msgid "Nacionalidad:"
+msgstr ""
+
+#: FormAlumno.form:110
+msgid "Esc.Origen:"
+msgstr ""
+
+#: FormAlumno.form:120
+msgid "Legajo:"
+msgstr ""
+
+#: FormAlumno.form:133
+msgid "haga click para elegir una imagen"
+msgstr ""
+
+#: FormAlumno.form:141
+msgid "webcam"
+msgstr ""
+
+#: FormAlumno.class:72
+msgid "Se ha producido un error al intentar añadir el nuevo alumno"
+msgstr ""
+
+#: FormCurso.form:19
+msgid "Nombre del curso:"
+msgstr ""
+
+#: FormCurso.form:28
+msgid "Detalle"
+msgstr ""
+
+#: FormCurso.class:34
+msgid "Se ha producido un error al intentar añadir el nuevo curso"
+msgstr ""
+
+#: FormElegirFichero.form:44
+msgid "Pegar desde Portapapeles"
+msgstr ""
+
+#: FormElegirFichero.form:45
+msgid "Pegar (Url)"
+msgstr ""
+
+#: FormElegirFichero.class:45
+msgid "Elija un fichero o pulse Cancelar"
+msgstr ""
+
+#: FormEligeAlumno.form:24
+msgid "Alumnos Disponibles...."
+msgstr ""
+
+#: FormEligeAlumno.form:48
+msgid "Por nº Documento"
+msgstr ""
+
+#: FormEligeAlumno.form:54
+msgid "Por Legajo"
+msgstr ""
+
+#: FormEligeAlumno.form:60
+msgid "Por Apellidos"
+msgstr ""
+
+#: FormEligeAlumno.form:66
+msgid "Listar Todos"
+msgstr ""
+
+#: FormEligeAlumno.form:77
+msgid "Buscar"
+msgstr ""
+
+#: FormEligeAlumno.form:84
+msgid "Buscar....."
+msgstr ""
+
+#: FormEligeCurso.form:17
+msgid "Cursos Disponibles...."
+msgstr ""
+
+#: FormError.form:14
+msgid "Mensaje de Error:"
+msgstr ""
+
+#: FormError.form:20
+msgid "Copiar Al portapapeles"
+msgstr ""
+
+#: FormError.form:25 FormPrincipal.form:496
+msgid "Salir"
+msgstr ""
+
+#: FormError.form:30
+msgid "Label1"
+msgstr ""
+
+#: FormExpedienteAlumno.form:61
+msgid "Cursos a los que esta apuntado:"
+msgstr ""
+
+#: FormExpedienteAlumno.form:68
+msgid "Añadirle a un  Curso"
+msgstr ""
+
+#: FormExpedienteAlumno.form:77
+msgid "Borrarle de un  Curso"
+msgstr ""
+
+#: FormExpedienteAlumno.form:86 FormExpedienteCurso.form:76
+msgid "Editar Observaciones"
+msgstr ""
+
+#: FormExpedienteAlumno.form:107
+msgid "Editar Alumno"
+msgstr ""
+
+#: FormExpedienteAlumno.form:122 FormExpedienteCurso.form:102
+msgid "Imprimir"
+msgstr ""
+
+#: FormExpedienteAlumno.form:131 FormExpedienteCurso.form:111
+msgid "Borrar Observaciones"
+msgstr ""
+
+#: FormExpedienteCurso.form:25
+msgid "Curso:"
+msgstr ""
+
+#: FormExpedienteCurso.form:36
+msgid "Detalles:"
+msgstr ""
+
+#: FormExpedienteCurso.form:47
+msgid "Alumnos en el curso:"
+msgstr ""
+
+#: FormExpedienteCurso.form:58
+msgid "Añadir Alumno"
+msgstr ""
+
+#: FormExpedienteCurso.form:67
+msgid "Borrar Alumno"
+msgstr ""
+
+#: FormExpedienteCurso.form:93
+msgid "Editar Curso"
+msgstr ""
+
+#: FormPensando.class:10
+msgid "Espere por favor..."
+msgstr ""
+
+#: FormPrincipal.form:91
+msgid "Acerca de..."
+msgstr ""
+
+#: FormPrincipal.form:96
+msgid ""
+"<h2>Historial Académico</h2><br>\n"
+"Realizado por:<br>\n"
+"<i>Julio Sánchez Berro y Jorge Agustín Pereyra</i><br>\n"
+"<br>\n"
+"<br>\n"
+"<b>Nota:</b><br>\n"
+"Es necesario tener instalado las programas:<br>\n"
+"sudo apt-get install imagemagick<br>\n"
+"sudo apt-get install latex-beamer <br>\n"
+"sudo apt-get install texlive-latex-extra<br>\n"
+"Para la creación de informes<br>\n"
+"Y para ver los pdf:<br>\n"
+"sudo apt-get install evince<br>\n"
+"\n"
+"\n"
+msgstr ""
+
+#: FormPrincipal.form:112
+msgid "Alumnos"
+msgstr ""
+
+#: FormPrincipal.form:122
+msgid "Añadir"
+msgstr ""
+
+#: FormPrincipal.form:130
+msgid "Editar"
+msgstr ""
+
+#: FormPrincipal.form:138
+msgid "Borrar"
+msgstr ""
+
+#: FormPrincipal.form:154
+msgid "Imprimir Lista"
+msgstr ""
+
+#: FormPrincipal.form:162
+msgid "si hace doble click editará el expediente"
+msgstr ""
+
+#: FormPrincipal.form:169
+msgid "Cursos"
+msgstr ""
+
+#: FormPrincipal.form:202
+msgid "Ficha"
+msgstr ""
+
+#: FormPrincipal.form:225
+msgid "Listados"
+msgstr ""
+
+#: FormPrincipal.form:235
+msgid ""
+"Listado de informes disponibles...<br>\n"
+"<b>Nota</b><br>\n"
+"Los listados \"Lista de Alumnos con los cursos que participan\" y \"Lista de "
+"Cursos y Alumnos que lo conforman\", dependiendo del numero de alumnos y "
+"cursos, suelen tardar algo más en aparcer."
+msgstr ""
+
+#: FormPrincipal.form:238
+msgid "Estadísticas"
+msgstr ""
+
+#: FormPrincipal.form:247
+msgid "Listado de Estadisticas "
+msgstr ""
+
+#: FormPrincipal.form:250
+msgid "Administrador"
+msgstr ""
+
+#: FormPrincipal.form:258
+msgid "Copias de Seguridad"
+msgstr ""
+
+#: FormPrincipal.form:265
+msgid "Realizar Copia Datos"
+msgstr ""
+
+#: FormPrincipal.form:274
+msgid "Restaurar Datos"
+msgstr ""
+
+#: FormPrincipal.form:279
+msgid "Contraseña"
+msgstr ""
+
+#: FormPrincipal.form:286
+msgid "Cambiar Contraseña"
+msgstr ""
+
+#: FormPrincipal.form:295
+msgid "mensaje:"
+msgstr ""
+
+#: FormPrincipal.form:301
+msgid "Reescriba la clave:"
+msgstr ""
+
+#: FormPrincipal.form:317
+msgid "Clave Nueva:"
+msgstr ""
+
+#: FormPrincipal.form:323
+msgid "Clave Actual:"
+msgstr ""
+
+#: FormPrincipal.form:339
+msgid "Usuario Actual:"
+msgstr ""
+
+#: FormPrincipal.form:342
+msgid "Rutas"
+msgstr ""
+
+#: FormPrincipal.form:349
+msgid "Cambiar"
+msgstr ""
+
+#: FormPrincipal.form:356
+msgid "/tmp"
+msgstr ""
+
+#: FormPrincipal.form:362
+msgid "Ruta donde se Guardan los Informes:"
+msgstr ""
+
+#: FormPrincipal.form:365
+msgid "Actualizar Version"
+msgstr ""
+
+#: FormPrincipal.form:372
+msgid "Comprobar si existe nueva Versión del programa"
+msgstr ""
+
+#: FormPrincipal.form:379
+msgid "Plan de Estudios"
+msgstr ""
+
+#: FormPrincipal.form:386
+msgid "Expedientes"
+msgstr ""
+
+#: FormPrincipal.form:390
+msgid "Añadir "
+msgstr ""
+
+#: FormPrincipal.form:413
+msgid "Nivel/Curso"
+msgstr ""
+
+#: FormPrincipal.form:440
+msgid "Divisiones"
+msgstr ""
+
+#: FormPrincipal.form:467
+msgid "Asignaturas"
+msgstr ""
+
+#: LatexHelper.module:10
+msgid "Se ha producido un error al crear informe en pdf."
+msgstr ""
+
+#: LatexHelper.module:10
+msgid "Puede ser que haya utilizado caracteres no validos"
+msgstr ""
+
+#: LatexHelper.module:10
+msgid "Error: "
+msgstr ""
+
+#: LatexHelper.module:22
+msgid "Error: You need to install gedit"
+msgstr ""
+
+#: LatexHelper.module:47
+msgid "Error: Try create file .tex"
+msgstr ""
+
+#: LatexHelper.module:60
+msgid "Error: You need to install latex-beamer and texlive-latex-extra"
+msgstr ""
+
+#: LatexHelper.module:65
+msgid "Error: You need to install evince"
+msgstr ""
+
+#: ModuleAsignarYSoltarImagenes.module:17
+msgid "Elija el archivo gráfico"
+msgstr ""
+
+#: ModuleAsignarYSoltarImagenes.module:18
+msgid "Ficheros de Imágenes"
+msgstr ""
+
+#: ModuleUpdate.module:22
+msgid "No ha sido posible conectarse al servidor"
+msgstr ""
+
+#: ModuleUpdate.module:22
+msgid "No puedo comprobar si hay nueva versión"
+msgstr ""
+
+#: ModuleUpdate.module:35
+msgid "El archivo de versión no es para este programa"
+msgstr ""
+
+#: ModuleUpdate.module:38
+msgid "Existe una nueva versión"
+msgstr ""
+
+#: ModuleUpdate.module:38
+msgid "Programa:"
+msgstr ""
+
+#: ModuleUpdate.module:38
+msgid "Versión encontrada:"
+msgstr ""
+
+#: ModuleUpdate.module:38
+msgid "Mejoras:"
+msgstr ""
+
+#: ModuleUpdate.module:38
+msgid "Dirección Url de descarga:"
+msgstr ""
+
+#: ModuleUpdate.module:39
+msgid "Ir a la página de descarga"
+msgstr ""
+
+#: ModuleUpdate.module:39
+msgid "No actualización"
+msgstr ""
+
+#: ModuleUpdate.module:47
+msgid "La versión actual:"
+msgstr ""
+
+#: ModuleUpdate.module:47
+msgid "es igual o superior que la que hay en el servidor"
+msgstr ""
+
+#: ModuleUpdate.module:47
+msgid "No necesita actualizarla"
+msgstr ""
+
+#: conexion.class:18
+msgid "ok"
+msgstr ""

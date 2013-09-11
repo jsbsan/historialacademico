@@ -1,0 +1,396 @@
+#Latex
+
+C
+Environment
+v
+_Environment
+
+'Environment: LandScape, Center, Verbatin, Enumerate, Bibliography
+Line
+v
+_Line
+
+'line center, left or right
+Size
+v
+_Size
+
+'Size font: tiny, lange,langeP,Huge
+TypeFont
+v
+_TypeFont
+
+'Type font: Roman, boldFace, italica
+Box
+v
+_Box
+
+'add box
+underline
+m
+s
+(sString)s
+'underline text
+bold
+m
+s
+(sString)s
+'bold text
+IconBox
+m
+s
+(stitle)s(sText)s(sImage)s(fScale)f(fAngle)f[(itype)i]
+'itype:1 shadow, 2: double, 3:Oval , 4: double Oval
+picture
+m
+s
+(sfile)s[(fScale)f(fAngle)f]
+'sfile: path and name file, fscale: scale picture, Fangle: angle picture
+CrLf
+m
+s
+
+'carriage return, end of line
+Section
+m
+s
+(sText)s
+SubSection
+m
+s
+(sText)s
+SubSubSeccion
+m
+s
+(sText)s
+spaceH
+m
+s
+[(fSize)f]
+'space horizontal, if fSize=0 then fSize=0.4 cm.
+spaceV
+m
+s
+[(fSize)f]
+'space vertical, if size=0 then size=0.4 cm.
+date
+m
+s
+[(dDate)d]
+'if dDate=0 then write today's date else write dDate
+footnote
+m
+s
+(sText)s
+'add footnote
+pageNumber
+m
+s
+
+'add number page
+pageHeader
+m
+
+(sTextLeft)s(sTextCenter)s(sTextRight)s[(fRuleWidth)f]
+'text that appear in the header of the page (left, center and right)
+pageFooter
+m
+
+(sTextLeft)s(sTextCenter)s(sTextRight)s[(fRuleWidth)f]
+'text that appear in the footer (left, center and right)
+TableOfContents
+m
+s
+[(TitleContents)s]
+'Table Of Contents. default TitleContents is "content"
+PageBreak
+m
+s
+
+'end of pag
+title
+m
+s
+(stitle)s(sAutor)s[(bDate)b]
+'title document
+text
+m
+s
+(sText)s[(InitParagraph)b]
+'InitParagraph: if not specified or True, for carriage return. 
+usepackage
+m
+s
+(cadena)s
+'add usepackage
+InitDoc
+m
+s
+
+'type doc: article. Latex document header starts
+compileTex
+m
+s
+(sText)s[(NameFileText)s]
+'sText: article , NameFileText: name doc (without adding .tex). Return name file create
+QueryResultTableDB
+m
+s
+(resultados)Result;(TableNameField)b[(sformato)s]
+'converts the result of a query of a database (result) to a table in latex format
+TableGridViews
+m
+s
+(rejilla)Gridview;[(sformat)s(TitleEndFirstHead)s(TitleEndHead)s(TitleEndFoot)s(TitleEndLastFoot)s]
+'converts a gridview content in a latex table
+#LatexHelper
+
+C
+hproc
+V
+Process
+
+Process_Error
+M
+
+(sError)s
+compileTEX
+M
+s
+(sText)s(classLatex)Latex;[(NameFileText)s(show)b]
+'sText: article , NameFileText: name doc (without adding .tex),show: show file .tex with gedit programs. Return name file create Or Error
+compilePDF
+M
+s
+(sText)s(classLatex)Latex;[(NameFileText)s(show)b]
+'sText: article , NameFileText: name doc (without adding .pdf), show: show file .pdf with evince programs. Return name file create or Error
+#_Bibliography
+
+C
+Cite
+m
+s
+(RefItem)s
+'insert ref to item bibliography
+Begin
+m
+s
+(legend)s
+'Begin bibliography
+Item
+m
+s
+(RefItem)s(TextString)s
+'ref and text bibliography
+End
+m
+s
+
+'End bibliography
+#_Box
+
+C
+Shadow
+C
+i
+1
+'Shadow=1
+Double
+C
+i
+2
+'Double=2
+Oval
+C
+i
+3
+'Oval=3
+DoubleOval
+C
+i
+4
+'DoubleOval=4
+parbox
+m
+s
+(sString)s
+'paragraph in a box
+framebox
+m
+s
+(sTextBox)s(iWith)i(sPos)s
+'frame in box,the pos parameter takes a one letter value: (c) center, (l) flushleft, (r)  flushright, or (s) spread the text to fill the box.
+MessageBox
+m
+s
+(sTextBox)s[(itype)i]
+'itype:1 shadow, 2: double, 3:Oval , 4: double Oval
+#_Center
+
+C
+Begin
+m
+s
+
+'Begin Center
+End
+m
+s
+
+'End Center
+#_Enumerate
+
+C
+Begin
+m
+s
+
+'Begin Enumerate
+Item
+m
+s
+(TextString)s
+'item Enumerate
+End
+m
+s
+
+'End  Enumerate
+#_Environment
+
+C
+Verbatin
+v
+_Verbatim
+
+'Environment verbatin
+LandScape
+v
+_landscape
+
+'Environment  LandScape
+Center
+v
+_Center
+
+'Environment  center
+Bibliography
+v
+_Bibliography
+
+'Environment Bibliography
+Enumerate
+v
+_Enumerate
+
+'Environment Enumerate
+#_Landscape
+
+C
+Begin
+m
+s
+
+'Begin landscape
+End
+m
+s
+
+'End landscape
+#_Line
+
+C
+Center
+m
+s
+(sString)s
+'Line Center
+Left
+m
+s
+(sString)s
+'Line left
+Right
+m
+s
+(sString)s
+'Line right
+#_Size
+
+C
+Tiny
+m
+s
+(sString)s
+'Size Font  0 tiny
+Small
+m
+s
+(sString)s
+'Size Font  1 Small
+Large
+m
+s
+(sString)s
+'Size Font  2 large
+LargeP
+m
+s
+(sString)s
+'Size Font  3 largeP
+Huge
+m
+s
+(sString)s
+'Size Font  4 Huge
+#_TypeFont
+
+C
+Roman
+m
+s
+(sString)s
+'Type Font  Roman
+Boldface
+m
+s
+(sString)s
+'Type Font  Boldface
+italica
+m
+s
+(sString)s
+'Type Font italica
+slanted
+m
+s
+(sString)s
+'Type Font slanted
+SansSerif
+m
+s
+(sString)s
+'Type Font SansSerif
+TypeWrite
+m
+s
+(sString)s
+'Type Font TypeWrite
+SmallCaps
+m
+s
+(sString)s
+'Type Font SmallCaps
+#_Verbatim
+
+C
+Begin
+m
+s
+
+'Begin verbatim
+End
+m
+s
+
+'End verbatim

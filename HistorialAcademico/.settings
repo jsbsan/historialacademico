@@ -1,0 +1,24 @@
+[Breakpoints]
+Count=0
+
+[DebugWindow]
+Count=0
+
+[OpenFile]
+File[1]="estadistica.png"
+File[2]="icono historial academico.png"
+File[3]=".src/Otros Formularios y Modulos/ModuleUpdate.module:2.20"
+File[4]=".src/modelo/conexion/conexion.class:14.0"
+Active=5
+File[5]=".src/vista/FormPrincipal.form"
+File[6]=".src/vista/FControlAcceso.form"
+File[7]=".src/vista/FControlAcceso.class:15.57"
+File[8]=".src/vista/FormPrincipal.class:39.0"
+File[9]="FloppyEntrada.png"
+File[10]="PlanEstudios.png"
+File[11]=".src/Imprimir/Imprimir.module:333.0"
+Count=11
+
+[Watches]
+Count=0
+

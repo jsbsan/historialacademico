@@ -1,0 +1,673 @@
+' Gambas class file
+
+Inherits RelacionRegistro
+Private mRs As Result
+Private mBase As Connection 
+Public SQLString As String 
+Private Gridview1 As Gridview 
+Private t1 As Object
+
+Public Sub Abrir(Optional ruta As String) 
+  
+  Dim conexion As New Connection
+
+  If ruta <> "" Or ruta <> Null Then 
+    mBase = conectar.abrir(conexion, ruta) 
+  Else 
+    mBase = conectar.abrir(conexion) 
+  Endif 
+  mRs = mBase.Exec("SELECT * from Relacion") 
+  Super.campo.Resize(0)
+  Super.campotipo.Resize(0)
+  Super.campo.add("idRelacion")
+  Super.campotipo.add("Integer")
+  Super.campo.add("idAlumno")
+  Super.campotipo.add("Integer")
+  Super.campo.add("idCurso")
+  Super.campotipo.add("Integer")
+  Super.campo.add("Observacion")
+  Super.campotipo.add("String")
+  
+End Sub 
+
+Public Sub Cerrar() 
+  
+  mRs = Null
+  mBase.close 
+  
+End Sub 
+
+Public Function Total() As Integer 
+  
+  SQLString = "SELECT idRelacion FROM Relacion" 
+  mRs = mbase.Exec(SQLString) 
+  Return Val(Str$(mRs.Count)) 
+  
+End 
+
+Public Function Insertar() As Result 
+  
+  SQLString = "INSERT INTO Relacion(idRelacion,idAlumno,idCurso,Observacion) Values ('"
+  SQLString &= Super.idRelacion
+  SQLString &= "','" & Super.idAlumno
+  SQLString &= "','" & Super.idCurso
+  SQLString &= "','" & Super.Observacion & "')"
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Intentar insertar datos, revise ID,  " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function ModificarIdRelacion(editado As Integer) As Result 
+  
+  SQLString = "UPDATE  Relacion SET "
+  SQLString &= "idAlumno='" & Super.idAlumno 
+  SQLString &= "', idCurso='" & Super.idCurso 
+  SQLString &= "', Observacion='" & Super.Observacion & "'" 
+  SQlString &= " WHERE idRelacion='" & editado & "'" 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Modificar datos, revise ID , " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function ModificarIdAlumno(editado As Integer) As Result 
+  
+  SQLString = "UPDATE  Relacion SET "
+  SQLString &= "idRelacion='" & Super.idRelacion 
+  SQLString &= "', idCurso='" & Super.idCurso 
+  SQLString &= "', Observacion='" & Super.Observacion & "'" 
+  SQlString &= " WHERE idAlumno='" & editado & "'" 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Modificar datos, revise ID , " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function ModificarIdCurso(editado As Integer) As Result 
+  
+  SQLString = "UPDATE  Relacion SET "
+  SQLString &= "idRelacion='" & Super.idRelacion 
+  SQLString &= "', idAlumno='" & Super.idAlumno 
+  SQLString &= "', Observacion='" & Super.Observacion & "'" 
+  SQlString &= " WHERE idCurso='" & editado & "'" 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Modificar datos, revise ID , " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function ModificarObservacion(editado As String) As Result 
+  
+  SQLString = "UPDATE  Relacion SET "
+  SQLString &= "idRelacion='" & Super.idRelacion 
+  SQLString &= "', idAlumno='" & Super.idAlumno 
+  SQLString &= "', idCurso='" & Super.idCurso & "'"
+  SQlString &= " WHERE Observacion='" & editado & "'" 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Modificar datos, revise ID , " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BorrarIdRelacion(valor As Integer) As Result
+  
+  sqlstring = "DELETE FROM Relacion WHERE idRelacion=" & Str$(valor) 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nSentencia: " & sqlstring)
+  Else
+    Return mRs
+  Endif 
+  
+End
+
+Public Function BorrarIdAlumno(valor As Integer) As Result
+  
+  sqlstring = "DELETE FROM Relacion WHERE idAlumno=" & Str$(valor) 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nSentencia: " & sqlstring)
+  Else
+    Return mRs
+  Endif 
+  
+End
+
+Public Function BorrarIdCurso(valor As Integer) As Result
+  
+  sqlstring = "DELETE FROM Relacion WHERE idCurso=" & Str$(valor) 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nSentencia: " & sqlstring)
+  Else
+    Return mRs
+  Endif 
+  
+End
+
+Public Function BorrarObservacion(valor As String) As Result
+  
+  sqlstring = "DELETE FROM Relacion WHERE Observacion='" & valor & "'" 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nSentencia: " & sqlstring)
+  Else
+    Return mRs
+  Endif 
+  
+End
+
+'----------------Generacion de listas----------------
+Public Function lista(res As Result, campo As String) As String[]
+  
+  Dim lista As New String[]
+
+  Do While res.Available
+    lista.Add(res[campo])
+    res.MoveNext()
+  Loop
+  res.MoveFirst() 'muevo al primer lugar del resultado...(para que puedan continuar otras funciones LISTA)
+  Return lista
+  
+End
+
+Public Function listaIdRelacion(res As Result) As String[]
+  
+  Dim lista As New String[]
+
+  Do While res.Available
+    lista.Add(res!idRelacion)
+    res.MoveNext()
+  Loop
+  res.MoveFirst() 'muevo al primer lugar del resultado...(para que puedan continuar otras funciones LISTA)
+  Return lista
+  
+End
+
+Public Function listaIdAlumno(res As Result) As String[]
+  
+  Dim lista As New String[]
+
+  Do While res.Available
+    lista.Add(res!idAlumno)
+    res.MoveNext()
+  Loop
+  res.MoveFirst() 'muevo al primer lugar del resultado...(para que puedan continuar otras funciones LISTA)
+  Return lista
+  
+End
+
+Public Function listaIdCurso(res As Result) As String[]
+  
+  Dim lista As New String[]
+
+  Do While res.Available
+    lista.Add(res!idCurso)
+    res.MoveNext()
+  Loop
+  res.MoveFirst() 'muevo al primer lugar del resultado...(para que puedan continuar otras funciones LISTA)
+  Return lista
+  
+End
+
+Public Function listaObservacion(res As Result) As String[]
+  
+  Dim lista As New String[]
+
+  Do While res.Available
+    lista.Add(res!Observacion)
+    res.MoveNext()
+  Loop
+  res.MoveFirst() 'muevo al primer lugar del resultado...(para que puedan continuar otras funciones LISTA)
+  Return lista
+  
+End
+
+Public Function BuscarIgualIdRelacion(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idRelacion like '" & valor & "' "
+  Else 
+    SQlString &= " WHERE idRelacion like '" & valor & "'  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarMenorQueIdRelacion(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idRelacion<" & valor 
+  Else 
+    SQlString &= " WHERE idRelacion<" & valor & "  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarMayorQueIdRelacion(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idRelacion>" & valor  
+  Else 
+    SQlString &= " WHERE idRelacion>" & valor & " Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarEntreIdRelacion(valorMin As Integer, valorMax As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idRelacion BETWEEN " & valorMin & " And " & valorMax  
+  Else 
+    SQlString &= " WHERE idRelacion BETWEEN " & valorMin & " And " & valorMax & "Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarIgualIdAlumno(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idAlumno like '" & valor & "' "
+  Else 
+    SQlString &= " WHERE idAlumno like '" & valor & "'  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarMenorQueIdAlumno(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idAlumno<" & valor 
+  Else 
+    SQlString &= " WHERE idAlumno<" & valor & "  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarMayorQueIdAlumno(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idAlumno>" & valor  
+  Else 
+    SQlString &= " WHERE idAlumno>" & valor & " Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarEntreIdAlumno(valorMin As Integer, valorMax As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idAlumno BETWEEN " & valorMin & " And " & valorMax  
+  Else 
+    SQlString &= " WHERE idAlumno BETWEEN " & valorMin & " And " & valorMax & "Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarIgualIdCurso(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idCurso like '" & valor & "' "
+  Else 
+    SQlString &= " WHERE idCurso like '" & valor & "'  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarMenorQueIdCurso(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idCurso<" & valor 
+  Else 
+    SQlString &= " WHERE idCurso<" & valor & "  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarMayorQueIdCurso(valor As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idCurso>" & valor  
+  Else 
+    SQlString &= " WHERE idCurso>" & valor & " Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarEntreIdCurso(valorMin As Integer, valorMax As Integer, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE idCurso BETWEEN " & valorMin & " And " & valorMax  
+  Else 
+    SQlString &= " WHERE idCurso BETWEEN " & valorMin & " And " & valorMax & "Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarContenidoObservacion(valor As String, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE Observacion like '%" & valor & "%' "
+  Else 
+    SQlString &= " WHERE Observacion like '%" & valor & "%'  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function BuscarIgualObservacion(valor As String, Optional CampoOrden As String) As Result
+  
+  SQLString = "Select * From Relacion"
+  If CampoOrden = Null Then 
+    SQlString &= " WHERE Observacion like '" & valor & "' "
+  Else 
+    SQlString &= " WHERE Observacion like '" & valor & "'  Order by CampoOrden"
+  Endif 
+  Try mRs = mBase.Exec(SQLString) 
+  If Error Then 
+    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nSentencia:  " & sqlstring)
+  Else 
+    Return mRs
+  Endif 
+  
+End  
+
+Public Function sql(consulta As String) As Result
+  
+  Try mRs = mbase.Exec(consulta) 
+  If Error Then message.info("Consulta erronea, revisela")
+  Return mRs 
+  
+End 
+
+Public Function informe() As String
+  
+  Dim texto As String
+
+  Print "Base de datos: CursosAlumnos"
+  Print "        Tabla: Relacion"
+  Print "             Campo: idRelacion Tipo: Integer"
+  Print "             Campo: idAlumno Tipo: Integer"
+  Print "             Campo: idCurso Tipo: Integer"
+  Print "             Campo: Observacion Tipo: String"
+  texto = "Base_de_datos:|CursosAlumnos|"
+  texto &= "Tabla:|Relacion"
+  texto &= "|campo:|idRelacion|tipo:|Integer"
+  texto &= "|campo:|idAlumno|tipo:|Integer"
+  texto &= "|campo:|idCurso|tipo:|Integer"
+  texto &= "|campo:|Observacion|tipo:|String"
+  Return texto 
+  
+End
+
+Public Function gridFormatearColumnas(grid As GridView) As Gridview
+  
+  With grid 
+    .header = 3 
+    .rows.count = 0 
+    .columns.count = 4 
+    .Columns[0].title = "idRelacion"
+    .Columns[0].width = 80
+    .Columns[1].title = "idAlumno"
+    .Columns[1].width = 80
+    .Columns[2].title = "idCurso"
+    .Columns[2].width = 80
+    .Columns[3].title = "Observacion"
+    .Columns[3].width = 80
+    .font.name = "Sans"
+    .font.size = 10 
+    .Background = 16777215 
+    .Foreground = 0 
+  End With
+  Return grid 
+  
+End
+
+Public Function gridFormatearFilas(grid As GridView) As Gridview  
+  
+  With grid  
+    .header = 3 
+    .rows.count = 4
+    .columns.count = 2  
+    .Columns[0].title = "Campos"  
+    .Columns[1].title = "Registro"  
+    .font.name = "Sans"
+    .font.size = 10 
+    .Background = 16777215 
+    .Foreground = 0 
+  End With
+  grid[0, 0].text = "idRelacion" 
+  grid[0, 0].background = color.lightgray  
+  grid[1, 0].text = "idAlumno" 
+  grid[1, 0].background = color.lightgray  
+  grid[2, 0].text = "idCurso" 
+  grid[2, 0].background = color.lightgray  
+  grid[3, 0].text = "Observacion" 
+  grid[3, 0].background = color.lightgray  
+  Return grid 
+  
+End
+
+Public Sub contenido() As Result 
+  
+  Try SQLString = "SELECT * FROM Relacion" 
+  mRs = mBase.Exec(SQLString) 
+  Return mRs 
+  
+End 
+
+Public Function mostrarRegistro(numero As Integer, grid As GridView, Optional sqlcadena As String) As Result
+  
+  Dim resultado As Result
+
+  If sqlcadena = Null Then 
+    resultado = contenido()
+  Else 
+    resultado = sql(sqlcadena)
+  Endif 
+  resultado.MoveTo(numero)
+  Try grid[0, 1].text = Str$(resultado!idRelacion)
+  Try grid[1, 1].text = Str$(resultado!idAlumno)
+  Try grid[2, 1].text = Str$(resultado!idCurso)
+  Try grid[3, 1].text = Str$(resultado!Observacion)
+  
+End
+
+Public Function GridResultanteSQL(res As Result, grid As GridView) As Gridview  
+  
+  Dim columna As Integer
+  Dim hField As ResultField
+  Dim a As Integer
+  Dim fila As Integer
+  'defino la regilla
+  With grid 
+    .header = 3 
+    .rows.count = 0 
+    Try .columns.count = res.Fields.Count 
+    columna = -1
+    For Each hField In res.Fields
+      columna = columna + 1
+      Try .Columns[columna].title = Str$(hField.name)
+    Next 
+    .font.name = "Sans"
+    .font.size = 10
+    .Background = 16777215 
+    .Foreground = 0 
+  End With
+  'relleno los datos procedentes de la consulta en las filas...
+  Grid.Rows.count = res.Count
+  fila = -1
+  Do While res.Available
+    Inc fila
+    For a = 0 To grid.columns.count - 1
+      'PRINT grid.Columns[a].title
+      grid[fila, a].text = res[grid.Columns[a].title] ' nombre 'grid.Columns[a].title]
+    Next 
+    res.MoveNext()
+  Loop
+  Return grid 
+
+End
+
+Public Sub resultObject(resultado As Result) As Object[]
+
+  Dim hField As ResultField
+  Dim a As Integer
+  Dim tarray As New Object[resultado.count]
+
+  For a = 0 To resultado.count - 1
+    tarray[a] = New Relacion 
+  Next 
+  a = -1 
+  'por cada resultado desponible
+  Do While resultado.Available
+    'va creando y añadiendo valores al nuevo objeto
+    Inc a
+    t1 = New Relacion 
+    Try t1.idRelacion = resultado!idRelacion
+    Try t1.idAlumno = resultado!idAlumno
+    Try t1.idCurso = resultado!idCurso
+    Try t1.Observacion = resultado!Observacion
+    
+    For Each hfield In resultado.fields
+      t1.campovisible.add(Str$(hfield.name))
+    Next
+    
+    tarray.Add(T1)
+    resultado.MoveNext()
+    
+  Loop
+  Return tarray
+
+End
+
+Public Sub ToBD(obj As Relacion) As Object
+
+  Dim Taux As Object
+  Taux = New Relacion 
+  Try taux.Relacion_idRelacion = obj.idRelacion
+  Try taux.Relacion_idAlumno = obj.idAlumno
+  Try taux.Relacion_idCurso = obj.idCurso
+  Try taux.Relacion_Observacion = obj.Observacion
+  Return taux
+
+End
+
+Public Sub ArrayObjectToBD(obj As Object[]) As Object[]
+Dim Taux As Object
+Dim TauxArray As New Object[]
+Dim a As Integer
+For a = 0 To obj.count - 1
+Taux = New Relacion 
+Taux = ToBD(Obj[a])
+TauxArray.add(Taux)
+Next
+
+Return TauxArray
+End
+

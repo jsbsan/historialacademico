@@ -1,0 +1,22 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.4.1
+Title=Historial Academico
+Startup=main
+Icon=icono historial academico.png
+Version=0.2.2
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.db
+Component=gb.db.form
+Component=gb.db.sqlite3
+Component=gb.desktop
+Component=gb.settings
+Component=gb.net
+Component=gb.net.curl
+Component=gb.qt4.ext
+Description="Para llevar el historial académico para de estudiantes"
+TabSize=2
+Translate=1
+Language=es
+Packager=1
