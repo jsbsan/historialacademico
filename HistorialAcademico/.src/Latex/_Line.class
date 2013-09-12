@@ -1,0 +1,24 @@
+' Gambas class file
+
+Export
+'' Line Center
+
+Public Function Center(sString As String) As String
+  
+  Return "\\centerline{" & sString & "}" & gb.CrLf
+  
+End
+
+'' Line left
+Public Function Left(sString As String) As String 
+  
+  Return "\\leftline{" & sString & "}" & gb.CrLf
+  
+End
+'' Line right
+
+Public Function Right(sString As String) As String
+  
+  Return "\\rightline{" & sString & "}" & gb.CrLf
+  
+End

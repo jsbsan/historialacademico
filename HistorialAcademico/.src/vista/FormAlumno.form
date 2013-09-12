@@ -1,0 +1,111 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,64,64)
+  Icon = Picture["icon:/16/people"]
+  Persistent = True
+  Resizable = False
+  { Label1 Label
+    MoveScaled(17,4,20,4)
+    Text = ("Nombre:")
+    Alignment = Align.Right
+  }
+  { TextBoxNOMBRE TextBox
+    MoveScaled(38,4,23,4)
+  }
+  { TextBoxAPELLIDOS TextBox
+    MoveScaled(38,9,23,4)
+  }
+  { Label2 Label
+    MoveScaled(17,9,20,4)
+    Text = ("Apellidos:")
+    Alignment = Align.Right
+  }
+  { TextBoxDOCUMENTO TextBox
+    MoveScaled(38,14,23,4)
+  }
+  { Label3 Label
+    MoveScaled(17,14,20,4)
+    Text = ("Documento:")
+    Alignment = Align.Right
+  }
+  { TextBoxFECHANACIMIENTO TextBox
+    MoveScaled(23,21,21,4)
+    Background = &HBFBFBF&
+    ReadOnly = True
+  }
+  { Label4 Label
+    MoveScaled(1,22,20,3)
+    Text = ("Fecha Nacimiento:")
+  }
+  { TextBoxDOMICILIO TextBox
+    MoveScaled(1,29,62,4)
+  }
+  { Label5 Label
+    MoveScaled(1,26,20,3)
+    Text = ("Domicilio:")
+  }
+  { TextBoxTELEFONO TextBox
+    MoveScaled(23,35,23,4)
+  }
+  { Label6 Label
+    MoveScaled(1,35,20,4)
+    Text = ("Télefono:")
+    Alignment = Align.Right
+  }
+  { TextBoxNACIONALIDAD TextBox
+    MoveScaled(23,40,23,4)
+  }
+  { Label7 Label
+    MoveScaled(1,40,20,4)
+    Text = ("Nacionalidad:")
+    Alignment = Align.Right
+  }
+  { TextBoxESCORIGEN TextBox
+    MoveScaled(23,45,23,4)
+  }
+  { Label8 Label
+    MoveScaled(1,45,20,4)
+    Text = ("Esc.Origen:")
+    Alignment = Align.Right
+  }
+  { TextBoxLEGAJO TextBox
+    MoveScaled(23,51,23,4)
+  }
+  { Label9 Label
+    MoveScaled(1,51,20,4)
+    Text = ("Legajo:")
+    Alignment = Align.Right
+  }
+  { ToolButtonCalendario ToolButton
+    MoveScaled(46,20,5,4)
+    Picture = Picture["icon:/16/calendar"]
+    Border = True
+  }
+  { PictureBoxAlumno PictureBox
+    MoveScaled(3,1,12.1429,17)
+    Tag = "icono_fotos_personas.png"
+    ToolTip = ("haga click para elegir una imagen")
+    Picture = Picture["icono_fotos_personas.png"]
+    Stretch = True
+    Border = Border.Plain
+  }
+  { ToolButtonfoto ToolButton
+    MoveScaled(1,18,16,4)
+    Text = ("webcam")
+    Picture = Picture["camara_icono.png"]
+    Border = True
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(9,57,15,6)
+    Text = ("Cancelar")
+    Picture = Picture["icon:/16/cancel"]
+    Border = True
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(40,57,15,6)
+    Text = ("Aceptar")
+    Picture = Picture["icon:/16/apply"]
+    Border = True
+  }
+}

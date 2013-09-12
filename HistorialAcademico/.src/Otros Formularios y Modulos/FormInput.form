@@ -1,0 +1,25 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,65,21)
+  { LabelPront Label
+    MoveScaled(2,3,29,4)
+  }
+  { TextboxLectura TextBox
+    MoveScaled(2,8,60,5)
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(44,14,14,6)
+    AutoResize = True
+    Text = ("Aceptar")
+    Picture = Picture["icon:/16/apply"]
+    Border = True
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(22,14,14,6)
+    AutoResize = True
+    Text = ("Cancelar")
+    Picture = Picture["icon:/16/cancel"]
+    Border = True
+  }
+}

@@ -1,0 +1,38 @@
+' Gambas class file
+
+Export
+'' Size Font  0 tiny
+
+Public Function Tiny(sString As String) As String 
+  
+  Return "{\\scriptsize " & sString & "}"
+  
+End
+'' Size Font  1 Small
+
+Public Function Small(sString As String) As String 
+  
+  Return "{\\small " & sString & "}"
+  
+End
+'' Size Font  2 large
+
+Public Function Large(sString As String) As String 
+  
+  Return "{\\large " & sString & "}"
+  
+End
+'' Size Font  3 largeP
+
+Public Function LargeP(sString As String) As String 
+  
+  Return "{\\LARGE " & sString & "}"
+  
+End
+'' Size Font  4 Huge
+
+Public Function Huge(sString As String) As String 
+  
+  Return "{\\Huge " & sString & "}"
+  
+End

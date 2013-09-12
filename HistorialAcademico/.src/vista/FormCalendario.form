@@ -1,0 +1,16 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,29,30)
+  Icon = Picture["icon:/16/calendar"]
+  Resizable = False
+  { DateChooser1 DateChooser
+    MoveScaled(0,0,29,26)
+  }
+  { ButtonAceptar ToolButton
+    MoveScaled(9,26,14,4)
+    Text = ("Aceptar")
+    Picture = Picture["icon:/16/apply"]
+    Border = True
+  }
+}

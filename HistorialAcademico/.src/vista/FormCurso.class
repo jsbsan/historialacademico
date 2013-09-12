@@ -1,0 +1,101 @@
+' Gambas class file
+
+Public ControladorAplicacion As Controlador
+Public TmpCurso As CursoVO
+
+Public Sub Form_Open()
+  
+  Me.center
+  Me.Title = "Curso"
+  If TmpCurso.idCurso = 0 Then
+    'limpio los textbox
+    limpio()
+  Else
+    'estoy editando
+    rellena(TmpCurso)
+  Endif
+  
+  TextBoxNombreCurso.SetFocus()
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  
+  TmpCurso.Nombre = TextBoxNombreCurso.Text
+  TmpCurso.Detalle = TextAreaDetalle.Text
+  
+  If TmpCurso.idCurso <> 0 Then
+    If ControladorAplicacion.ModificarIdCurso(TmpCurso) Then 
+      'se ha añadido bien el curso
+      limpio()
+      Me.Close()
+      Return
+    Else
+      Message.Error(("Se ha producido un error al intentar añadir el nuevo curso"))
+      Return 
+    Endif
+  Endif
+  
+  If TmpCurso.idcurso = 0 And If ControladorAplicacion.anadirCurso(TmpCurso) Then 
+    'se ha añadido bien el nuevo alumno
+    limpio()
+    Me.Close()
+    Return
+  Else
+    Message.Error(("Se ha producido un error al intentar añadir el nuevo curso"))
+    Return
+  Endif
+  
+End
+
+Public Sub limpio()
+  
+  TextAreaDetalle.text = ""
+  TextBoxNombreCurso.text = ""
+  
+End
+
+Public Sub rellena(micurso As CursoVO)
+  
+  TextBoxNombreCurso.text = micurso.Nombre
+  TextAreaDetalle.text = micurso.Detalle
+  
+End
+
+Public Sub ToolButtonCancelar_Click()
+  
+  Me.Close()
+  Return
+  
+End
+
+Public Sub TextBoxNombreCurso_KeyPress()
+  
+  If Key.code = Key.enter Or Key.code = Key.Return Then 
+    TextAreaDetalle.SetFocus()
+    Return 
+  Endif
+  
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextAreaDetalle_KeyPress()
+  
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End

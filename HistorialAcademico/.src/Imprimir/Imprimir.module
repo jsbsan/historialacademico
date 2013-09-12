@@ -1,0 +1,493 @@
+' Gambas module file
+
+Public alumno As New AlumnoVO
+Public curso As New CursoVO
+Public resultados As Result
+Public mirela As New RelacionDAO
+Public resultadoCurso As Result
+Public f As New Form
+Public gridviewTmporal As New GridView(f)
+
+Public controladorAplicacion As Controlador
+'------------------------------------------------------------------------------------------------
+'INFORMES: Datos Alumno y su expediente
+'------------------------------------------------------------------------------------------------
+
+Public Sub FichaAlumno(idalumno As Integer, show As Boolean)
+  
+  Dim doc As New Latex
+  Dim stext As String
+  Dim parrafo As String
+  Dim fpensando As New FormPensando
+  Dim cadenaControlTerminadar As String
+  
+  fpensando.estadoimprimiendo = True
+  fpensando.Show()
+  
+  'leer datos del alumno
+  alumno = controladorAplicacion.BuscarIdalumno(idalumno)
+  alumno.idAlumno = idalumno
+  'leer datos de Relaciones
+  mirela.GridResultanteSQL(ControladorAplicacion.ContenidoRelacionesIdAlumnos(idAlumno), gridviewTmporal)
+  revisarAnchosDatosCursos(gridviewTmporal)
+  'realizar consulta 
+  RefrescarDatosCursos()
+  'Escribir datos del alumno
+  ' doc.pageHeader("", "Expediente Alumno", "")
+  'doc.pageFooter("", "", "" & doc.pageNumber())
+  
+  If alumno.RutaFoto = "" Then alumno.RutaFoto = "transparente.png"
+  parrafo = doc.Picture(ControladorAplicacion.rutaTrabajo & "Fotos/" & alumno.RutaFoto, 0.5, 0) &
+    gb.CrLf & gb.CrLf & ""
+  
+  stext &= parrafo
+  stext &= doc.bold("Nombre y Apellidos: ") & doc.text(String.Upper$(alumno.Nombre) & " " & String.Upper$(alumno.Apellido)) & doc.CrLf()
+  stext &= doc.bold("Documento: ") & doc.text(alumno.Documento) & doc.CrLf()
+  stext &= doc.bold("Fecha Nacimiento: ") & Format(Date(Year(alumno.FechaNacimiento), Month(alumno.FechaNacimiento), Day(alumno.FechaNacimiento)), "dd mmmm yyyy") & doc.CrLf()
+  stext &= doc.bold("Domicilio: ") & doc.text(alumno.Domicilio) & doc.CrLf()
+  stext &= doc.bold("Teléfono: ") & doc.text(alumno.Telefono) & doc.CrLf() 
+  stext &= doc.bold("Nacionalidad: ") & doc.text(alumno.Nacionalidad) & doc.CrLf()
+  stext &= doc.bold("Esc. Origen: ") & doc.text(alumno.EscOrigen) & doc.CrLf()
+  stext &= doc.bold("Legajo: ") & doc.text(alumno.Legajo) & doc.CrLf()
+  stext &= doc.spaceV(0.5)
+  stext &= doc.bold("Asistencia a Cursos:")
+  stext &= doc.spaceV(0.5)
+  stext &= doc.CrLf()
+  
+  stext &= doc.TableGridViews(gridviewTmporal, "|l|l|")
+  'Escribir datos de las relaciones
+  'escribir documento en pdf...
+  'LatexHelper.compileTEX(stext, doc, "FichaAlumno", True)
+  cadenaControlTerminadar = ""
+  If show = False Then
+    cadenaControlTerminadar = LatexHelper.compilePDF(stext, doc, "FichaAlumno", False)
+    
+  Else
+    cadenaControlTerminadar = LatexHelper.compilePDF(stext, doc, "FichaAlumno", True)    
+  Endif
+  
+  Do While cadenaControlTerminadar = ""
+    Wait 0.2
+  Loop
+  
+  If controladorAplicacion.rutainformes = "/tmp" Then 
+    'no hago nada
+  Else
+    
+    BorrarSiExiste(controladorAplicacion.rutainformes & "/FichaAlumno.pdf")
+    Wait 0.2
+    Copy "/tmp/FichaAlumno.pdf" To controladorAplicacion.rutainformes & "/FichaAlumno.pdf"
+  Endif
+  
+  fpensando.parar = True
+  fpensando.Close()
+  fpensando = Null
+  
+End
+
+'------------------------------------------------------------------------------------------------
+'INFORMES: Datos Curso y su expediente
+'------------------------------------------------------------------------------------------------
+
+Public Sub FichaCurso(idcurso As Integer, show As Boolean)
+  
+  Dim doc As New Latex
+  Dim stext As String
+  Dim parrafo As String
+  Dim fpensando As New FormPensando
+  Dim cadenaControlTerminadar As String
+  
+  fpensando.estadoimprimiendo = True
+  fpensando.Show()
+  
+  'leer datos del alumno
+  curso = controladorAplicacion.BuscarIdcurso(idcurso)
+  curso.idcurso = idcurso
+  
+  'leer datos de Relaciones
+  mirela.GridResultanteSQL(ControladorAplicacion.ContenidoRelacionesIdCurso(idcurso), gridviewTmporal)
+  revisarAnchosDatosAlumnos(gridviewTmporal)
+  'realizar consulta 
+  RefrescarDatosAlumnos()
+  'Escribir datos del alumno
+  'doc.pageHeader("", "Expediente Curso", "")
+  ' doc.pageFooter("", "", "" & doc.pageNumber())
+  
+  stext &= doc.bold("Curso: ") & doc.text(String.Upper$(curso.Nombre)) & doc.CrLf()
+  stext &= doc.bold("Detalles: ") & doc.CrLf()
+  stext &= doc.text(curso.Detalle) & doc.CrLf()
+  stext &= doc.spaceV(0.5)
+  stext &= doc.bold("Alumnos del Curso:")
+  stext &= doc.spaceV(0.5)
+  stext &= doc.CrLf()
+  'Escribir datos de las relaciones
+  stext &= doc.TableGridViews(gridviewTmporal, "|l|l|l|")
+  
+  'escribir documento en pdf...
+  '  LatexHelper.compileTEX(stext, doc, "FichaCurso", True)
+  '  
+  cadenaControlTerminadar = ""
+  If show = False Then
+    cadenaControlTerminadar = LatexHelper.compilePDF(stext, doc, "FichaCurso", False)
+    
+  Else
+    cadenaControlTerminadar = LatexHelper.compilePDF(stext, doc, "FichaCurso", True)
+  Endif
+  
+  Do While cadenaControlTerminadar = ""
+    Wait 0.2
+  Loop
+  
+  If controladorAplicacion.rutainformes = "/tmp" Then 
+    'no hago nada
+  Else
+    
+    BorrarSiExiste(controladorAplicacion.rutainformes & "/FichaCurso.pdf")
+    Wait 0.2
+    Copy "/tmp/FichaCurso.pdf" To controladorAplicacion.rutainformes & "/FichaCurso.pdf"
+  Endif
+  
+  fpensando.parar = True
+  fpensando.Close()
+  fpensando = Null
+  
+End
+
+Public Sub ListaAlumnos()
+  
+  Dim doc As New Latex
+  Dim stext As String
+  Dim parrafo As String
+  
+  Dim fila As Integer
+  Dim a As Integer
+  
+  Dim alu As New Alumnodao
+  Dim fpensando As New FormPensando
+  Dim cadenaControlTerminadar As String
+  
+  fpensando.estadoimprimiendo = True
+  fpensando.Show()
+  
+  alu.gridFormatearColumnas(gridviewTmporal)
+  With gridviewTmporal
+    .Columns[0].width = 0
+    .Rows.Height = 40
+    .Columns[1].width = 0
+    .Columns[2].width = 150
+    .Columns[5].width = 125
+    .Columns[6].width = 250
+    .font.size = 8
+  End With
+  
+  'rellenar lista de alumnos
+  resultadoCurso = ControladorAplicacion.ContenidoAlumnos()
+  
+  gridviewTmporal.Rows.count = resultadoCurso.count 
+  
+  fila = -1
+  Do While resultadoCurso.Available
+    Inc fila
+    For a = 0 To gridviewTmporal.columns.count - 1
+      gridviewTmporal[fila, a].text = resultadoCurso[gridviewTmporal.Columns[a].title]
+    Next 
+    resultadoCurso.MoveNext()
+  Loop
+  ' doc.pageHeader("", "Lista de Alumnos", "")
+  ' doc.pageFooter("", "", "" & doc.pageNumber())
+  stext = doc.Environment.LandScape.Begin()
+  'stext &= doc.Environment.Center.Begin() ' & doc.bold(doc.text("Lista de Alumnos")) & doc.CrLf() & doc.CrLf()
+  stext &= " " & doc.TableGridViews(gridviewTmporal,, "Lista de Alumnos", "Lista de Alumnos (continua)", "Sigue en la página siguiente...", "Fin de la lista de Alumnos") & " "
+  '  stext &= doc.Environment.Center.End()
+  stext &= doc.Environment.LandScape.End()
+  
+  'LatexHelper.compileTEX(stext, doc, "ListaAlumnos", True)
+  cadenaControlTerminadar = ""
+  cadenaControlTerminadar = LatexHelper.compilePDF(stext, doc, "ListaAlumnos", True)
+  
+  Do While cadenaControlTerminadar = ""
+    Wait 0.2
+  Loop
+  
+  If controladorAplicacion.rutainformes = "/tmp" Then 
+    'no hago nada
+  Else
+    BorrarSiExiste(controladorAplicacion.rutainformes & "/ListaAlumnos.pdf")
+    Wait 0.2
+    Copy "/tmp/ListaAlumnos.pdf" To controladorAplicacion.rutainformes & "/ListaAlumnos.pdf"
+    
+  Endif
+  
+  fpensando.parar = True
+  fpensando.Close()
+  fpensando = Null
+  
+End
+
+Public Sub ListaCusos()
+  
+  Dim doc As New Latex
+  Dim stext As String
+  Dim parrafo As String
+  
+  Dim fila As Integer
+  Dim a As Integer
+  
+  Dim cur As New CursoDAO
+  Dim fpensando As New FormPensando
+  Dim cadenaControlTerminadar As String
+  
+  fpensando.estadoimprimiendo = True
+  fpensando.Show()
+  
+  cur.gridFormatearColumnas(gridviewTmporal)
+  With gridviewTmporal    
+    .Columns[0].width = 0
+    .Columns[1].width = 200
+  End With
+  
+  'rellenar lista de alumnos
+  resultadoCurso = ControladorAplicacion.ContenidoCurso()
+  
+  gridviewTmporal.Rows.count = resultadoCurso.count 
+  
+  fila = -1
+  Do While resultadoCurso.Available
+    Inc fila
+    For a = 0 To gridviewTmporal.columns.count - 1
+      gridviewTmporal[fila, a].text = resultadoCurso[gridviewTmporal.Columns[a].title]
+    Next 
+    resultadoCurso.MoveNext()
+  Loop
+  'doc.pageHeader("", "Lista de Cursos", "")
+  'doc.pageFooter("", doc.pageNumber(), "")
+  
+  stext &= "{ " & doc.TableGridViews(gridviewTmporal, "|l|l|", "Lista de Cursos", "Lista de Cursos (continua)", "Sigue en la página siguiente...", "Fin listado de Cursos") & " }"
+  
+  'LatexHelper.compileTEX(stext, doc, "ListaAlumnos", True)
+  cadenaControlTerminadar = ""
+  
+  cadenaControlTerminadar = LatexHelper.compilePDF(stext, doc, "ListaCursos", True)
+  
+  Do While cadenaControlTerminadar = ""
+    Wait 0.2
+  Loop
+  
+  If controladorAplicacion.rutainformes = "/tmp" Then 
+    'no hago nada
+  Else
+    BorrarSiExiste(controladorAplicacion.rutainformes & "/ListaCursos.pdf")
+    Wait 0.2
+    Copy "/tmp/ListaCursos.pdf" To controladorAplicacion.rutainformes & "/ListaCursos.pdf"
+  Endif
+  
+  fpensando.parar = True
+  fpensando.Close()
+  fpensando = Null
+  
+End
+
+Public Sub ListaAlumnosConCursosParticipal()
+  
+  Dim resultadoTodosLosAlumnos As Result
+  Dim fila As Integer = 0
+  Dim fpensando As New FormPensando
+  
+  fpensando.estadoimprimiendo = True
+  fpensando.Show()
+  
+  'consultar todos los id
+  resultadoTodosLosAlumnos = controladorAplicacion.ContenidoAlumnos() 
+  ModuleUtilidadesDisco.vaciarDirectorio("/tmp/ListaTodosLosAlumnos")
+  Try Mkdir "/tmp/ListaTodosLosAlumnos"
+  'por cada id crear un documento
+  Do While resultadoTodosLosAlumnos.Available
+    Inc fila
+    FichaAlumno(resultadoTodosLosAlumnos["idAlumno"], False)
+    Do While (Not Exist("/tmp/FichaAlumno.pdf"))
+      Wait 0.1
+    Loop
+    
+    If Exist("/tmp/ListaTodosLosAlumnos/FichaAlumno" & Str(fila) & ".pdf") Then 
+      Kill "/tmp/ListaTodosLosAlumnos/FichaAlumno" & Str(fila) & ".pdf"
+    Endif
+    
+    Try Move "/tmp/FichaAlumno.pdf" To "/tmp/ListaTodosLosAlumnos/FichaAlumno" & Str(fila) & ".pdf"
+    
+    Wait 0.2
+    If controladorAplicacion.rutainformes = "/tmp" Then 
+      'no hago nada
+    Else
+      BorrarSiExiste(controladorAplicacion.rutainformes & "/FichaAlumno" & Str(fila) & ".pdf")
+      Wait 0.2
+      Copy "/tmp/ListaTodosLosAlumnos/FichaAlumno" & Str(fila) & ".pdf" To controladorAplicacion.rutainformes & "/FichaAlumno" & Str(fila) & ".pdf"
+    Endif
+    
+    resultadoTodosLosAlumnos.MoveNext()
+  Loop
+  
+  fpensando.parar = True
+  fpensando.Close()
+  fpensando = Null
+  
+  'abrir en la caperta temporal para ver los documentos pdf
+  Desktop.Open("/tmp/ListaTodosLosAlumnos")
+  
+End
+
+Public Sub ListaCusosConAlumnosParticipal()
+  
+  Dim resultadoTodosLosCursos As Result
+  Dim fila As Integer = 0
+  Dim fpensando As New FormPensando
+  
+  fpensando.estadoimprimiendo = True
+  fpensando.Show()
+  'consultar todos los id
+  resultadoTodosLosCursos = controladorAplicacion.ContenidoCurso() 
+  
+  ModuleUtilidadesDisco.vaciarDirectorio("/tmp/ListaTodosLosCursos")
+  
+  Try Mkdir "/tmp/ListaTodosLosCursos"
+  'por cada id crear un documento
+  Do While resultadoTodosLosCursos.Available
+    fila += 1
+    FichaCurso(resultadoTodosLosCursos["idCurso"], False)
+    Do While (Not Exist("/tmp/FichaCurso.pdf"))
+      Wait 0.1
+    Loop
+    
+    If Exist("/tmp/ListaTodosLosCursos/FichaCurso" & Str(fila) & ".pdf") Then 
+      Kill "/tmp/ListaTodosLosCursos/FichaCurso" & Str(fila) & ".pdf"
+    Endif
+    
+    Move "/tmp/FichaCurso.pdf" To "/tmp/ListaTodosLosCursos/FichaCurso" & Str(fila) & ".pdf"
+    Wait 0.2
+    If controladorAplicacion.rutainformes = "/tmp" Then 
+      'no hago nada
+    Else
+      BorrarSiExiste(controladorAplicacion.rutainformes & "/FichaCurso" & Str(fila) & ".pdf")
+      Wait 0.2
+      Copy "/tmp/ListaTodosLosCursos/FichaCurso" & Str(fila) & ".pdf" To controladorAplicacion.rutainformes & "/FichaCurso" & Str(fila) & ".pdf"
+    Endif
+    
+    resultadoTodosLosCursos.MoveNext()
+  Loop
+  
+  'abrir en la caperta temporal para ver los documentos pdf
+  fpensando.parar = True
+  fpensando.Close()
+  fpensando = Null
+  Desktop.Open("/tmp/ListaTodosLosCursos")
+  
+End
+
+'------------------------------------------
+Public Sub revisarAnchosDatosCursos(rejilla As GridView)
+  
+  With rejilla 
+    .Columns[0].width = 0
+    .Columns[2].width = 300
+    .Columns[3].width = 0
+    .Columns[4].width = 0
+    
+  End With
+  
+End
+
+Public Sub revisarAnchosDatosAlumnos(rejilla As Gridview)
+  
+  With rejilla 
+    
+    .Columns[0].width = 0
+    .Columns[1].width = 0
+    .Columns[2].width = 0
+  End With
+  
+End
+
+'-----------------------------------------------------------------
+
+Public Sub RefrescarDatosCursos()
+  'para el informe de ficha de alumnos
+  
+  Dim fila As Integer
+  Dim a As Integer
+  
+  resultadoCurso = ControladorAplicacion.ContenidoRelacionesIdAlumnos(alumno.idAlumno)
+  
+  gridviewTmporal.Rows.count = 0 'lo ponemos a cero el numero de filas
+  gridviewTmporal.Rows.count = resultadoCurso.count 'actualizamso al resultado de la consulta
+  
+  fila = -1
+  Do While resultadoCurso.Available
+    Inc fila
+    For a = 0 To gridviewTmporal.columns.count - 1
+      gridviewTmporal[fila, a].text = resultadoCurso[gridviewTmporal.Columns[a].title]
+    Next 
+    resultadoCurso.MoveNext()
+  Loop
+  
+End
+
+'--------------------------------------
+Public Sub RefrescarDatosAlumnos()
+  'para el informe de ficha de Curso
+  
+  Dim fila As Integer
+  Dim a As Integer
+  
+  resultadoCurso = ControladorAplicacion.ContenidoRelacionesIdCurso(curso.idCurso)
+  
+  gridviewTmporal.Rows.count = 0 'lo ponemos a cero el numero de filas
+  gridviewTmporal.Rows.count = resultadoCurso.count 'actualizamso al resultado de la consulta
+  
+  fila = -1
+  Do While resultadoCurso.Available
+    Inc fila
+    For a = 0 To gridviewTmporal.columns.count - 1
+      gridviewTmporal[fila, a].text = resultadoCurso[gridviewTmporal.Columns[a].title]
+    Next 
+    resultadoCurso.MoveNext()
+  Loop
+  
+End
+'--------------------------------------------------------------------------------
+' ExpedienteDeterminadoAlumno
+'--------------------------------------------------------------------------------
+
+Public Sub ExpedienteDeterminadoAlumno()
+  
+  Dim Alumnoelegido As New ClaseDato
+  Dim idalumno As Integer
+  
+  ControladorAplicacion.eligeAlumno.AlumnoElegido = Alumnoelegido
+  ControladorAplicacion.eligeAlumno.showmodal()
+  If Alumnoelegido.tag <> "" Then 
+    idAlumno = Alumnoelegido.tag
+    FichaAlumno(idalumno, True)
+  Endif
+  
+End
+
+Public Sub ExpedienteDeterminadoCurso()
+  
+  Dim cursoelegido As New ClaseDato
+  Dim idcurso As Integer
+  
+  ControladorAplicacion.EligeCurso.cursoelegido = cursoelegido
+  
+  ControladorAplicacion.EligeCurso.showmodal()
+  If cursoelegido.tag <> "" Then 
+    
+    idCurso = cursoelegido.tag
+    FichaCurso(idcurso, True)
+  Endif  
+  
+End
+
+Public Sub BorrarSiExiste(ruta As String)
+  
+  If Exist(ruta) Then Kill ruta
+  
+End

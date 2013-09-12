@@ -1,0 +1,65 @@
+' Gambas class file
+
+Private intentos As Integer = 3
+Public ControladorAplicacion As Controlador
+
+Public Sub _new()
+  
+End
+
+Public Sub Form_Open()
+  
+  Me.Title = "Control de Acceso"
+  Me.Center
+  TextBoxUsuario.SetFocus()
+  TextLabel2.text = ("Historial Académico") 
+  Labelversion.Text = ("versión: ") & Application.Version
+  
+End
+
+Public Sub ToolButtonCancelar_Click()
+  'finaliza el programa
+  
+  Me.Close(False)
+  
+End
+
+Public Sub TextBoxUsuario_KeyPress()
+  
+  If Key.code = Key.enter Or Key.code = Key.return Then 
+    TextBoxContrasena.SetFocus()
+  Endif
+  
+End
+
+Public Sub TextBoxContrasena_KeyPress()
+  
+  If Key.code = Key.enter Or Key.code = Key.return Then 
+    ToolButtonAceptar_Click()
+  Endif
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  'compruebo validez de usuario/password
+  
+  If intentos > 0 Then 
+    
+    If ControladorAplicacion.comprobarUsuarioPassword(TextBoxUsuario.TEXT, TextBoxContrasena.TEXT) Then 
+      'Clave verdadera 
+      Me.Close(True)
+    Else
+      'usuario o password mal introducidos...
+      intentos -= 1
+      Message.Error("Usuario/Clave no correctas" & gb.CrLf & "Le quedan " & intentos & " intentos")
+      TextBoxUsuario.TEXT = ""
+      TextBoxContrasena.TEXT = ""
+      TextBoxUsuario.SetFocus()
+      
+    Endif
+  Else
+    'ha superado el numero de intentos...
+    Me.Close(False)
+  Endif
+  
+End

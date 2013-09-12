@@ -1,0 +1,26 @@
+' Gambas class file
+
+Public hconn As Connection
+
+Public Sub Conexion() As String
+  
+  hconn = New Connection
+  
+  hconn.Host = main.rutaTrabajo & "CursosAlumnos"
+  
+  hconn.name = main.rutaTrabajo & "CursosAlumnos"
+  
+  hconn.Type = "Sqlite3"
+  
+  hconn.Open()
+  If Error Then Return ("Error: Imposible abrir la base de datos. Error: " & Error.Text)
+  
+  Return ("ok")
+  
+End
+
+Public Sub desconectar()
+  
+  Try hconn.Close()
+  
+End

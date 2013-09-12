@@ -1,0 +1,76 @@
+' Gambas class file
+
+Private resultadoCurso As Result
+Public cursoelegido As ClaseDato
+Public ControladorAplicacion As Controlador
+
+Public Sub Form_Show()
+  
+  Dim curs As New Cursodao
+  
+  curs.gridFormatearColumnas(GridViewCurso)
+  RevisarAnchos(GridViewCurso)
+  
+  RefrescarDatosCursos()
+  
+End
+
+Public Sub ToolButtonCancelar_Click()
+  
+  Me.Close()
+  Return
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  
+  If GridViewCurso.row = -1 Then 
+    Message.Info("No ha seleccinado ningun curso, y no se añadira nada al alumno")
+    Return 
+  Else
+    '  Debug "curso elegido: ", GridViewCurso[GridViewCurso.row, 0].text
+    cursoelegido.tag = GridViewCurso[GridViewCurso.row, 0].text
+    Me.Close()
+    Return
+  Endif
+  
+End
+
+Public Sub RefrescarDatosCursos()
+  
+  resultadoCurso = ControladorAplicacion.ContenidoCurso()
+  GridViewCurso.Rows.count = 0 'lo ponemos a cero el numero de filas
+  GridViewCurso.Rows.count = resultadoCurso.count 'actualizamso al resultado de la consulta
+  
+End
+
+Public Sub GridViewCurso_Data(row As Integer, column As Integer)
+  ' este evento se encarga de dibujar los datos en el gridviews, para que aparezcan en la pantalla.
+  
+  resultadoCurso.MoveTo(row)
+  GridViewCurso.Data.text = Str(resultadoCurso[GridViewCurso.Columns[column].text])
+  
+  ' colorea la fila, según sea par o impar
+  If row = GridViewCurso.row Then 
+    'cursor donde esta situado en el gridview
+    GridViewCurso.Data.Background = Color.Orange
+  Else
+    If row Mod 2 = 0 Then GridViewCurso.Data.Background = Color.Cyan
+  Endif
+  
+End
+
+Public Sub Form_Open()
+  
+End
+'reviso anchos de las columnas
+
+Public Sub RevisarAnchos(rejilla As GridView)
+  
+  With rejilla 
+    
+    .Columns[0].width = 0
+    
+  End With
+  
+End

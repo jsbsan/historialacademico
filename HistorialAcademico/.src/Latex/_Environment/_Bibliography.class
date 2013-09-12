@@ -1,0 +1,31 @@
+' Gambas class file
+
+Export
+'' insert ref to item bibliography
+
+Public Sub Cite(RefItem As String) As String 
+  
+  Return "\\cite{" & RefItem & "} "
+  
+End
+'' Begin bibliography
+
+Public Function Begin(legend As String) As String 
+  
+  Return "\\renewcommand{\\refname}{" & legend & "} " & gb.CrLf & "\\begin{thebibliography}{11} " & gb.CrLf
+  
+End
+
+'' ref and text bibliography
+Public Function Item(RefItem As String, TextString As String) As String 
+  
+  Return "\\bibitem{" & RefItem & "} " & TextString & gb.CrLf 
+  
+End
+
+'' End bibliography
+Public Function End() As String 
+  
+  Return "\\end{thebibliography} " & gb.CrLf 
+  
+End

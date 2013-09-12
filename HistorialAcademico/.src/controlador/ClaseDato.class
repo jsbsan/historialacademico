@@ -1,0 +1,16 @@
+' Gambas class file
+
+Property tag As Variant
+Private htag As Variant
+
+Private Function tag_Read() As Variant
+  
+  Return htag
+  
+End
+
+Private Sub tag_Write(Value As Variant)
+  
+  htag = value
+  
+End

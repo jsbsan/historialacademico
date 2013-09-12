@@ -1,0 +1,236 @@
+' Gambas module file
+
+Export
+
+Public hproc As Process
+
+Public Sub Process_Error(sError As String)
+  
+  Message.Info(("Se ha producido un error al crear informe en pdf.") & gb.CrLf & ("Puede ser que haya utilizado caracteres no validos") & 
+    gb.CrLf & ("Error: ") & Serror)
+  
+End
+
+'' sText: article , NameFileText: name doc (without adding .tex),show: show file .tex with gedit programs. Return name file create Or Error
+Public Function compileTEX(sText As String, classLatex As Latex, Optional NameFileText As String, show As Boolean) As String 
+  
+  Dim sContent As String
+  Dim sFileTemp As String
+  
+  If Not CheckProgram("gedit") And show = True Then
+    '    Print ("You need to install  latex-beamer and texlive-latex-extra")
+    Return ("Error: You need to install gedit")
+  Endif
+  
+  If IsNull(NameFileText) Then 
+    'no me pasan ningun nombre, doy el nombre tipo, trabajando desde la carpeta temporal.
+    sFileTemp = "/tmp" & "/" & "filetmp.tex" 
+  Else
+    sFileTemp = "/tmp" & "/" & NameFileText & ".tex"
+  Endif
+  
+  'me han pasado el documentocompleto en latex, (sin el inicio), lo que hago es asignar el contenido añadiendo iniciodocumento y lo que me pasan.
+  sContent = classLatex.InitDoc() & sText
+  
+  sContent &= gb.CrLf & "\\end{document}" & gb.CrLf
+  'creo un fichero temporal
+  file.Save(sFileTemp, sContent)
+  Wait 0.2
+  
+  If show = True Then 
+    Exec ["gedit", sFileTemp]
+  Endif
+  
+  Return sFileTemp 
+  
+Catch
+  Return ("Error: Try create file .tex")
+  
+End
+
+'' sText: article , NameFileText: name doc (without adding .pdf), show: show file .pdf with evince programs. Return name file create or Error
+Public Function compilePDF(sText As String, classLatex As Latex, Optional NameFileText As String, show As Boolean) As String 
+  
+  'Dim scontentFile As String
+  Dim sContent As String
+  Dim sFileTemp As String
+  
+  If Not CheckProgram("pdflatex") Then
+    '    Print ("You need to install  latex-beamer and texlive-latex-extra")
+    Return ("Error: You need to install latex-beamer and texlive-latex-extra")
+  Endif
+  
+  If Not CheckProgram("evince") Then
+    '  Print ("You need to install evince")
+    Return ("Error: You need to install evince")
+  Endif
+  
+  If IsNull(NameFileText) Then 
+    'no me pasan ningun nombre, doy el nombre tipo, trabajando desde la carpeta temporal.
+    sFileTemp = "/tmp" & "/" & "filetmp.tex" 
+  Else
+    sFileTemp = "/tmp" & "/" & NameFileText & ".tex"
+  Endif
+  
+  'me han pasado el documentocompleto en latex, (sin el inicio), lo que hago es asignar el contenido añadiendo iniciodocumento y lo que me pasan.
+  sContent = classLatex.InitDoc() & sText
+  
+  sContent &= gb.CrLf & "\\end{document}" & gb.CrLf
+  'creo un fichero temporal
+  
+  file.Save(sFileTemp, sContent)
+  
+  'I copy script, I add the file name, and give it execute permissions
+  'If Exist("/tmp/createPdf.sh") Then 
+  '  Kill "/tmp/createPdf.sh"
+  'Endif
+  'Copy "createPdf.sh" To "/tmp/createPdf.sh"
+  'Wait 0.2
+  'scontentFile = File.Load("/tmp/createPdf.sh")
+  'scontentFile &= sfiletemp
+  'File.Save("/tmp/createPdf.sh", scontentFile)
+  
+  'Chmod "/tmp/createPdf.sh" To "rwx------"
+  
+  'hproc = Exec ["/tmp/createPdf.sh"] ''create file .text to .pdf file
+  
+  hproc = Shell "cd /tmp;pdflatex " & sfiletemp
+  
+  Do While hproc.state = Process.Running
+    Wait 0.2
+  Loop
+  
+  If show = True Then 
+    Exec ["evince", (Replace$(sFileTemp, ".tex", ".pdf"))]
+  Endif
+  
+  Return Replace$(sFileTemp, ".tex", ".pdf")
+  
+End
+
+'' sText: article , NameFileText: name doc (without adding .pdf), show: show file .pdf with evince programs. Return name file create or Error
+'Public Function compileRTF(sText As String, classLatex As Latex, Optional NameFileText As String, show As Boolean) As String 
+
+'  Dim sContent As String
+'  Dim sFileTemp As String
+'Dim hproc As Process
+
+'If Not CheckProgram("pandoc") Then
+'  'Debug ("Error: You need to install pandoc")
+'  Return ("Error: You need to install pandoc")
+'  Endif
+
+' If Not CheckProgram("libreoffice") Then
+'   'Print ("You need to install libreoffice")
+'  Return ("Error: You need to install libreoffice")
+' Endif
+
+' If IsNull(NameFileText) Then 
+'no me pasan ningun nombre, doy el nombre tipo, trabajando desde la carpeta temporal.
+'  sFileTemp = "/tmp" & "/" & "filetmp.tex" 
+' Else
+'  sFileTemp = "/tmp" & "/" & NameFileText & ".tex"
+' Endif
+
+'I have spent the entire document in latex, (without beginning), what I do is assign iniciodocumento adding content and what I spend.
+'sContent = classLatex.InitDoc() & sText
+
+'sContent &= gb.CrLf & "\\end{document}" & gb.CrLf
+''I create a temporary file
+'file.Save(sFileTemp, sContent)
+
+'I copy script, I add the file name, and give it execute permissions
+' If Exist("/tmp/createRtf.sh") Then 
+'   Kill "/tmp/createRtf.sh"
+' Endif
+' Copy "createRtf.sh" To "/tmp/createRtf.sh"
+' Wait 0.2
+' scontentFile = File.Load("/tmp/createRtf.sh")
+' scontentFile &= sFileTemp & " -o " & Replace$(sFileTemp, ".tex", ".rtf")
+' File.Save("/tmp/createRtf.sh", scontentFile)
+' Chmod "/tmp/createRtf.sh" To "rwx------"
+
+'hproc = Exec ["/tmp/createRtf.sh"] ''create file .text to .pdf file
+
+' hproc = Shell "cd /tmp ; pandoc -s " & sFileTemp & " -o " & Replace$(sFileTemp, ".tex", ".rtf")
+' Do While hproc.state = Process.Running
+'   Wait 0.2
+' Loop
+
+' If show = True Then 
+'   Exec ["libreoffice", Replace$(sFileTemp, ".tex", ".rtf")]
+' Endif
+' Return Replace$(sFileTemp, ".tex", ".rtf")
+
+'End
+
+'' sText: article , NameFileText: name doc (without adding .pdf), show: show file .pdf with evince programs. Return name file create Or Error
+'Public Function compileODT(sText As String, classLatex As Latex, Optional NameFileText As String, show As Boolean) As String 
+
+' Dim sContent As String
+' Dim sFileTemp As String
+' Dim hproc As Process
+' 
+' If Not CheckProgram("pandoc") Then
+'   'Print ("You need to install pandoc")
+'   Return ("You need to install libreoffice")
+' Endif
+
+' If Not CheckProgram("libreoffice") Then
+'   'Print ("You need to install libreoffice")
+'   Return ("You need to install libreoffice")
+' Endif
+
+'If IsNull(NameFileText) Then 
+'I do not spend any name, give the name type, working from the temporary folder.
+'  sFileTemp = "/tmp" & "/" & "filetmp.tex" 
+'Else
+' sFileTemp = "/tmp" & "/" & NameFileText & ".tex"
+'Endif
+
+'I have spent the documentocompleto in latex, (without beginning), what I do is assign iniciodocumento adding content and what I spend.
+' sContent = classLatex.InitDoc() & sText
+
+' sContent &= gb.CrLf & "\\end{document}" & gb.CrLf
+'I create a temporary file
+
+' file.Save(sFileTemp, sContent)
+
+'I copy script, I add the file name, and give it execute permissions
+'If Exist("/tmp/createOdt.sh") Then 
+'  Kill "/tmp/createOdt.sh"
+'Endif
+'Copy "createOdt.sh" To "/tmp/createOdt.sh"
+'Wait 0.2
+'scontentFile = File.Load("/tmp/createOdt.sh")
+'scontentFile &= Replace$(sFileTemp, ".tex", ".odt") & " " & sFileTemp
+'File.Save("/tmp/createOdt.sh", scontentFile)
+'Chmod "/tmp/createOdt.sh" To "rwx------"
+
+' hproc = Exec ["/tmp/createOdt.sh"] ''create file .text to .pdf file
+
+' hproc = Shell "cd /tmp ; pandoc -f latex -t odt -o " & Replace$(sFileTemp, ".tex", ".odt") & " " & sFileTemp
+
+' Do While hproc.state = Process.Running
+'   Wait 0.2
+' Loop
+
+' If show = True Then 
+'  Exec ["libreoffice", Replace$(sFileTemp, ".tex", ".odt")]
+'Endif
+' Return Replace$(sFileTemp, ".tex", ".odt")
+
+'End
+
+Private Function CheckProgram(sProg As String) As Boolean
+  
+  Dim iPos As Integer
+  
+  iPos = InStr(sProg, " ")
+  If iPos Then sProg = Left(sProg, iPos - 1)
+  
+  Shell "which " & sProg & " >/dev/null 2>&1" Wait
+  
+  Return (Process.LastValue = 0)
+  
+End

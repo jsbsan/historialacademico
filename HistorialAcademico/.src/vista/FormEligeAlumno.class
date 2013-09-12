@@ -1,0 +1,162 @@
+' Gambas class file
+
+Public ControladorAplicacion As Controlador
+Private resultadoAlumnos As Result
+Public AlumnoElegido As ClaseDato
+Private criterioBusqueda As Integer
+
+Public Sub Form_Open()
+  'muestra inicialmente todos los alumnos
+  
+  criterioBusqueda = 4
+  
+End
+
+Public Sub Form_show()
+  
+  Dim alu As New AlumnoDAO
+  
+  alu.gridFormatearColumnas(GridViewAlumnos)
+  RefrescarDatosAlumnos()
+  regillaAlumno()
+  
+End
+
+Public Sub ToolButtonCancelar_Click()
+  
+  Me.Close()
+  Return
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  
+  If GridViewAlumnos.Row = -1 Then 
+    Message.Info("No ha seleccionado ningun alumno, no se añadirá nada alcurso")
+    Return 
+  Else
+    AlumnoElegido.tag = GridViewAlumnos[GridViewAlumnos.row, 1].text
+    Me.Close()
+    Return
+  Endif
+  
+End
+
+Public Sub RefrescarDatosAlumnos()
+  
+  resultadoAlumnos = ControladorAplicacion.ContenidoAlumnos()
+  GridViewAlumnos.Rows.count = 0 'lo ponemos a cero el numero de filas
+  GridViewAlumnos.Rows.count = resultadoAlumnos.count 'actualizamso al resultado de la consulta
+  
+End
+
+Public Sub GridViewAlumnos_Data(row As Integer, column As Integer)
+  
+  resultadoAlumnos.MoveTo(row)
+  
+  If column = 0 Then 
+    If Exist(ControladorAplicacion.rutaTrabajo & "MiniFotos/Mini" & resultadoAlumnos[GridViewAlumnos.Columns[column].text]) Then 
+      GridViewAlumnos.Data.Picture = Picture.Load(ControladorAplicacion.rutaTrabajo & "MiniFotos/Mini" & resultadoAlumnos[GridViewAlumnos.Columns[column].text])
+      Return 
+    Else
+      GridViewAlumnos.Data.text = ""
+      Return
+    Endif
+  Endif
+  
+  GridViewAlumnos.Data.text = Str(resultadoAlumnos[GridViewAlumnos.Columns[column].text])
+  
+  ' colorea la fila, según sea par o impar
+  If row = GridViewAlumnos.row Then 
+    'cursor donde esta situado en el gridview
+    GridViewAlumnos.Data.Background = Color.Orange
+  Else
+    If row Mod 2 = 0 Then GridViewAlumnos.Data.Background = Color.LightGray
+  Endif
+  
+End
+
+Private Sub regillaAlumno()
+  
+  With GridViewAlumnos    
+    .Columns[0].width = 40
+    .Rows.Height = 40
+    .Columns[1].width = 0
+    .Columns[2].width = 150
+    .Columns[5].width = 125
+    .Columns[6].width = 250
+    .font.size = 8
+  End With
+  
+End
+
+Public Sub ToolButtonBuscar_Click()
+  
+  Select Case criterioBusqueda
+    Case 1
+      'por documento
+      resultadoAlumnos = ControladorAplicacion.ContenidoDocumento(TextBoxPalabraBusqueda.text)
+    Case 2
+      'por apellidos
+      resultadoAlumnos = ControladorAplicacion.ContenidoApellidos(TextBoxPalabraBusqueda.text)
+    Case 3
+      'por un legajo
+      resultadoAlumnos = ControladorAplicacion.ContenidoLegajo(TextBoxPalabraBusqueda.text)
+    Case 4
+      'todos los alumnos
+      resultadoAlumnos = ControladorAplicacion.ContenidoAlumnos()
+  End Select
+  
+  'refresco datos 
+  GridViewAlumnos.Rows.count = 0 'lo ponemos a cero el numero de filas
+  GridViewAlumnos.Rows.count = resultadoAlumnos.count 'actualizamso al resultado de la consulta
+  
+End
+
+Public Sub RadioDocumento_Click()
+  
+  criterioBusqueda = 1
+  TextBoxPalabraBusqueda.SetFocus()
+  
+End
+
+Public Sub RadioApellidos_Click()
+  
+  criterioBusqueda = 2
+  TextBoxPalabraBusqueda.SetFocus()
+  
+End
+
+Public Sub RadioLegajo_Click()
+  
+  criterioBusqueda = 3
+  TextBoxPalabraBusqueda.SetFocus()
+  
+End
+
+Public Sub RadioListarTodos_Click()
+  
+  criterioBusqueda = 4
+  
+End
+
+Public Sub TextBoxPalabraBusqueda_KeyRelease()
+  
+  If criterioBusqueda <> 4 Then 
+    ToolButtonBuscar_Click()
+  Endif
+  
+End
+
+Public Sub TextBoxPalabraBusqueda_KeyPress()
+  
+  'limitar caracteres  
+  If Key.enter = Key.code Or Key.return = Key.code Or Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End

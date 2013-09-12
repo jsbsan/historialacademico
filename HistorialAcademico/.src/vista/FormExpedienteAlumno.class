@@ -1,0 +1,221 @@
+' Gambas class file
+
+Public ControladorAplicacion As Controlador
+
+Public TmpAlumno As AlumnoVO
+
+Private resultadoCurso As Result
+
+Public Sub Form_Open()
+  
+  Dim mirela As New RelacionDAO
+  'formateo el gridvies, segun el resultado de una consulta...
+  GridViewRelacionCursos = mirela.GridResultanteSQL(ControladorAplicacion.ContenidoRelacionesIdAlumnos(TmpAlumno.idAlumno), GridViewRelacionCursos)
+  refrescarDatosCursos()
+  RevisarAnchos(GridViewRelacionCursos)
+  Me.Title = "Expedientes de Alumnos"
+  
+End
+
+Public Sub form_Show()
+  
+  Dim mirela As New RelacionDAO
+  
+  mirela.GridResultanteSQL(ControladorAplicacion.ContenidoRelacionesIdAlumnos(TmpAlumno.idAlumno), GridViewRelacionCursos)
+  
+  RefrescarDatosAlumnos()
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  
+  Me.Close()
+  
+End
+
+Public Sub ToolButtonAnnadirAlumnoCurso_Click()
+  
+  Dim dato As New ClaseDato
+  Dim rela As New RelacionVO
+  Dim cursoelegido As New ClaseDato
+  Dim formularioInput As New FormInput
+  
+  ControladorAplicacion.EligeCurso.cursoelegido = cursoelegido
+  
+  ControladorAplicacion.EligeCurso.showmodal()
+  If cursoelegido.tag <> "" Then 
+    'añadir relacion sabiendo idcurso,idalumno
+    rela.idAlumno = TmpAlumno.idAlumno
+    rela.idCurso = cursoelegido.tag
+    
+    formularioInput.dato = dato
+    formularioInput.pront = "Observacion:"
+    formularioInput.titulo = "Introduzca una observacion"
+    formularioInput.Showmodal()
+    rela.Observacion = dato.tag
+    'rela.Observacion = InputBox("Observacion:", "Introduzca una observacion")
+    If ControladorAplicacion.anadirRelacion(rela) Then 
+      
+      refrescarDatosCursos()
+    Endif
+    
+  Endif
+  
+End
+
+'-----------------------------------------------------------------
+
+Public Sub RefrescarDatosCursos()
+  
+  resultadoCurso = ControladorAplicacion.ContenidoRelacionesIdAlumnos(TmpAlumno.idAlumno)
+  
+  GridViewRelacionCursos.Rows.count = 0 'lo ponemos a cero el numero de filas
+  GridViewRelacionCursos.Rows.count = resultadoCurso.count 'actualizamso al resultado de la consulta
+  
+End
+
+Public Sub GridViewRelacionCursos_Data(row As Integer, column As Integer)
+  ' este evento se encarga de dibujar los datos en el gridviews, para que aparezcan en la pantalla.
+  
+  Try resultadoCurso.MoveTo(row)
+  If Error Then Return 
+  GridViewRelacionCursos.Data.text = Str(resultadoCurso[GridViewRelacionCursos.Columns[column].text])
+  
+  ' colorea la fila, según sea par o impar
+  If row = GridViewRelacionCursos.row Then 
+    'cursor donde esta situado en el gridview
+    GridViewRelacionCursos.Data.Background = Color.Orange
+  Else
+    If row Mod 2 = 0 Then GridViewRelacionCursos.Data.Background = Color.Cyan
+  Endif
+  
+End
+
+Public Sub ToolButtonBorrarAlumno_Click()
+  
+  If GridViewRelacionCursos.row = -1 Then 
+    Message.Info("Seleccione un curso")
+  Else
+    
+    If ControladorAplicacion.borrarAlumnoDeCurso(Val(GridViewRelacionCursos[GridViewRelacionCursos.row, 3].Text)) Then 
+      
+      refrescarDatosCursos()
+    Endif
+    
+  Endif
+  
+End
+
+Public Sub ToolButtonEditarObservacion_Click()
+  
+  Dim dato As New ClaseDato
+  Dim formularioInput As New FormInput
+  Dim rela As New RelacionVO
+  Dim textoObservacion As String
+  
+  If GridViewRelacionCursos.row = -1 Then 
+    Message.Info("Seleccione un curso")
+  Else
+    
+    formularioInput.dato = dato
+    formularioInput.pront = "Introduzca Observación:"
+    formularioInput.titulo = "Observación del Alumno en el Curso " & GridViewRelacionCursos[GridViewRelacionCursos.row, 1].Text
+    formularioInput.Pordefecto = GridViewRelacionCursos[GridViewRelacionCursos.row, 2].Text
+    formularioInput.Showmodal()
+    
+    textoObservacion = dato.tag ' InputBox("Introduzca Observación:", "Observación del Aluno en el Curso " & GridViewRelacionCursos[GridViewRelacionCursos.row, 1].Text, GridViewRelacionCursos[GridViewRelacionCursos.row, 2].Text)
+    If textoObservacion <> "" Then 
+      'modificar registro de observacion
+      rela.idAlumno = Val(GridViewRelacionCursos[GridViewRelacionCursos.row, 4].Text)
+      rela.idCurso = Val(GridViewRelacionCursos[GridViewRelacionCursos.row, 3].Text)
+      rela.idRelacion = Val(GridViewRelacionCursos[GridViewRelacionCursos.row, 0].Text)
+      rela.Observacion = textoObservacion
+      
+      If ControladorAplicacion.modificarIdRelacion(rela) Then 
+        refrescarDatosCursos()
+      Else
+        Message.Error("No se ha podido modificar la observacion")
+      Endif
+    Endif
+    
+  Endif
+  
+End
+
+'para el tema de dimensionado del formulario
+Public Sub Form_Resize()
+  
+  GridViewRelacionCursos.w = Me.w - GridViewRelacionCursos.x - 20
+  
+  GridViewRelacionCursos.h = Me.H - GridViewRelacionCursos.y - 10
+  
+End
+
+'reviso anchos de las columnas
+Public Sub RevisarAnchos(rejilla As GridView)
+  
+  With rejilla 
+    .Columns[0].width = 0
+    .Columns[2].width = 1000
+    .Columns[3].width = 0
+    .Columns[4].width = 0
+    
+  End With
+  
+End
+
+Public Sub ToolButtonEditarAlumno_Click()
+  
+  ControladorAplicacion.falumno.TmpAlumno = TmpAlumno
+  
+  ControladorAplicacion.falumno.showmodal()
+  ControladorAplicacion.falumno.TmpAlumno = Null
+  'relleno el gridview de datos...
+  RefrescarDatosAlumnos()
+  
+End
+
+Public Sub RefrescarDatosAlumnos()
+  
+  TextBoxNombreAlumno.text = TmpAlumno.Nombre
+  TextBoxApellidosAlumno.text = TmpAlumno.Apellido
+  TextBoxDocumento.text = TmpAlumno.Documento
+  refrescarDatosCursos()
+  RevisarAnchos(GridViewRelacionCursos)
+  'rellenar foto del alumno
+  If TmpAlumno.RutaFoto <> "transparente.png" Then 
+    
+    PictureBoxAlumno.Tag = ControladorAplicacion.rutaTrabajo & "Fotos/" & TmpAlumno.RutaFoto
+    PictureBoxAlumno.Picture = Picture[ControladorAplicacion.rutaTrabajo & "Fotos/" & TmpAlumno.RutaFoto]
+  Else
+    PictureBoxAlumno.Picture = Picture["icono_fotos_personas.png"]
+  Endif
+  
+End
+
+Public Sub ToolButtonImprimir_Click()
+  
+  Imprimir.FichaAlumno(TmpAlumno.idAlumno, True)
+  
+End
+
+Public Sub ToolButtonBorrarObservacion_Click()
+  
+  Dim rela As New RelacionVO
+  Dim textoObservacion As String
+  
+  If GridViewRelacionCursos.row = -1 Then 
+    Message.Info("Seleccione una observacion (fila) a borrar")
+  Else
+    
+    'modificar registro de observacion
+    rela.idRelacion = Val(GridViewRelacionCursos[GridViewRelacionCursos.row, 0].Text)
+    
+    If ControladorAplicacion.BorrarIdRelacion(rela) Then 
+      refrescarDatosCursos()
+    Else
+      Message.Error("No se ha podido modificar la observacion")
+    Endif
+  Endif
+  
+End

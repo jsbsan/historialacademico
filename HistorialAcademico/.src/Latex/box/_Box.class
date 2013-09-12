@@ -1,0 +1,42 @@
+' Gambas class file
+
+Export
+
+'' itype:1 shadow, 2: double, 3:Oval , 4: double Oval
+Public Const Shadow As Integer = 1 '' Shadow=1
+Public Const Double As Integer = 2 '' Double=2
+Public Const Oval As Integer = 3 '' Oval=3
+Public Const DoubleOval As Integer = 4 '' DoubleOval=4
+
+'' paragraph in a box
+Public Function parbox(sString As String) As String 
+  
+  Return "\\parbox[b] {1\\linewidth} { " & gb.CrLf & sString & gb.CrLf & "} " & gb.CrLf
+  
+End
+
+'' frame in box,the pos parameter takes a one letter value: (c) center, (l) flushleft, (r)  flushright, or (s) spread the text to fill the box.
+Public Function framebox(sTextBox As String, iWith As Integer, sPos As String) As String 
+  
+  Return "\\framebox[" & iWith & "cm] [" & sPos & "] {" & sTextBox & "}" & gb.CrLf
+  
+End
+
+'' itype:1 shadow, 2: double, 3:Oval , 4: double Oval
+Public Function MessageBox(sTextBox As String, Optional itype As Integer) As String 
+  
+  If IsNull(itype) Or If itype = 0 Then itype = 1
+  Select itype
+    Case 1
+      Return "\\shadowbox{" & parbox(sTextbox) & "}" & gb.CrLf
+    Case 2
+      Return "\\doublebox{" & parbox(sTextbox) & "}" & gb.CrLf
+    Case 3
+      Return "\\ovalbox{" & parbox(sTextbox) & "}" & gb.CrLf
+    Case 4
+      Return "\\Ovalbox{" & parbox(sTextbox) & "}" & gb.CrLf
+    Default
+      Return "\\shadowbox{" & parbox(sTextbox) & "}" & gb.CrLf
+  End Select
+  
+End

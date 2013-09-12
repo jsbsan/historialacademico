@@ -1,0 +1,101 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,75,60)
+  Icon = Picture["icon:/16/bookmark"]
+  Persistent = True
+  { Label1 Label
+    MoveScaled(20,0,16,5)
+    Text = ("Nombre:")
+  }
+  { TextBoxNombreAlumno TextBox
+    MoveScaled(37,0,35.7143,5)
+    Background = &HBFBFBF&
+    ReadOnly = True
+  }
+  { Label2 Label
+    MoveScaled(19.8571,5.8571,16,5)
+    Text = ("Apellidos:")
+  }
+  { TextBoxApellidosAlumno TextBox
+    MoveScaled(37,6,35.7143,5)
+    Background = &HBFBFBF&
+    ReadOnly = True
+  }
+  { Label3 Label
+    MoveScaled(20,12,16,5)
+    Text = ("Documento:")
+  }
+  { TextBoxDocumento TextBox
+    MoveScaled(37,12,35.7143,5)
+    Background = &HBFBFBF&
+    ReadOnly = True
+  }
+  { Label4 Label
+    MoveScaled(2,22,64,4)
+    Text = ("Cursos a los que esta apuntado:")
+  }
+  { ToolButtonAnnadirAlumnoCurso ToolButton
+    MoveScaled(2,26,20,5)
+    Font = Font["Arial,-2"]
+    AutoResize = True
+    Text = ("Añadirle a un  Curso")
+    Picture = Picture["icon:/16/add"]
+    Border = True
+  }
+  { ToolButtonBorrarAlumno ToolButton
+    MoveScaled(22,26,20,5)
+    Font = Font["Arial,-2"]
+    AutoResize = True
+    Text = ("Borrarle de un  Curso")
+    Picture = Picture["icon:/16/erase"]
+    Border = True
+  }
+  { ToolButtonEditarObservacion ToolButton
+    MoveScaled(51,23,23,4)
+    Font = Font["Arial,-2"]
+    AutoResize = True
+    Text = ("Editar Observaciones")
+    Picture = Picture["icon:/16/edit"]
+    Border = True
+  }
+  { GridViewRelacionCursos GridView
+    MoveScaled(1,32,73,27)
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(57,17,15,5)
+    Font = Font["Andale Mono,-1"]
+    Text = ("Aceptar")
+    Picture = Picture["icon:/16/apply"]
+    Border = True
+  }
+  { ToolButtonEditarAlumno ToolButton
+    MoveScaled(15,17,20,5)
+    Font = Font["Andale Mono,-1"]
+    AutoResize = True
+    Text = ("Editar Alumno")
+    Picture = Picture["icon:/16/edit"]
+    Border = True
+  }
+  { PictureBoxAlumno PictureBox
+    MoveScaled(2,1,12.1429,17)
+    Stretch = True
+    Border = Border.Plain
+  }
+  { ToolButtonImprimir ToolButton
+    MoveScaled(39,17,7,5)
+    Font = Font["Andale Mono,-1"]
+    AutoResize = True
+    Text = ("Imprimir")
+    Picture = Picture["icon:/16/printer"]
+    Border = True
+  }
+  { ToolButtonBorrarObservacion ToolButton
+    MoveScaled(51,28,23,4)
+    Font = Font["Arial,-2"]
+    AutoResize = True
+    Text = ("Borrar Observaciones")
+    Picture = Picture["icon:/16/erase"]
+    Border = True
+  }
+}
