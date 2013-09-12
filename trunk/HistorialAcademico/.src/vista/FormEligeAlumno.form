@@ -1,0 +1,62 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,59,64)
+  Resizable = False
+  { Label1 Label
+    MoveScaled(0,0,57,3)
+    Font = Font["Arial,Bold,+2"]
+    AutoResize = True
+    Text = ("Alumnos Disponibles....")
+  }
+  { GridViewAlumnos GridView
+    MoveScaled(0,19,57,38)
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(36,58,15,5)
+    Text = ("Aceptar")
+    Picture = Picture["icon:/16/apply"]
+    Border = True
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(9,58,15,5)
+    Text = ("Cancelar")
+    Picture = Picture["icon:/16/cancel"]
+    Border = True
+  }
+  { RadioDocumento RadioButton
+    MoveScaled(2,9,23,4)
+    Tag = "1"
+    Text = ("Por nº Documento")
+  }
+  { RadioLegajo RadioButton
+    MoveScaled(2,13,23,4)
+    Tag = "3"
+    Text = ("Por Legajo")
+  }
+  { RadioApellidos RadioButton
+    MoveScaled(33,9,17,4)
+    Tag = "2"
+    Text = ("Por Apellidos")
+  }
+  { RadioListarTodos RadioButton
+    MoveScaled(33,13,19,4)
+    Tag = "4"
+    Text = ("Listar Todos")
+    Value = True
+  }
+  { TextBoxPalabraBusqueda TextBox
+    MoveScaled(19,4,19,4)
+  }
+  { ToolButtonBuscar ToolButton
+    MoveScaled(41,4,12,4)
+    AutoResize = True
+    Text = ("Buscar")
+    Picture = Picture["icon:/16/find"]
+    Border = True
+  }
+  { Label2 Label
+    MoveScaled(3,4,15,4)
+    Text = ("Buscar.....")
+  }
+}

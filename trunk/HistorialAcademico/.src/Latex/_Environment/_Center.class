@@ -1,0 +1,17 @@
+' Gambas class file
+
+Export
+
+'' Begin Center
+Public Function Begin() As String 
+  
+  Return "\\begin{center}" & gb.CrLf     
+  
+End
+'' End Center
+
+Public Function End() As String 
+  
+  Return "\\end{center}" & gb.CrLf
+  
+End

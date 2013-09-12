@@ -1,0 +1,493 @@
+' Gambas class file
+
+' Gambas class filete
+
+Export
+
+Private sUsePackageText As String
+'' Environment: LandScape, Center, Verbatin, Enumerate, Bibliography
+Public Environment As New _Environment 
+'' line center, left or right
+Public Line As New _Line 
+'' Size font: tiny, lange,langeP,Huge
+Public Size As New _Size 
+'' Type font: Roman, boldFace, italica
+Public TypeFont As New _TypeFont 
+'' add box
+Public Box As New _Box
+
+'-------------------------------------------------------------------------------------------------------
+
+'' underline text
+Public Function underline(sString As String) As String 
+  
+  Return "\\underline{" & sString & "}"
+  
+End
+
+'' bold text
+Public Function bold(sString As String) As String 
+  
+  Return "{\\bf " & sString & "}"
+  
+End
+
+'-------------------------------------------------------------------------------------------------------
+'' itype:1 shadow, 2: double, 3:Oval , 4: double Oval
+Public Sub IconBox(stitle As String, sText As String, sImage As String, fScale As Float, fAngle As Float, Optional itype As Integer) As String
+  
+  Return Box.MessageBox(picture(sImage, fScale, fangle) & bold(sTitle) & gb.CrLf & gb.CrLf & sText, iType)
+  
+End
+
+'-------------------------------------------------------------------------------------------------------
+'' sfile: path and name file, fscale: scale picture, Fangle: angle picture
+Public Sub picture(sfile As String, Optional fScale As Float, Optional fAngle As Float) As String
+  'copy file to path tmp
+  
+  Dim sfileNew As String = "/tmp/" & removepath(sfile)
+  
+  Try Copy sfile To sfileNew
+  
+  If IsNull(fscale) Then fscale = 1
+  If IsNull(fangle) Then fangle = 0
+  Return "\\includegraphics[scale=" & fscale & ",angle=" & fangle & "]{" & sfileNew & "} " & gb.CrLf
+  
+End
+
+'' remove path, getting  file's name 
+Private Function removepath(sFile As String) As String
+  
+  Dim stype As String
+  Dim sfileNew As String = ""
+  Dim ia As Integer 
+  
+  For ia = (Len(sFile)) To 0 Step -1
+    stype = Mid$(sfile, ia, 1) 
+    If stype = "/" Then 
+      Return sFileNew
+    Else
+      sFileNew = stype & sFileNew
+    Endif
+  Next
+  
+  Return sfileNew
+  
+End
+
+'-----------------------------------------------------------------
+'                Section
+'-----------------------------------------------------------------
+Public Function Section(sText As String) As String
+  
+  Return "\\section{" & sText & "}" & gb.CrLf
+  
+End
+
+Public Function SubSection(sText As String) As String
+  
+  Return "\\subsection{" & sText & "}" & gb.CrLf
+  
+End
+
+Public Function SubSubSeccion(sText As String) As String
+  
+  Return "\\subsubsection{" & sText & "}" & gb.CrLf
+  
+End
+
+'-------------------------------------------------------------------------------------------------------
+'' space horizontal, if fSize=0 then fSize=0.4 cm.
+Public Function spaceH(Optional fSize As Float) As String 
+  
+  If IsNull(fSize) Or If fSize = 0 Then 
+    Return "\\hspace{0.4cm} " & gb.CrLf
+  Else
+    Return "\\hspace{" & fSize & "cm} " & gb.CrLf
+  Endif
+  
+End
+
+'' space vertical, if size=0 then size=0.4 cm.
+Public Function spaceV(Optional fsize As Float) As String 
+  
+  If IsNull(fsize) Or If fsize = 0 Then 
+    Return "\\vspace{0.4cm} " & gb.CrLf
+  Else
+    Return "\\vspace{" & fsize & "cm} " & gb.CrLf
+  Endif
+  
+End
+
+'----------------------------------
+' date
+'---------------------------------- 
+'' if dDate=0 then write today's date else write dDate
+Public Sub date(Optional dDate As Date) As String 
+  
+  If IsNull(dDate) Or If dDate = 0 Then 
+    Return "\\today" & gb.CrLf
+  Else
+    Return dDate & gb.CrLf
+  Endif
+  
+End
+'--------------------------------------------------------------
+'-------------------------------------------------------------
+'nota a pie de pagina
+'-------------------------------------------------------------
+'' add footnote
+
+Public Function footnote(sText As String) As String
+  
+  Return "\\footnote{" & sText & "}" & gb.CrLf
+  
+End
+'--------------------------------------------------------------------
+' footer and header page
+'--------------------------------------------------------------------
+'' add number page
+
+Public Function pageNumber() As String
+  
+  Return "  \\thepage"
+  
+End
+
+'' text that appear in the header of the page (left, center and right)
+Public Sub pageHeader(sTextLeft As String, sTextCenter As String, sTextRight As String, Optional fRuleWidth As Float) 
+  
+  Dim stex As String
+  
+  stex = "\\lhead{" & sTextLeft & "} " & gb.CrLf
+  stex &= "\\chead{" & sTextCenter & "}" & gb.CrLf
+  stex &= "\\rhead{" & sTextRight & "}" & gb.CrLf
+  stex &= "" & gb.CrLf
+  
+  If IsNull(fRuleWidth) Or If fRuleWidth = 0 Then 
+    stex &= "\\renewcommand{\\headrulewidth}{0.4pt} " & gb.CrLf
+  Else
+    stex &= "\\renewcommand{\\headrulewidth}{" + fRuleWidth + "} " & gb.CrLf
+  Endif
+  sUsePackageText &= stex
+  
+End
+
+'' text that appear in the footer (left, center and right)
+Public Sub pageFooter(sTextLeft As String, sTextCenter As String, sTextRight As String, Optional fRuleWidth As Float) 
+  
+  Dim stex As String
+  
+  stex = "\\lfoot{" & sTextLeft & "} " & gb.CrLf
+  stex &= "\\cfoot{" & sTextCenter & "}" & gb.CrLf
+  stex &= "\\rfoot{" & sTextRight & "}" & gb.CrLf
+  stex &= "" & gb.CrLf
+  If IsNull(fRuleWidth) Or If fRuleWidth = 0 Then 
+    stex &= "\\renewcommand{\\footrulewidth}{0.4pt} " & gb.CrLf
+  Else
+    stex &= "\\renewcommand{\\footrulewidth}{" + fRuleWidth + "} " & gb.CrLf
+  Endif
+  
+  sUsePackageText &= stex
+  
+End
+'---------------------------------------------------------------------------------
+'' Table Of Contents. default TitleContents is "content"
+
+Public Function TableOfContents(Optional TitleContents As String) As String 
+  
+  If IsNull(TitleContents) Then 
+    Return "\\renewcommand{\\contentsname}{Content} \\tableofcontents" & gb.CrLf
+  Else
+    Return "\\renewcommand{\\contentsname}{" & TitleContents & "} \\tableofcontents" & gb.CrLf
+  Endif
+  
+End
+
+'' end of pag
+Public Function PageBreak() As String 
+  
+  Return "\\pagebreak" & gb.CrLf
+  
+End
+
+'' title document
+Public Function title(sTitle As String, sAutor As String, Optional bDate As Boolean) As String 
+  
+  Dim stext As String
+  
+  stext = "\\title{" & sTitle & "}" & gb.CrLf
+  stext &= "\\author{" & sAutor & "}" & gb.CrLf
+  If IsNull(bDate) Or If bDate = False Then 
+    'no date
+  Else
+    stext &= "\\date{\\today}" & gb.CrLf
+  Endif
+  stext &= "\\maketitle" & gb.CrLf
+  
+  Return stext
+  
+End
+
+'' InitParagraph: if not specified or True, for carriage return. 
+Public Sub text(sText As String, Optional InitParagraph As Boolean) As String
+  
+  If IsNull(InitParagraph) Or If InitParagraph = True Then 
+    Return gb.CrLf & TextPure(sText) & gb.CrLf 
+  Else
+    Return TextPure(sText) & gb.CrLf   
+  Endif
+  
+End
+
+'' carriage return, end of line
+Public Sub CrLf() As String
+  
+  Return Me.text("", True)
+  
+End
+
+'---------------------------------------------------------------------------------
+'' add usepackage
+Public Sub usepackage(cadena As String) As String 
+  
+  sUsePackageText &= cadena & gb.CrLf
+  
+End
+
+'' type doc: article. Latex document header starts
+Public Function InitDoc() As String 
+  
+  Dim stext As String
+  
+  stext = "\\documentclass[12pt,a4paper]{article}" & gb.CrLf 'type document: article
+  stext &= "\\usepackage[dvips,dvipsnames,usenames]{color}" & gb.CrLf 'color
+  stext &= "\\usepackage[utf8]{inputenc} % Escribir con acentos, ñ, ..." & gb.CrLf ' spanish
+  stext &= "\\textheight = 25 cm"
+  stext &= "\\textwidth = 17 cm"
+  stext &= "\\topmargin = -1 cm"
+  stext &= "\\oddsidemargin = 0 cm"
+  stext &= "\\parindent = 0 mm"
+  stext &= "\\usepackage{lscape}" & gb.CrLf
+  stext &= "\\usepackage{longtable}" & gb.CrLf '% para tablas largas
+  stext &= "\\usepackage[pdftex]{graphicx}  % Inclusión de imágenes" & gb.CrLf ' image
+  stext &= "\\DeclareGraphicsExtensions {.pdf,.png,.jpg}" & gb.CrLf 'type image
+  stext &= "\\usepackage{amsmath}" & gb.crlf 'box
+  stext &= "\\usepackage{fancybox}" & gb.CrLf 'type box
+  'stext &= "\\usepackage{fancyhdr}" & gb.CrLf 'para indicar cabecera y pie de pagina
+  ' stext &= "\\pagestyle{fancy} " & gb.CrLf 'para indicar cabecera y pie de pagina
+  stext &= sUsePackageText & gb.CrLf
+  stext &= "\\begin{document}" & gb.CrLf
+  Return stext 
+  
+End
+
+'' sText: article , NameFileText: name doc (without adding .tex). Return name file create
+Public Function compileTex(sText As String, Optional NameFileText As String) As String 
+  
+  Dim sContent As String
+  Dim sFileTemp As String
+  
+  If IsNull(NameFileText) Then 
+    'name file temp:
+    sFileTemp = User.home & "/" & "filetmp.tex" 
+  Else
+    sFileTemp = User.home & "/" & NameFileText & ".tex"
+  Endif
+  
+  sContent = InitDoc() & sText
+  
+  sContent &= "\\end{document}" & gb.CrLf
+  'create file temp
+  file.Save(sFileTemp, sContent)
+  
+  Return sFileTemp '' Return name file create
+  
+End
+
+'----------------------------------------------------------------
+'-----------------------------------------------------------------
+'             query result table database
+'-----------------------------------------------------------------
+'' converts the result of a query of a database (result) to a table in latex format
+
+Public Sub QueryResultTableDB(resultados As Result, TableNameField As Boolean, Optional sformato As String) As String
+  
+  Dim stext As String
+  Dim hfield As ResultField  
+  Dim snombrecampo As String
+  Dim scampotemp As String
+  Dim sascampo As New String[]
+  Dim sTextoRejilla As String
+  Dim ia As Integer
+  Dim ib As Integer
+  
+  'formato
+  If IsNull(sformato) Then 
+    'formato es nulo, el formato basico es con rejilla dibujado
+    For Each hfield In resultados.fields
+      sformato &= "|c"
+    Next
+    sformato &= "|"
+  Endif
+  'formato
+  stext = tableInit(sformato)
+  
+  'leo los titulos de las columnas 
+  stextorejilla = ""
+  stextorejilla &= "\\hline  \n"
+  
+  For Each hField In resultados.Fields
+    If TableNameField = True Then
+      snombrecampo = Str$(hfield.name)
+    Else
+      scampotemp = Str$(hfield.name)
+      snombrecampo = Mid$(scampotemp, RInStr(scampotemp, ".") + 1, Len(scampotemp))
+      
+    Endif
+    sascampo.Add(snombrecampo)
+  Next
+  
+  'pongo en la tabla el titulo de las columnas
+  For ia = 0 To sascampo.count - 2
+    stextorejilla &= "{\\bf " & sascampo[ia] & " } & "
+  Next
+  stextorejilla &= "{\\bf " & sascampo[sascampo.count - 1] & " } \\\\ "
+  stextorejilla &= "\\hline  \n"
+  
+  'leo los datos..
+  Do While resultados.available
+    
+    For ib = 0 To sascampo.count - 2
+      stextorejilla &= resultados[sascampo[ib]] & " & "
+    Next
+    stextorejilla &= resultados[sascampo[ib]] & "\\\\ \n"
+    stextorejilla &= "\\hline  \n" 
+    resultados.movenext
+    
+  Loop 
+  
+  stext &= Me.text(stextorejilla)
+  stext &= Me.CrLf()
+  stext &= tableEnd()
+  Return stext
+  
+End
+
+'-----------------------------------------------------------------
+'                tables Gridviews
+'-----------------------------------------------------------------
+'' converts a gridview content in a latex table
+Public Sub TableGridViews(rejilla As Gridview, Optional sformat As String, Optional TitleEndFirstHead As String, Optional TitleEndHead As String, Optional TitleEndFoot As String, Optional TitleEndLastFoot As String) As String 
+  
+  Dim solocolumnas As String
+  Dim stext As String
+  Dim stextorejilla As String
+  Dim ia As Integer
+  Dim ib As Integer
+  'formato
+  If IsNull(sformat) Then 
+    'formato es nulo, el formato basico es con rejilla dibujado
+    For ia = 0 To rejilla.Columns.count - 1
+      If rejilla.Columns[ia].Width <> 0 Then 
+        sformat &= "|c"
+      Else
+        'no relleno esa columna al estar con ancho vacio...
+      Endif
+    Next
+    sformat &= "|"
+  Endif
+  
+  stext = tableInit(sformat)
+  
+  'leo los titulos de las columnas 
+  stextorejilla = ""
+  stextorejilla &= "\\hline  \n"
+  
+  'titulos de columnas...
+  
+  For ia = 0 To rejilla.Columns.count - 2
+    If rejilla.Columns[ia].Width <> 0 Then 
+      
+      stextorejilla &= "{\\bf " & Replace(TextPure(rejilla.Columns[ia].title), "_", " ") & "} & "
+      solocolumnas &= "{\\bf " & Replace(TextPure(rejilla.Columns[ia].title), "_", " ") & "} & "
+    Else
+      'no pongo titulo al ser la columna bacia...
+    Endif
+  Next
+  'ultima columna...
+  If rejilla.Columns[ia].Width <> 0 Then 
+    stextorejilla &= "{\\bf " & Replace(TextPure(rejilla.Columns[rejilla.Columns.count - 1].title), "_", " ") & "}\\\\" 
+    solocolumnas &= "{\\bf " & Replace(TextPure(rejilla.Columns[rejilla.Columns.count - 1].title), "_", " ") & "}\\\\" 
+  Else
+    stextorejilla = Left$(stextorejilla, Len(stextorejilla) - Len(" & ")) 'le quito " & "
+    stextorejilla &= "\\\\ \n"  
+    solocolumnas = Left$(stextorejilla, Len(stextorejilla) - Len(" & ")) & "\\\\ \n "
+  Endif
+  
+  stextorejilla &= "\\hline  \n"
+  
+  stext &= CrLf() & "\n"
+  
+  If TitleEndFirstHead <> "" And TitleEndFoot <> "" Then 
+    stext &= " \n" & "\\multicolumn{" & Str$(rejilla.Columns.max - 1) & "}{c} {" & TextPure(TitleEndFirstHead) & "} \\\\ \n  \\hline" & " \n \\endfirsthead \n"
+    stext &= " \n" & "\\multicolumn{" & Str$(rejilla.Columns.max - 1) & "}{c} {" & TextPure(TitleEndHead) & "} \\\\ \n  \\hline" & " \n" & solocolumnas & " \n \\endhead \n " 
+    stext &= " \n" & "\\multicolumn{" & Str$(rejilla.Columns.max - 1) & "}{c} {" & TextPure(TitleEndFoot) & "} \\\\ \n \\endfoot \n"
+    stext &= " \n" & "\\multicolumn{" & Str$(rejilla.Columns.max - 1) & "}{c} {" & TextPure(TitleEndLastFoot) & "} \\\\ \n \n \\endlastfoot \n"
+  Endif
+  'leo los datos..
+  For ia = 0 To rejilla.Rows.count - 1
+    For ib = 0 To rejilla.Columns.count - 2
+      If rejilla.Columns[ib].Width <> 0 Then 
+        stextorejilla &= "{ " & TextPure(rejilla[ia, ib].text) & " } & "
+      Endif
+    Next
+    If rejilla.Columns[ib].Width <> 0 Then 
+      stextorejilla &= "{ " & TextPure(rejilla[ia, ib].text) & "} \\\\ \n"
+    Else
+      stextorejilla = Left$(stextorejilla, Len(stextorejilla) - Len(" & ")) 'le quito " & "
+      stextorejilla &= "\\\\ \n"
+    Endif
+    stextorejilla &= "\\hline  \n" 
+  Next 
+  
+  stext &= stextorejilla
+  stext &= CrLf()
+  stext &= tableEnd()
+  Return stext
+  
+End
+
+'' init table, sformat: l (left), c (center), r (right), p (paragragh) the columns
+Private Function tableInit(Optional sformat As String) As String 
+  
+  'sample table's  format:
+  ' |1||r|p{2cm}|
+  ' lrc
+  If IsNull(sformat) Then 
+    Return "\\begin{longtable}" & gb.CrLf
+  Else
+    Return "\\begin{longtable}{" & sformat & "}" & gb.CrLf
+  Endif
+  
+End
+
+Private Function tableEnd() As String ''end table
+  
+  Return "\\end{longtable}\n"
+  
+End
+
+'añadido....
+Private Function TextPure(cadena As String) As String '' pure text where special characters are changed
+  
+  Dim cadenaCaracteres As Variant = ["\\", "$", "#", "%", "&", "_", "{", "}", "~", "¿", "¡", "^"]
+  Dim sustituyeCaracter As Variant = [" ", "\\$", "\\#", "\\%", "\\&", "\\_", "\\{", "\\}", " ", "?`", "!`", " "]
+  Dim a As Integer
+  
+  For a = 0 To cadenaCaracteres.max    
+    cadena = Replace$(cadena, cadenaCaracteres[a], sustituyeCaracter[a])
+  Next
+  Return cadena
+  
+End

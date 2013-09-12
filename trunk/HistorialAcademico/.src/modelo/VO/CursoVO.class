@@ -1,0 +1,90 @@
+' Gambas class file
+
+Property idCurso As Integer 
+Private hidCurso As Integer
+
+Property Nombre As String 
+Private hNombre As String
+
+Property Detalle As String 
+Private hDetalle As String
+
+Property campo As String[] 
+Private hcampo As New String[]
+
+Property campotipo As String[] 
+Private hcampotipo As New String[]
+
+Property campovisible As String[] 
+Private hcampovisible As New String[]
+
+Private Function idCurso_read() As Integer
+  
+  Return hidCurso 
+  
+End 
+
+Private Sub idCurso_write(Valor As Integer)
+  
+  hidCurso = Valor 
+  
+End  
+
+Private Function Nombre_read() As String
+  
+  Return hNombre 
+  
+End 
+
+Private Sub Nombre_write(Valor As String)
+  
+  hNombre = Valor 
+  
+End  
+
+Private Function Detalle_read() As String
+  
+  Return hDetalle 
+  
+End 
+
+Private Sub Detalle_write(Valor As String)
+  
+  hDetalle = Valor 
+  
+End  
+
+Private Function campo_read() As String[]
+  
+  Return hcampo 
+  
+End 
+
+Private Sub campo_write(Valor As String[])
+  
+  hcampo = Valor 
+  
+End  
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo 
+
+End 
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor 
+
+End  
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible 
+
+End 
+ 
+Private Sub campovisible_write(Valor As String[])
+ hcampovisible = Valor 
+End  
+ 

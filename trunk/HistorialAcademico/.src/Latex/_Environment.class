@@ -1,0 +1,14 @@
+' Gambas class file
+
+Export
+
+'' Environment verbatin
+Public Verbatin As New _Verbatim 
+'' Environment  LandScape
+Public LandScape As New _landscape 
+'' Environment  center
+Public Center As New _Center 
+'' Environment Bibliography
+Public Bibliography As New _Bibliography 
+'' Environment Enumerate
+Public Enumerate As New _Enumerate 

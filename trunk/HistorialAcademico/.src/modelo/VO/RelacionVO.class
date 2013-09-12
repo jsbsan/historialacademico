@@ -1,0 +1,105 @@
+' Gambas class file
+
+Property idRelacion As Integer 
+Private hidRelacion As Integer
+
+Property idAlumno As Integer 
+Private hidAlumno As Integer
+
+Property idCurso As Integer 
+Private hidCurso As Integer
+
+Property Observacion As String 
+Private hObservacion As String
+
+Property campo As String[] 
+Private hcampo As New String[]
+
+Property campotipo As String[] 
+Private hcampotipo As New String[]
+
+Property campovisible As String[] 
+Private hcampovisible As New String[]
+
+Private Function idRelacion_read() As Integer
+  
+  Return hidRelacion 
+  
+End 
+
+Private Sub idRelacion_write(Valor As Integer)
+  
+  hidRelacion = Valor 
+  
+End  
+
+Private Function idAlumno_read() As Integer
+  
+  Return hidAlumno 
+  
+End 
+
+Private Sub idAlumno_write(Valor As Integer)
+  
+  hidAlumno = Valor 
+  
+End  
+
+Private Function idCurso_read() As Integer
+  
+  Return hidCurso 
+  
+End 
+
+Private Sub idCurso_write(Valor As Integer)
+  
+  hidCurso = Valor 
+  
+End  
+
+Private Function Observacion_read() As String
+  
+  Return hObservacion 
+  
+End 
+
+Private Sub Observacion_write(Valor As String)
+  
+  hObservacion = Valor 
+  
+End  
+
+Private Function campo_read() As String[]
+  
+  Return hcampo 
+  
+End 
+
+Private Sub campo_write(Valor As String[])
+  
+  hcampo = Valor 
+
+End  
+
+Private Function campotipo_read() As String[]
+
+  Return hcampotipo 
+
+End 
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor 
+
+End  
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible 
+
+End 
+ 
+Private Sub campovisible_write(Valor As String[])
+ hcampovisible = Valor 
+End  
+ 

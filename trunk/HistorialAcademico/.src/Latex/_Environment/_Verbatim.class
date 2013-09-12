@@ -1,0 +1,17 @@
+' Gambas class file
+
+Export
+'' Begin verbatim
+
+Public Function Begin() As String 
+  
+  Return "\\begin{verbatim}" & gb.CrLf     
+  
+End
+'' End verbatim
+
+Public Function End() As String 
+  
+  Return "\\end{verbatim}" & gb.CrLf
+  
+End

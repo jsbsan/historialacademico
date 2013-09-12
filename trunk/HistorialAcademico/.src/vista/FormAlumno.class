@@ -1,0 +1,332 @@
+' Gambas class file
+
+Public TmpAlumno As AlumnoVO
+Public ControladorAplicacion As Controlador
+
+Public Sub Form_Open()
+  
+  Me.Center()
+  'si no esta editando, poner todos los campos "vacios"
+  If TmpAlumno.idAlumno = 0 Then 
+    'limpio los texbox
+    limpio()
+    'si estoy añadiendo
+    PictureBoxAlumno.tag = "icono_fotos_personas.png"
+  Else
+    'estoy editando...
+    rellena(TmpAlumno)
+  Endif
+  
+  'me voy la primera caja de texto...
+  TextBoxNOMBRE.SetFocus()
+  
+End
+
+Public Sub ToolButtonCalendario_Click()
+  
+  Dim fcalendario As New FormCalendario
+  
+  Dim fecha As New ClaseDato
+  
+  fcalendario.fecha = fecha
+  
+  fcalendario.Showmodal()
+  
+  TextBoxFECHANACIMIENTO.text = Format(Date(Year(fecha.tag), Month(fecha.tag), Day(fecha.tag)), "dd-mmmm-yyyy")
+  TextBoxFECHANACIMIENTO.tag = fecha.tag
+  TextBoxDOMICILIO.SetFocus()
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  
+  If TmpAlumno.idAlumno <> 0 Then 
+    'si estoy editando...  
+    '
+  Else
+    'estoy añadiendo
+    
+  Endif
+  
+  TmpAlumno.Nombre = TextBoxNOMBRE.Text
+  TmpAlumno.Apellido = TextBoxAPELLIDOS.Text
+  TmpAlumno.Documento = TextBoxDOCUMENTO.Text
+  TmpAlumno.Domicilio = TextBoxDOMICILIO.Text
+  TmpAlumno.EscOrigen = TextBoxESCORIGEN.Text
+  If TextBoxFECHANACIMIENTO.Tag = Null Then TextBoxFECHANACIMIENTO.Tag = Now
+  TmpAlumno.FechaNacimiento = TextBoxFECHANACIMIENTO.Tag
+  TmpAlumno.Legajo = TextBoxLEGAJO.Text
+  TmpAlumno.Nacionalidad = TextBoxNACIONALIDAD.Text
+  TmpAlumno.RutaFoto = file.Name(PictureBoxAlumno.Tag)
+  TmpAlumno.Telefono = TextBoxTELEFONO.Text
+  'crear minifoto...
+  creaminifoto(PictureBoxAlumno.tag)
+  
+  If TmpAlumno.idAlumno <> 0 Then 
+    If ControladorAplicacion.ModificarIdAlumno(TmpAlumno) Then
+      'se ha añadido bien el nuevo alumno
+      limpio()
+      Me.Close()
+      Return
+    Else
+      Message.Error(("Se ha producido un error al intentar añadir el nuevo alumno"))
+      Return 
+      
+    Endif
+  Endif
+  If TmpAlumno.idAlumno = 0 And If ControladorAplicacion.anadirAlumno(TmpAlumno) Then 
+    'se ha añadido bien el nuevo alumno
+    limpio()
+    Me.Close()
+    Return
+  Else
+    Message.Error(("Se ha producido un error al intentar añadir el nuevo alumno"))
+    Return
+  Endif
+  
+End
+
+Public Sub limpio()
+  
+  TextBoxNOMBRE.Text = ""
+  TextBoxAPELLIDOS.Text = ""
+  TextBoxDOCUMENTO.Text = ""
+  TextBoxDOMICILIO.Text = ""
+  TextBoxESCORIGEN.Text = ""
+  TextBoxFECHANACIMIENTO.Tag = ""
+  TextBoxLEGAJO.Text = ""
+  TextBoxNACIONALIDAD.Text = ""
+  PictureBoxAlumno.Tag = ""
+  PictureBoxAlumno.Picture = Picture["icono_fotos_personas.png"]
+  TextBoxTELEFONO.Text = ""
+  
+End
+
+Public Sub rellena(alu As AlumnoVO)
+  
+  TextBoxNOMBRE.Text = alu.Nombre
+  TextBoxAPELLIDOS.Text = alu.Apellido
+  TextBoxDOCUMENTO.Text = alu.Documento
+  TextBoxDOMICILIO.Text = alu.Domicilio
+  TextBoxESCORIGEN.Text = alu.EscOrigen
+  TextBoxFECHANACIMIENTO.Tag = alu.FechaNacimiento
+  TextBoxFECHANACIMIENTO.text = Format(Date(Year(TextBoxFECHANACIMIENTO.Tag), Month(TextBoxFECHANACIMIENTO.Tag), Day(TextBoxFECHANACIMIENTO.Tag)), "dd-mmmm-yyyy")
+  TextBoxLEGAJO.Text = alu.Legajo
+  TextBoxNACIONALIDAD.Text = alu.Nacionalidad
+  
+  If alu.RutaFoto <> "transparente.png" And alu.RutaFoto <> "" Then 
+    
+    PictureBoxAlumno.Tag = ControladorAplicacion.rutaTrabajo & "Fotos/" & alu.RutaFoto
+    PictureBoxAlumno.Picture = Picture[ControladorAplicacion.rutaTrabajo & "Fotos/" & alu.RutaFoto]
+  Else
+    PictureBoxAlumno.Picture = Picture["icono_fotos_personas.png"]
+    PictureBoxAlumno.Tag = ""
+  Endif
+  TextBoxTELEFONO.Text = ""
+  
+End
+
+Public Sub ToolButtonCancelar_Click()
+  
+  limpio()
+  Me.Close()
+  
+End
+
+Public Sub ToolButtonfoto_Click()
+  
+  Dim comando As String = ControladorAplicacion.rutaTrabajo & "FotoCarnetMyWebCam.gambas"
+  Dim nombrefinal As String
+  
+  Exec [comando] Wait
+  '  User.home & "/webcam_carnet.png"
+  '  cambio el nombre si tienes _ o espacios en blanco
+  nombrefinal = ControladorAplicacion.rutaTrabajo & "Fotos/" & Replace(Replace(Replace("webcam_carnet" & Str$(Now()) & ".png", " ", "_"), "/", "-"), ":", "-")
+  
+  If Exist(User.home & "/webcam_carnet.png") Then 
+    Exec ["mv", User.home & "/webcam_carnet.png", nombrefinal] Wait
+    
+    PictureBoxAlumno.tag = nombrefinal
+    PictureBoxAlumno.picture = Picture[nombrefinal]
+  Endif
+  
+End
+
+Public Sub PictureBoxAlumno_MouseDown()
+  
+  ModuleAsignarYSoltarImagenes.asignaImagen(PictureBoxAlumno, ControladorAplicacion.rutaTrabajo & "Fotos/")
+  'reducir imagen a 120x85
+  creaminifoto(PictureBoxAlumno.Tag, 85, 119, ControladorAplicacion.rutaTrabajo & "Fotos")
+  
+End
+
+Public Sub creaminifoto(ruta As String, Optional w As Integer, Optional h As Integer, Optional rutaFinal As String)
+  
+  Dim i As Image
+  
+  If ruta = "" Then 
+    ruta = ControladorAplicacion.rutaTrabajo & "Fotos/transparente.png"
+  Endif
+  If Exist(ruta) Then 
+  Else
+    ruta = ControladorAplicacion.rutaTrabajo & "Fotos/transparente.png"
+  Endif
+  
+  i = Image.Load(ruta)
+  
+  If w = 0 And h = 0 Then 
+    i = i.Stretch(30, 30)
+  Else
+    i = i.Stretch(w, h)
+  Endif
+  
+  If rutafinal = "" Then 
+    If Exist(ControladorAplicacion.rutaTrabajo & "MiniFotos/Mini" & File.Name(ruta)) Then 
+      'no crea mini foto ya que existe una con el mismo nombre
+      Return 
+    Endif
+    If File.Ext(ruta) = "" Then 
+      ruta &= ".png"
+    Endif
+    Try i.Save(ControladorAplicacion.rutaTrabajo & "MiniFotos/Mini" & File.Name(ruta))
+    Return 
+  Else
+    If Exist(rutaFinal & "/" & File.Name(ruta)) Then 
+      'borrar foto existente
+      Kill rutaFinal & "/" & File.Name(ruta)
+    Endif
+    
+    Try i.Save(rutaFinal & "/" & File.Name(ruta))
+    Return 
+    
+  Endif
+  
+End
+
+Public Sub TextBoxNOMBRE_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    TextBoxAPELLIDOS.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxAPELLIDOS_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    TextBoxDOCUMENTO.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxDOCUMENTO_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    ToolButtonCalendario.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(Moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxDOMICILIO_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    TextBoxTELEFONO.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxTELEFONO_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    TextBoxNACIONALIDAD.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxNACIONALIDAD_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    TextBoxESCORIGEN.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxESCORIGEN_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    TextBoxLEGAJO.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub TextBoxLEGAJO_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    ToolButtonAceptar.SetFocus()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End

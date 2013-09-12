@@ -1,0 +1,53 @@
+' Gambas class file
+
+Public dato As ClaseDato
+Public pront As String
+Public titulo As String
+Public Pordefecto As String
+
+Public Sub Form_Open()
+  
+End
+
+Public Sub Form_show()
+  
+  LabelPront.text = pront
+  
+  Me.Title = titulo
+  
+  TextboxLectura.text = pordefecto
+  Me.Center()
+  
+End
+
+Public Sub TextboxLectura_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    ToolButtonAceptar_Click()
+  Endif
+  'limitar caracteres  
+  If Key.End = Key.CODE Or Key.Tab = Key.CODE Or Key.BackSpace = Key.CODE Or Key.delete = Key.code Or Key.Down = Key.code Or Key.Esc = Key.code Or Key.Tab = Key.code Or Key.Insert = Key.code Or Key.left = Key.code Or Key.Right = Key.code Then 
+  Else
+    
+    If InStr(moduloletras.posibles, Str$(Key.text)) = 0 Then 
+      Stop Event
+    Endif
+  Endif
+  
+End
+
+Public Sub ToolButtonAceptar_Click()
+  
+  dato.tag = TextboxLectura.Text
+  Me.Close()
+  Return 
+  
+End
+
+Public Sub ToolButtonCancelar_Click()
+  
+  dato.tag = ""
+  Me.Close()
+  Return 
+  
+End

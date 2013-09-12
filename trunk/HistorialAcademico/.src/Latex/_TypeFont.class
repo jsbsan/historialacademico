@@ -1,0 +1,52 @@
+' Gambas class file
+
+Export
+'' Type Font  Roman
+
+Public Function Roman(sString As String) As String 
+  
+  Return "{\\rm " & sString & "}"
+  
+End
+'' Type Font  Boldface
+
+Public Function Boldface(sString As String) As String
+  
+  Return "{\\bf " & sString & "}"
+  
+End
+'' Type Font italica
+
+Public Function italica(sString As String) As String 
+  
+  Return "{\\it " & sString & "}"
+  
+End
+
+'' Type Font slanted
+Public Function slanted(sString As String) As String 
+  
+  Return "{\\sl " & sString & "}"
+  
+End
+'' Type Font SansSerif
+
+Public Function SansSerif(sString As String) As String 
+  
+  Return "{\\sf " & sString & "}"
+  
+End
+'' Type Font TypeWrite
+
+Public Function TypeWrite(sString As String) As String 
+  
+  Return "{\\tt " & sString & "}"
+  
+End
+'' Type Font SmallCaps
+
+Public Function SmallCaps(sString As String) As String 
+  
+  Return "{\\sc " & sString & "}"
+  
+End

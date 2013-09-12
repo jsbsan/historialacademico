@@ -1,0 +1,42 @@
+' Gambas class file
+
+Public parar As Boolean = False
+Public estadoimprimiendo As Boolean
+Private contador As Integer
+
+Public Sub Form_Open()
+  
+  contador = 0
+  Me.Title = ("Espere por favor...")
+  Me.center
+  
+End
+
+Public Sub Timer1_Timer()
+  
+  Dim respuesta As Integer
+  
+  If parar = True Then
+    Timer1.delay = False
+    Me.close
+  Endif
+  
+  If estadoimprimiendo Then 
+    contador += 1
+    
+    If contador > 100 Then 
+      'si hay una espera mayor de 10 segundo, aparece este letrero"
+      respuesta = Message.Question("Se está tardando en imprimir... es posible que haya un problema con los caracteres." & gb.CrLf & "Pero tranquilo que los datos estan guardados" & gb.crlf & "¿desea cerrar el programa?", "Si,cierra el programa", "No, espero")
+      If respuesta = 1 Then 
+        Quit
+      Else
+        contador = 0
+      Endif
+    Endif
+  Endif
+  
+End
+
+Public Sub MovieBox1_MouseDown()
+  
+End

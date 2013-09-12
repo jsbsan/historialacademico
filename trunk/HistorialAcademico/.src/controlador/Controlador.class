@@ -1,0 +1,170 @@
+' Gambas class file
+
+Public controlAcceso As FControlAcceso
+Public fprincipal As FormPrincipal
+Public falumno As FormAlumno
+Public fcurso As FormCurso
+Public fExpCurso As FormExpedienteCurso
+Public fexpAlumno As FormExpedienteAlumno
+Public cone As Conexion
+Public eligecurso As FormEligeCurso
+Public eligeAlumno As FormEligeAlumno
+Public log As Logica
+
+Public rutainformes As String
+Public rutaTrabajo As String = User.home & "/.CursoAlumnos/"
+
+Private usuarioActual As String
+Private passwordActual As String
+
+Public Sub actualizarPassword(usuario As String, password As String) 
+  'actualizo los datos de usuario y password
+  
+  Settings["Acceso/usuario"] = usuario
+  Settings["Acceso/password"] = password
+  
+End
+
+Public Function comprobarUsuarioPassword(Optional usuario As String, Optional password As String) As Boolean
+  'leo las contraseñas guardas
+  
+  usuarioActual = Settings["Acceso/usuario"]
+  passwordActual = Settings["Acceso/password"]
+  
+  If usuarioActual = "" And passwordActual = "" Then 
+    'como no hay valores pongo los de defecto
+    Settings["Acceso/usuario"] = "admin"
+    Settings["Acceso/password"] = "admin"
+    'las leo de nuevo
+    usuarioActual = Settings["Acceso/usuario"]
+    passwordActual = Settings["Acceso/password"]
+    
+  Endif
+  
+  'comprobacion de usuario y password
+  If usuario = usuarioActual And password = passwordActual Then 
+    Return True
+  Else
+    Return False
+  Endif
+  
+End
+
+'-----------------------------------------------------------------------------
+'-------------------TRABAJOS CON DATOS DE ALUMNOS-----------------------------
+'-----------------------------------------------------------------------------
+Public Function anadirAlumno(DatosAlumnos As AlumnoVO) As Boolean
+  
+  Return log.validarAnnadirAlumno(datosAlumnos)
+  
+End
+
+Public Function anadirCurso(Datos As CursoVO) As Boolean
+  
+  Return log.validarAnnadirCurso(Datos)
+  
+End
+
+Public Function anadirRelacion(datos As RelacionVO) As Boolean
+  
+  Return log.validarAnnadirRela(datos)
+  
+End
+
+Public Function ContenidoRelacionesIdAlumnos(IdAlumno As Integer) As Result
+  
+  Return log.mostrarRelacionesIdAlumno(idalumno)
+  
+End
+
+Public Function ContenidoRelacionesIdCurso(IdCurso As Integer) As Result
+  
+  Return log.mostrarRelacionesIdCurso(IdCurso)
+  
+End
+
+Public Function modificarIdAlumno(datos As Alumnovo) As Boolean
+  
+  Return log.ModificarIdAlumno(datos)
+  
+End
+
+Public Function modificarIdCurso(datos As CursoVO) As Boolean
+  
+  Return log.ModificarIdCurso(datos) 
+  
+End
+
+Public Function ContenidoAlumnos() As Result
+  
+  Return log.ContenidoAlumnosOrdenados()
+  'Return log.ContenidoAlumnos()
+  
+End
+
+'BUSQUEDA POR VARIOS CRITERIOS....
+Public Function ContenidoDocumento(dato As String) As Result
+  
+  Return log.ContenidoDocumento(dato)  
+  
+End
+
+Public Function ContenidoApellidos(dato As String) As Result
+  
+  Return log.ContenidoApellidos(dato)
+  
+End
+
+Public Function ContenidoLegajo(dato As String) As Result
+  'por un legajo
+  
+  Return log.ContenidoLegajo(dato)
+  
+End
+
+'-----------------------------------------------------------
+'
+Public Function ContenidoCurso() As Result
+  
+  Return log.ContenidoCursosOrdenados()
+  'Return log.ContenidoCurso()
+  
+End
+
+Public Function BuscarIdCurso(id As Integer) As CursoVO
+  
+  'si borro un curso tambien tengo que borrar las apariciones que haga en la tabla relaciones...
+  
+  Return log.BuscarIdCurso(id)
+  
+End
+
+Public Function BuscarIdalumno(id As Integer) As AlumnoVO
+  
+  Return log.BuscarIdalumno(id)
+  
+End
+
+Public Function borrarAlumnoDeCurso(idcurso As Integer) As Boolean
+  
+  Return log.BorrarRelacionCurso(idcurso)
+  
+End
+
+Public Function borrarAlumnoDeCursoIdAlumno(idalumno As Integer) As Boolean
+  
+  Return log.BorrarRelacionAlumno(idalumno) 
+  
+End
+
+Public Function modificarIdRelacion(datos As RelacionVO) As Boolean
+  
+  Return log.modificarIdRelacion(datos)
+  
+End
+
+Public Function BorrarIdRelacion(datos As RelacionVO) As Boolean
+  
+  Return log.borrarRelacionIdRela(datos)
+  
+End

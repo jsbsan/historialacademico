@@ -1,0 +1,24 @@
+' Gambas class file
+
+Export
+'' Begin Enumerate
+
+Public Function Begin() As String 
+  
+  Return "\\begin{enumerate}" & gb.CrLf
+  
+End
+'' item Enumerate
+
+Public Function Item(TextString As String) As String 
+  
+  Return "\\item " & TextString & gb.CrLf & gb.CrLf
+  
+End
+'' End  Enumerate
+
+Public Function End() As String 
+  
+  Return "\\end{enumerate} " & gb.CrLf
+  
+End

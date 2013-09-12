@@ -1,0 +1,244 @@
+' Gambas class file
+
+Public ControladorAplicacion As Controlador
+
+'------------------------------------------------------------------------
+'Reglas del Negocio: http://es.wikipedia.org/wiki/Reglas_de_negocio
+'------------------------------------------------------------------------
+'Esta clase contiene las "condiciones" para poder añadir/modificar/borrar la base de datos
+
+'Public Function validarRegistroAlumno(DatosAlumno As Alumno) As Boolean
+
+'  Return True
+
+'End
+
+Public Function validarAnnadirAlumno(DatosAlumnos As AlumnoVO) As Boolean
+  
+  Dim miAlumno As New AlumnoDAO
+  Dim rutadestino As String = ControladorAplicacion.rutaTrabajo & "Fotos/" & File.Name(DatosAlumnos.RutaFoto)
+  
+  'Trato el fichero de la foto del alumno:
+  '1 caso de que no haya fichero del alumno, poner una transparencia...
+  If DatosAlumnos.rutafoto = "icono_fotos_personas.png" Then
+    rutadestino = ControladorAplicacion.rutaTrabajo & "Fotos/transparente.png"
+  Else 
+    Try Copy DatosAlumnos.RutaFoto To rutadestino
+  Endif
+  'dejo solo el nombre...
+  DatosAlumnos.RutaFoto = File.Name(rutadestino)  
+  
+  Return miAlumno.registrar(DatosAlumnos)
+  
+End
+
+Public Function validarAnnadirCurso(datos As Cursovo) As Boolean
+  
+  Dim micurso As New CursoDAO
+  
+  Return micurso.registrar(datos)
+  
+End
+
+Public Function validarAnnadirRela(datos As RelacionVo) As Boolean
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.registrar(datos)
+  
+End
+
+Public Function mostrarRelacionesIdAlumno(idalumno As Integer) As Result
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.sql("Select idRelacion as IdR,Nombre as Nombre_del_Curso,Observacion as Observaciones_del_Alumno, Curso.idCurso,idAlumno From (Relacion join Curso On Relacion.IdCurso = Curso.IdCurso) where idalumno =" & Str$(idAlumno) & " order by upper(Curso.Nombre)")
+  
+End
+
+Public Function mostrarRelacionesIdCurso(IdCurso As Integer) As Result
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.sql("Select idRelacion, Relacion.idAlumno, IdCurso, Alumno.Apellido, Alumno.Nombre, Observacion From (Relacion join Alumno On Relacion.IdAlumno=Alumno.IdAlumno)where idcurso = " & Str$(idcurso) & " order by upper(Alumno.Apellido)")
+  
+End
+
+Public Function ContenidoAlumnos() As Result
+  
+  Dim mialumno As New AlumnoDAO
+  
+  Return mialumno.contenido()   
+  
+End
+
+Public Function ContenidoAlumnosOrdenados() As Result
+  
+  Dim mialumno As New AlumnoDAO
+  
+  Return mialumno.sql("Select * From Alumno ORDER BY UPPER(Apellido)")
+  
+End
+
+Public Function ContenidoCurso() As Result
+  
+  Dim micurso As New CursoDAO
+  
+  Return micurso.contenido()
+  
+End
+
+Public Function ContenidoCursosOrdenados() As Result
+  
+  Dim micurso As New CursoDAO
+  
+  Return micurso.sql("Select * From Curso ORDER BY UPPER(Nombre)")
+  
+End
+
+Public Function buscarIdAlumno(id As Integer) As AlumnoVO
+  
+  Dim mialumno As New AlumnoDAO
+  Dim resultado As Result
+  Dim retornoAlumno As New AlumnoVO
+  
+  resultado = mialumno.BuscarIgualIdAlumno(id)
+  
+  retornoAlumno.Apellido = resultado["Apellido"]
+  retornoAlumno.Nombre = resultado["Nombre"]
+  retornoAlumno.Documento = resultado["Documento"]
+  retornoAlumno.FechaNacimiento = resultado["FechaNacimiento"]
+  retornoAlumno.Domicilio = resultado["Domicilio"]
+  retornoAlumno.Telefono = resultado["Telefono"]
+  retornoAlumno.Nacionalidad = resultado["Nacionalidad"]
+  retornoAlumno.EscOrigen = resultado["EscOrigen"]
+  retornoAlumno.Legajo = resultado["Legajo"]
+  retornoAlumno.RutaFoto = resultado["RutaFoto"]
+  Return retornoAlumno
+  
+End
+
+Public Function buscarIdCurso(id As Integer) As CursoVO
+  
+  Dim miCurso As New CursoDAO
+  Dim resultado As Result
+  Dim retornoCurso As New CursoVO
+  
+  resultado = micurso.BuscarIgualIdCurso(id)
+  retornoCurso.Nombre = resultado["Nombre"]
+  retornoCurso.Detalle = resultado["Detalle"]
+  Return retornoCurso
+  
+End
+
+Public Function ModificarIdAlumno(mialumnotmp As AlumnoVO) As Boolean
+  
+  Dim mialumno As New AlumnoDAO
+  
+  Return mialumno.ModificarIdAlumno(mialumnotmp.idAlumno, mialumnotmp)
+  
+End
+
+Public Function ModificarIdCurso(micursotmp As CursoVO) As Boolean
+  
+  Dim micurso As New CursoDAO
+  
+  Return micurso.ModificarIdCurso(micursotmp.idcurso, micursotmp)
+  
+End
+
+Public Function modificarIdRelacion(mirelaciontmp As RelacionVO) As Boolean
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.ModificarIdRelacion(mirelaciontmp.idRelacion, mirelaciontmp)
+  
+End
+
+Public Function borrarIdAlumno(id As Integer) As Boolean
+  
+  Dim mialumno As New AlumnoDAO
+  
+  'borro apariciones que tenga ese ALUMNO en la tabla de RELACION
+  borrarRelacionIdAlumno(id)
+  
+  Return mialumno.BorrarIdAlumno(id)
+  
+End
+
+Public Function borrarIdcurso(id As Integer) As Boolean
+  
+  Dim micurso As New CursoDAO
+  'borro apariciones que tenga ese curso en la tabla de RELACION
+  borrarRelacionIdCurso(id)
+  
+  Return micurso.BorrarIdCurso(id)
+  
+End
+
+Public Function borrarRelacionIdCurso(idcurso As Integer) As Boolean
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.BorrarIdCurso(idcurso)
+  
+End
+
+Public Function borrarRelacionIdAlumno(idalumno As Integer) As Boolean
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.BorrarIdAlumno(idalumno)
+  
+End
+
+Public Function borrarRelacionIdRela(dato As RelacionVO) As Boolean
+  
+  Dim mirela As New RelacionDAO
+  
+  Return mirela.BorrarIdRelacion(dato.idRelacion)
+  
+End
+
+Public Function BorrarRelacionCurso(idcurso As Integer) As Boolean
+  
+  Dim mirel As New RelacionDAO
+  
+  Return mirel.BorrarIdCurso(idcurso)
+  
+End
+
+Public Function BorrarRelacionAlumno(idAlumno As Integer) As Boolean
+  
+  Dim mirel As New RelacionDAO
+  
+  Return mirel.BorrarIdAlumno(idalumno)
+  
+End
+'--------------------------------------------------------------
+' BUSQUEDAS....
+' -------------------------------------------------------------
+
+Public Function ContenidoLegajo(dato As String) As Result
+  
+  Dim mialu As New AlumnoDAO
+  
+  Return mialu.BuscarContenidoLegajo(dato, "Apellido")
+  
+End
+
+Public Function ContenidoApellidos(dato As String) As Result
+  
+  Dim mialu As New AlumnoDAO
+  
+  Return mialu.BuscarContenidoApellido(dato, "Apellido")
+  
+End
+
+Public Function ContenidoDocumento(dato As String) As Result
+  
+  Dim mialu As New AlumnoDAO
+  
+  Return mialu.BuscarContenidoDocumento(dato, "Apellido") 
+  
+End

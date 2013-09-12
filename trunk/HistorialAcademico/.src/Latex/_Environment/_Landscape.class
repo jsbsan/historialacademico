@@ -1,0 +1,17 @@
+' Gambas class file
+
+Export
+
+'' Begin landscape
+Public Function Begin() As String 
+  
+  Return "\\begin{landscape}" & gb.CrLf     
+  
+End
+'' End landscape
+
+Public Function End() As String 
+  
+  Return "\\end{landscape}" & gb.CrLf
+  
+End

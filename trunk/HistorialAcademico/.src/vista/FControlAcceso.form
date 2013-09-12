@@ -1,0 +1,67 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,81,42)
+  Background = &HFFFFFF&
+  Icon = Picture["icon:/16/book"]
+  Persistent = True
+  Resizable = False
+  { Label1 Label
+    MoveScaled(12,21,25,6)
+    Font = Font["Arial,Bold,+2"]
+    Text = ("Usuario:")
+    Alignment = Align.Right
+  }
+  { Label2 Label
+    MoveScaled(11,28,26,7)
+    Font = Font["Arial,Bold,+2"]
+    Text = ("Contraseña:")
+    Alignment = Align.Right
+  }
+  { ToolButtonAceptar ToolButton
+    MoveScaled(50,35,15,6)
+    Text = ("Aceptar")
+    Picture = Picture["icon:/16/apply"]
+    Border = True
+  }
+  { ToolButtonCancelar ToolButton
+    MoveScaled(19,35,15,6)
+    Text = ("Cancelar")
+    Picture = Picture["icon:/16/cancel"]
+    Border = True
+  }
+  { TextBoxUsuario TextBox
+    MoveScaled(42,21,17,5)
+    Password = True
+  }
+  { TextBoxContrasena TextBox
+    MoveScaled(42,29,17,5)
+    Password = True
+  }
+  { PictureBox1 PictureBox
+    MoveScaled(0,0,80,15)
+    Picture = Picture["colegio13.jpg"]
+  }
+  { TextLabel2 TextLabel
+    MoveScaled(1,11,78,4)
+    Font = Font["Arial,Bold,+3"]
+    Text = ("Historial Académico")
+    Alignment = Align.Center
+  }
+  { PictureBoxLogo PictureBox
+    MoveScaled(1,17,17,17)
+    Picture = Picture["icono historial academico.png"]
+  }
+  { PictureBox2 PictureBox
+    MoveScaled(69,19,11,13)
+    Picture = Picture["logo gambas.png"]
+    Stretch = True
+  }
+  { Labelversion Label
+    MoveScaled(31,15,17,3)
+    Font = Font["Andale Mono,Italic"]
+    AutoResize = True
+    Text = ("Label3")
+    Alignment = Align.Center
+  }
+}

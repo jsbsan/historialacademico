@@ -1,0 +1,164 @@
+' Gambas module file
+
+Public rutaTrabajo As String = User.home & "/.CursoAlumnos/"
+
+Public Sub main()
+  
+  Dim entrada As Boolean
+  'iniciar programa...
+  
+  Dim ControladorAplicacion As New Controlador
+  Dim FormularioControlAcceso As New FControlAcceso
+  Dim FormularioPrincipal As New FormPrincipal
+  Dim fcurso As New FormCurso
+  Dim falumno As New FormAlumno
+  Dim fexpcurso As New FormExpedienteCurso
+  Dim fexpAlumno As New FormExpedienteAlumno
+  Dim logicatmp As New Logica
+  Dim eligeCurso As New FormEligeCurso
+  Dim eligeAlumno As New FormEligeAlumno
+  
+  eligeCurso.Persistent = True
+  eligeAlumno.Persistent = True
+  
+  'modulos / Clases Estaticas
+  Imprimir.controladorAplicacion = ControladorAplicacion
+  
+  'relaciones MODELO VISTA CONTROLADOR
+  FormularioControlAcceso.ControladorAplicacion = ControladorAplicacion
+  FormularioPrincipal.ControladorAplicacion = ControladorAplicacion
+  falumno.ControladorAplicacion = ControladorAplicacion
+  fcurso.ControladorAplicacion = ControladorAplicacion
+  fexpcurso.ControladorAplicacion = ControladorAplicacion
+  fexpAlumno.ControladorAplicacion = ControladorAplicacion
+  logicatmp.ControladorAplicacion = ControladorAplicacion
+  eligeCurso.ControladorAplicacion = ControladorAplicacion
+  eligeAlumno.ControladorAplicacion = ControladorAplicacion
+  
+  ControladorAplicacion.controlAcceso = FormularioControlAcceso
+  ControladorAplicacion.Fprincipal = FormularioPrincipal
+  ControladorAplicacion.falumno = falumno
+  ControladorAplicacion.fcurso = fcurso
+  ControladorAplicacion.fExpCurso = fexpcurso
+  ControladorAplicacion.fexpAlumno = fexpAlumno
+  ControladorAplicacion.log = Logicatmp
+  ControladorAplicacion.eligeCurso = eligeCurso
+  ControladorAplicacion.eligeAlumno = eligeAlumno
+  
+  'inicio directorios
+  iniciarDirectoriosYArchivos(ControladorAplicacion) 
+  controladorAplicacion.rutainformes = "/tmp"
+  
+  'inicio usuario/password si no estan definidas
+  ControladorAplicacion.comprobarUsuarioPassword()
+  
+  entrada = ControladorAplicacion.controlAcceso.Showmodal() 
+  
+  If entrada = True Then 
+    'puedo continual con el program
+    ControladorAplicacion.fprincipal.Showmodal()
+  Endif
+  
+  'terminar ejecucion del programa
+  'anular relaciones entre formularios y clases
+  FormularioControlAcceso.ControladorAplicacion = Null
+  ControladorAplicacion.controlAcceso = Null
+  
+  FormularioPrincipal.ControladorAplicacion = Null
+  ControladorAplicacion.fprincipal = Null 
+  
+  falumno.ControladorAplicacion = Null
+  ControladorAplicacion.falumno = Null
+  
+  fcurso.ControladorAplicacion = Null
+  ControladorAplicacion.fcurso = Null
+  
+  fexpcurso.ControladorAplicacion = Null
+  ControladorAplicacion.fExpCurso = Null
+  
+  fexpAlumno.ControladorAplicacion = Null
+  ControladorAplicacion.fexpAlumno = Null
+  
+  logicatmp.ControladorAplicacion = Null
+  ControladorAplicacion.log = Null
+  
+  eligeCurso.ControladorAplicacion = Null
+  ControladorAplicacion.eligeCurso = Null
+  
+  eligeAlumno.ControladorAplicacion = Null
+  ControladorAplicacion.eligeAlumno = Null
+  
+  'anulamos los objetos en si
+  eligeAlumno = Null
+  logicatmp = Null
+  fexpAlumno = Null
+  fexpcurso = Null
+  fcurso = Null
+  falumno = Null
+  FormularioPrincipal = Null
+  FormularioControlAcceso = Null
+  ControladorAplicacion = Null
+  
+  Quit
+  
+End
+
+Public Sub iniciarDirectoriosYArchivos(controladorApli As Controlador)
+  
+  Dim con As New Conexion
+  'defino ruta de trabajo
+  
+  ControladorApli.rutaTrabajo = User.home & "/.CursoAlumnos/"
+  'creo el directorio de trabajo si no existe
+  If Exist(ControladorApli.rutaTrabajo) Then 
+  Else
+    Mkdir ControladorApli.rutaTrabajo
+  Endif
+  
+  'copio la base de datos si no existe
+  If Exist(ControladorApli.rutaTrabajo & "CursosAlumnos") Then 
+    
+  Else
+    Copy "CursosAlumnosVacia" To ControladorApli.rutaTrabajo & "/CursosAlumnos"
+    'añado tablas...
+    Try con.Conexion()
+    Try con.hconn.Exec("CREATE TABLE Curso (idCurso INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Detalle TEXT)")
+    Try con.hconn.Exec("Create TABLE Relacion(idRelacion INTEGER PRIMARY KEY AUTOINCREMENT, idAlumno NUMERIC, idCurso NUMERIC, Observacion TEXT)")
+    Try con.hconn.Exec("Create TABLE Alumno(RutaFoto TEXT, idAlumno INTEGER PRIMARY KEY AUTOINCREMENT, Apellido TEXT, Nombre TEXT, Documento TEXT, FechaNacimiento DATE, Domicilio TEXT, Telefono TEXT, Nacionalidad TEXT, EscOrigen TEXT, Legajo TEXT); ")
+    If Error Then 
+      Message.Info("Se ha producido un error al intentar crear las tablas" & gb.CrLf & "Error: " & Error.Text)
+      Return
+      
+    Endif
+    con.desconectar()
+    
+  Endif
+  
+  'creo el directorio de fotos  si no existe
+  If Exist(ControladorApli.rutaTrabajo & "Fotos") Then 
+  Else
+    Mkdir ControladorApli.rutaTrabajo & "Fotos"
+  Endif
+  
+  'creo el directorio de fotosmini  si no existe
+  If Exist(ControladorApli.rutaTrabajo & "MiniFotos") Then 
+  Else
+    
+    Mkdir ControladorApli.rutaTrabajo & "MiniFotos"
+  Endif
+  
+  'copio el fichero transparente si no existe
+  If Exist(ControladorApli.rutaTrabajo & "Fotos/transparente.png") Then 
+  Else
+    Copy "transparente.png" To ControladorApli.rutaTrabajo & "Fotos/transparente.png"
+  Endif
+  
+  'copio porgrama de tomar fotos
+  If Exist(ControladorApli.rutaTrabajo & "FotoCarnetMyWebCam.gambas") Then 
+  Else
+    Copy "FotoCarnetMyWebCam.gambas1" To ControladorApli.rutaTrabajo & "FotoCarnetMyWebCam.gambas"
+    Wait 0.5
+    Chmod ControladorApli.rutaTrabajo & "FotoCarnetMyWebCam.gambas" To "rwxrwxrwx"
+  Endif
+  
+End

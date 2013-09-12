@@ -1,0 +1,22 @@
+' Gambas class file
+
+Public fecha As ClaseDato
+
+Public Sub ButtonAceptar_Click()
+  
+  fecha.tag = DateChooser1.Value
+  Me.Close()
+  
+End
+
+Public Sub Form_Open()
+  
+End
+
+Public Sub DateChooser1_KeyPress()
+  
+  If Key.code = Key.return Or Key.code = Key.enter Then 
+    ButtonAceptar.SetFocus()
+  Endif
+  
+End
