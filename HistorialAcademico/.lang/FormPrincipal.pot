@@ -14,163 +14,163 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: FormPrincipal.form:91
+#: FormPrincipal.form:82
 msgid "Acerca de..."
 msgstr ""
 
-#: FormPrincipal.form:96
+#: FormPrincipal.form:87
 msgid "<h2>Historial Académico</h2><br>\nRealizado por:<br>\n<i>Julio Sánchez Berro y Jorge Agustín Pereyra</i><br>\n<br>\n<br>\n<b>Nota:</b><br>\nEs necesario tener instalado las programas:<br>\nsudo apt-get install imagemagick<br>\nsudo apt-get install latex-beamer <br>\nsudo apt-get install texlive-latex-extra<br>\nPara la creación de informes<br>\nY para ver los pdf:<br>\nsudo apt-get install evince<br>\n\n\n"
 msgstr ""
 
-#: FormPrincipal.form:112
+#: FormPrincipal.form:103
 msgid "Alumnos"
 msgstr ""
 
-#: FormPrincipal.form:122
+#: FormPrincipal.form:113
 msgid "Añadir"
 msgstr ""
 
-#: FormPrincipal.form:130
+#: FormPrincipal.form:121
 msgid "Editar"
 msgstr ""
 
-#: FormPrincipal.form:138
+#: FormPrincipal.form:129
 msgid "Borrar"
 msgstr ""
 
-#: FormPrincipal.form:146
+#: FormPrincipal.form:137
 msgid "Historial Academico"
 msgstr ""
 
-#: FormPrincipal.form:154
+#: FormPrincipal.form:145
 msgid "Imprimir Lista"
 msgstr ""
 
-#: FormPrincipal.form:162
+#: FormPrincipal.form:153
 msgid "si hace doble click editará el expediente"
 msgstr ""
 
-#: FormPrincipal.form:169
+#: FormPrincipal.form:160
 msgid "Cursos"
 msgstr ""
 
-#: FormPrincipal.form:202
+#: FormPrincipal.form:193
 msgid "Ficha"
 msgstr ""
 
-#: FormPrincipal.form:225
+#: FormPrincipal.form:216
 msgid "Listados"
 msgstr ""
 
-#: FormPrincipal.form:235
+#: FormPrincipal.form:226
 msgid "Listado de informes disponibles...<br>\n<b>Nota</b><br>\nLos listados \"Lista de Alumnos con los cursos que participan\" y \"Lista de Cursos y Alumnos que lo conforman\", dependiendo del numero de alumnos y cursos, suelen tardar algo más en aparcer."
 msgstr ""
 
-#: FormPrincipal.form:238
+#: FormPrincipal.form:229
 msgid "Estadísticas"
 msgstr ""
 
-#: FormPrincipal.form:247
+#: FormPrincipal.form:238
 msgid "Listado de Estadisticas "
 msgstr ""
 
-#: FormPrincipal.form:250
+#: FormPrincipal.form:241
 msgid "Administrador"
 msgstr ""
 
-#: FormPrincipal.form:258
+#: FormPrincipal.form:249
 msgid "Copias de Seguridad"
 msgstr ""
 
-#: FormPrincipal.form:265
+#: FormPrincipal.form:256
 msgid "Realizar Copia Datos"
 msgstr ""
 
-#: FormPrincipal.form:274
+#: FormPrincipal.form:265
 msgid "Restaurar Datos"
 msgstr ""
 
-#: FormPrincipal.form:279
+#: FormPrincipal.form:270
 msgid "Contraseña"
 msgstr ""
 
-#: FormPrincipal.form:286
+#: FormPrincipal.form:277
 msgid "Cambiar Contraseña"
 msgstr ""
 
-#: FormPrincipal.form:295
+#: FormPrincipal.form:286
 msgid "mensaje:"
 msgstr ""
 
-#: FormPrincipal.form:301
+#: FormPrincipal.form:292
 msgid "Reescriba la clave:"
 msgstr ""
 
-#: FormPrincipal.form:317
+#: FormPrincipal.form:308
 msgid "Clave Nueva:"
 msgstr ""
 
-#: FormPrincipal.form:323
+#: FormPrincipal.form:314
 msgid "Clave Actual:"
 msgstr ""
 
-#: FormPrincipal.form:339
+#: FormPrincipal.form:330
 msgid "Usuario Actual:"
 msgstr ""
 
-#: FormPrincipal.form:342
+#: FormPrincipal.form:333
 msgid "Rutas"
 msgstr ""
 
-#: FormPrincipal.form:349
+#: FormPrincipal.form:340
 msgid "Cambiar"
 msgstr ""
 
-#: FormPrincipal.form:356
+#: FormPrincipal.form:347
 msgid "/tmp"
 msgstr ""
 
-#: FormPrincipal.form:362
+#: FormPrincipal.form:353
 msgid "Ruta donde se Guardan los Informes:"
 msgstr ""
 
-#: FormPrincipal.form:365
+#: FormPrincipal.form:356
 msgid "Actualizar Version"
 msgstr ""
 
-#: FormPrincipal.form:372
+#: FormPrincipal.form:363
 msgid "Comprobar si existe nueva Versión del programa"
 msgstr ""
 
-#: FormPrincipal.form:379
+#: FormPrincipal.form:370
 msgid "Plan de Estudios"
 msgstr ""
 
-#: FormPrincipal.form:386
+#: FormPrincipal.form:377
 msgid "Expedientes"
 msgstr ""
 
-#: FormPrincipal.form:390
-msgid "Añadir "
-msgstr ""
-
-#: FormPrincipal.form:413
+#: FormPrincipal.form:383
 msgid "Nivel/Curso"
 msgstr ""
 
-#: FormPrincipal.form:440
+#: FormPrincipal.form:389
 msgid "Divisiones"
 msgstr ""
 
-#: FormPrincipal.form:467
+#: FormPrincipal.form:395
 msgid "Asignaturas"
 msgstr ""
 
-#: FormPrincipal.form:496
+#: FormPrincipal.form:405
+msgid "Añadir "
+msgstr ""
+
+#: FormPrincipal.form:424
 msgid "Salir"
 msgstr ""
 
-#: FormPrincipal.class:14
+#: FormPrincipal.class:20
 msgid "Historial Académico"
 msgstr ""
 

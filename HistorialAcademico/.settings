@@ -4,11 +4,20 @@ Count=0
 [DebugWindow]
 Count=0
 
+[DebugWindow/TableViewExpediente.Columns[column]]
+Geometry=[0,31,232,530]
+
 [DebugWindow/con]
 Geometry=[0,31,210,210]
 
 [DebugWindow/con.hconn]
 Geometry=[14,45,944,629]
+
+[DebugWindow/resultadoExpediente]
+Geometry=[0,31,210,210]
+
+[DebugWindow/resultadoExpediente.Fields]
+Geometry=[55,389,210,210]
 
 [OpenFile]
 File[1]="estadistica.png"
@@ -18,7 +27,8 @@ File[4]=".src/modelo/conexion/conexion.class:11.2"
 File[5]=".src/vista/FormPrincipal.form"
 File[6]=".src/vista/FControlAcceso.form"
 File[7]=".src/vista/FControlAcceso.class:15.57"
-File[8]=".src/vista/FormPrincipal.class:361.45"
+Active=8
+File[8]=".src/vista/FormPrincipal.class:364.18"
 File[9]="FloppyEntrada.png"
 File[10]="PlanEstudios.png"
 File[11]=".src/Imprimir/Imprimir.module:3.0"
@@ -31,14 +41,16 @@ File[17]=".src/vista/FormEligeAsignatura.form"
 File[18]=".src/vista/FormExpedienteAlumno.form"
 File[19]=".src/vista/FormExpedienteAsignatura.form"
 File[20]="esquema.MpBd:27.80"
-File[21]="esquema AMPLIACION.MpBd:0.0"
-File[22]=".src/controlador/Controlador.class:9.45"
+File[21]="esquema AMPLIACION.MpBd:49.8"
+File[22]=".src/controlador/Controlador.class:153.33"
 File[23]=".src/modelo/VO/AlumnoVO.class:7.0"
 File[24]=".src/vista/FormAsignatura.class:17.25"
-Active=25
 File[25]=".src/vista/FormExpedienteAlumno.class:42.62"
 File[26]=".src/modelo/VO/CursoVO.class:0.19"
-Count=26
+File[27]=".src/modelo/Logica.class:86.27"
+File[28]=".src/modelo/VO/ExpedienteVO.class:2.33"
+File[29]=".src/modelo/DAO/ExpedienteDAO.class:0.19"
+Count=29
 
 [Watches]
 Count=0

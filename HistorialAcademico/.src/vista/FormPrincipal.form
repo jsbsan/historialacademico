@@ -17,7 +17,7 @@
       }
     }
     { IconPanelMenu IconPanel
-      MoveScaled(0,14,120,55)
+      MoveScaled(0,15,120,55)
       AutoResize = True
       Count = 8
       Index = 0
@@ -81,7 +81,7 @@
         }
       }
       { GridViewAlumno GridView
-        MoveScaled(1,9,70,42)
+        MoveScaled(0,9,70,42)
         ToolTip = ("si hace doble click editará el expediente")
       }
       { LabelMensajeAlumnos Label
@@ -272,101 +272,47 @@
       Text = ("Plan de Estudios")
       Picture = Picture["PlanEstudios.png"]
       { TabPanelPlanDeEstudios TabPanel
-        MoveScaled(3,5,61,49)
+        MoveScaled(3,6,61,49)
         Count = 4
         Index = 0
         Text = ("Expedientes")
-        { ToolButton1 ToolButton
-          MoveScaled(37,1,16,4)
-          Text = ("Añadir ")
-          Picture = Picture["icon:/16/add"]
-          Border = True
-        }
-        { ToolButtonModificarExpediente ToolButton
-          MoveScaled(37,9,16,4)
-          Text = ("Editar")
-          Picture = Picture["icon:/16/edit"]
-          Border = True
-        }
-        { ToolButtonBorrarExpediente ToolButton
-          MoveScaled(38,30,16,4)
-          Text = ("Borrar")
-          Picture = Picture["icon:/16/delete"]
-          Border = True
-        }
-        { TableView1 TableView
-          MoveScaled(0,0,29,40)
+        { TableViewExpediente TableView
+          MoveScaled(1,1,58,43)
         }
         Index = 1
         Text = ("Nivel/Curso")
-        { ToolButton2 ToolButton
-          MoveScaled(37,1,16,4)
-          Text = ("Añadir ")
-          Picture = Picture["icon:/16/add"]
-          Border = True
-        }
-        { ToolButtonModificarExpediente2 ToolButton
-          MoveScaled(37,9,16,4)
-          Text = ("Editar")
-          Picture = Picture["icon:/16/edit"]
-          Border = True
-        }
-        { ToolButtonBorrarExpediente2 ToolButton
-          MoveScaled(38,30,16,4)
-          Text = ("Borrar")
-          Picture = Picture["icon:/16/delete"]
-          Border = True
-        }
-        { TableView2 TableView
-          MoveScaled(0,0,29,40)
+        { TableViewCurso TableView
+          MoveScaled(1,1,58,43)
         }
         Index = 2
         Text = ("Divisiones")
-        { ToolButton3 ToolButton
-          MoveScaled(37,1,16,4)
-          Text = ("Añadir ")
-          Picture = Picture["icon:/16/add"]
-          Border = True
-        }
-        { ToolButtonModificarExpediente3 ToolButton
-          MoveScaled(37,9,16,4)
-          Text = ("Editar")
-          Picture = Picture["icon:/16/edit"]
-          Border = True
-        }
-        { ToolButtonBorrarExpediente3 ToolButton
-          MoveScaled(38,30,16,4)
-          Text = ("Borrar")
-          Picture = Picture["icon:/16/delete"]
-          Border = True
-        }
-        { TableView3 TableView
-          MoveScaled(0,0,29,40)
+        { TableViewDivision TableView
+          MoveScaled(1,1,59,42)
         }
         Index = 3
         Text = ("Asignaturas")
-        { ToolButton4 ToolButton
-          MoveScaled(37,1,16,4)
-          Text = ("Añadir ")
-          Picture = Picture["icon:/16/add"]
-          Border = True
-        }
-        { ToolButtonModificarExpediente4 ToolButton
-          MoveScaled(37,9,16,4)
-          Text = ("Editar")
-          Picture = Picture["icon:/16/edit"]
-          Border = True
-        }
-        { ToolButtonBorrarExpediente4 ToolButton
-          MoveScaled(38,30,16,4)
-          Text = ("Borrar")
-          Picture = Picture["icon:/16/delete"]
-          Border = True
-        }
-        { TableView4 TableView
-          MoveScaled(0,0,29,40)
+        { TableViewAsignatura TableView
+          MoveScaled(1,1,58,43)
         }
         Index = 0
+      }
+      { ToolButtonPlanDeEstudioAnnade ToolButton
+        MoveScaled(3,1,16,4)
+        Text = ("Añadir ")
+        Picture = Picture["icon:/16/add"]
+        Border = True
+      }
+      { ToolButtonPlanDeEstudioEditar ToolButton
+        MoveScaled(21,1,16,4)
+        Text = ("Editar")
+        Picture = Picture["icon:/16/edit"]
+        Border = True
+      }
+      { ToolButtonPlanDeEstudioBorrar ToolButton
+        MoveScaled(54,1,12,4)
+        Text = ("Borrar")
+        Picture = Picture["icon:/16/delete"]
+        Border = True
       }
       Index = 7
       Text = ("Salir")
