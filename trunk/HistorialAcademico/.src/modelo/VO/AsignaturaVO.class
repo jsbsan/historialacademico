@@ -1,7 +1,7 @@
 ' Gambas class file
 
-Property idCurso As Integer 
-Private hidCurso As Integer
+Property idAsignatura As Integer 
+Private hidAsignatura As Integer
 
 Property Nombre As String 
 Private hNombre As String
@@ -9,8 +9,8 @@ Private hNombre As String
 Property Detalle As String 
 Private hDetalle As String
 
-Property idDivision As Integer 
-Private hidDivision As Integer
+Property idCurso As Integer 
+Private hidCurso As Integer
 
 Property campo As String[] 
 Private hcampo As New String[]
@@ -21,15 +21,15 @@ Private hcampotipo As New String[]
 Property campovisible As String[] 
 Private hcampovisible As New String[]
 
-Private Function idCurso_read() As Integer
+Private Function idAsignatura_read() As Integer
   
-  Return hidCurso 
+  Return hidAsignatura 
   
 End 
 
-Private Sub idCurso_write(Valor As Integer)
+Private Sub idAsignatura_write(Valor As Integer)
   
-  hidCurso = Valor 
+  hidAsignatura = Valor 
   
 End  
 
@@ -57,15 +57,15 @@ Private Sub Detalle_write(Valor As String)
   
 End  
 
-Private Function idDivision_read() As Integer
+Private Function idCurso_read() As Integer
   
-  Return hidDivision 
+  Return hidCurso 
   
 End 
 
-Private Sub idDivision_write(Valor As Integer)
+Private Sub idCurso_write(Valor As Integer)
   
-  hidDivision = Valor 
+  hidCurso = Valor 
   
 End  
 

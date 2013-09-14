@@ -32,11 +32,11 @@ Public Function validarAnnadirAlumno(DatosAlumnos As AlumnoVO) As Boolean
   
 End
 
-Public Function validarAnnadirCurso(datos As Cursovo) As Boolean
+Public Function validarAnnadirasignatura(datos As Asignaturavo) As Boolean
   
-  Dim micurso As New CursoDAO
+  Dim miasignatura As New AsignaturaDAO
   
-  Return micurso.registrar(datos)
+  Return miasignatura.registrar(datos)
   
 End
 
@@ -52,15 +52,15 @@ Public Function mostrarRelacionesIdAlumno(idalumno As Integer) As Result
   
   Dim mirela As New RelacionDAO
   
-  Return mirela.sql("Select idRelacion as IdR,Nombre as Nombre_del_Curso,Observacion as Observaciones_del_Alumno, Curso.idCurso,idAlumno From (Relacion join Curso On Relacion.IdCurso = Curso.IdCurso) where idalumno =" & Str$(idAlumno) & " order by upper(Curso.Nombre)")
+  Return mirela.sql("Select idRelacion as IdR,Nombre as Nombre_del_asignatura,Observacion as Observaciones_del_Alumno, asignatura.idasignatura,idAlumno From (Relacion join asignatura On Relacion.Idasignatura = asignatura.Idasignatura) where idalumno =" & Str$(idAlumno) & " order by upper(asignatura.Nombre)")
   
 End
 
-Public Function mostrarRelacionesIdCurso(IdCurso As Integer) As Result
+Public Function mostrarRelacionesIdasignatura(Idasignatura As Integer) As Result
   
   Dim mirela As New RelacionDAO
   
-  Return mirela.sql("Select idRelacion, Relacion.idAlumno, IdCurso, Alumno.Apellido, Alumno.Nombre, Observacion From (Relacion join Alumno On Relacion.IdAlumno=Alumno.IdAlumno)where idcurso = " & Str$(idcurso) & " order by upper(Alumno.Apellido)")
+  Return mirela.sql("Select idRelacion, Relacion.idAlumno, Idasignatura, Alumno.Apellido, Alumno.Nombre, Observacion From (Relacion join Alumno On Relacion.IdAlumno=Alumno.IdAlumno)where idasignatura = " & Str$(idasignatura) & " order by upper(Alumno.Apellido)")
   
 End
 
@@ -80,19 +80,19 @@ Public Function ContenidoAlumnosOrdenados() As Result
   
 End
 
-Public Function ContenidoCurso() As Result
+Public Function Contenidoasignatura() As Result
   
-  Dim micurso As New CursoDAO
+  Dim miasignatura As New AsignaturaDAO
   
-  Return micurso.contenido()
+  Return miasignatura.contenido()
   
 End
 
-Public Function ContenidoCursosOrdenados() As Result
+Public Function ContenidoasignaturasOrdenados() As Result
   
-  Dim micurso As New CursoDAO
+  Dim miasignatura As New AsignaturaDAO
   
-  Return micurso.sql("Select * From Curso ORDER BY UPPER(Nombre)")
+  Return miasignatura.sql("Select * From asignatura ORDER BY UPPER(Nombre)")
   
 End
 
@@ -118,16 +118,16 @@ Public Function buscarIdAlumno(id As Integer) As AlumnoVO
   
 End
 
-Public Function buscarIdCurso(id As Integer) As CursoVO
+Public Function buscarIdasignatura(id As Integer) As AsignaturaVO
   
-  Dim miCurso As New CursoDAO
+  Dim miasignatura As New AsignaturaDAO
   Dim resultado As Result
-  Dim retornoCurso As New CursoVO
+  Dim retornoasignatura As New AsignaturaVO
   
-  resultado = micurso.BuscarIgualIdCurso(id)
-  retornoCurso.Nombre = resultado["Nombre"]
-  retornoCurso.Detalle = resultado["Detalle"]
-  Return retornoCurso
+  resultado = miasignatura.BuscarIgualIdasignatura(id)
+  retornoasignatura.Nombre = resultado["Nombre"]
+  retornoasignatura.Detalle = resultado["Detalle"]
+  Return retornoasignatura
   
 End
 
@@ -139,11 +139,11 @@ Public Function ModificarIdAlumno(mialumnotmp As AlumnoVO) As Boolean
   
 End
 
-Public Function ModificarIdCurso(micursotmp As CursoVO) As Boolean
+Public Function ModificarIdasignatura(miasignaturatmp As AsignaturaVO) As Boolean
   
-  Dim micurso As New CursoDAO
+  Dim miasignatura As New AsignaturaDAO
   
-  Return micurso.ModificarIdCurso(micursotmp.idcurso, micursotmp)
+  Return miasignatura.ModificarIdasignatura(miasignaturatmp.idasignatura, miasignaturatmp)
   
 End
 
@@ -166,21 +166,21 @@ Public Function borrarIdAlumno(id As Integer) As Boolean
   
 End
 
-Public Function borrarIdcurso(id As Integer) As Boolean
+Public Function borrarIdasignatura(id As Integer) As Boolean
   
-  Dim micurso As New CursoDAO
-  'borro apariciones que tenga ese curso en la tabla de RELACION
-  borrarRelacionIdCurso(id)
+  Dim miasignatura As New AsignaturaDAO
+  'borro apariciones que tenga ese asignatura en la tabla de RELACION
+  borrarRelacionIdasignatura(id)
   
-  Return micurso.BorrarIdCurso(id)
+  Return miasignatura.BorrarIdasignatura(id)
   
 End
 
-Public Function borrarRelacionIdCurso(idcurso As Integer) As Boolean
+Public Function borrarRelacionIdasignatura(idasignatura As Integer) As Boolean
   
   Dim mirela As New RelacionDAO
   
-  Return mirela.BorrarIdCurso(idcurso)
+  Return mirela.BorrarIdasignatura(idasignatura)
   
 End
 
@@ -200,11 +200,11 @@ Public Function borrarRelacionIdRela(dato As RelacionVO) As Boolean
   
 End
 
-Public Function BorrarRelacionCurso(idcurso As Integer) As Boolean
+Public Function BorrarRelacionasignatura(idasignatura As Integer) As Boolean
   
   Dim mirel As New RelacionDAO
   
-  Return mirel.BorrarIdCurso(idcurso)
+  Return mirel.BorrarIdasignatura(idasignatura)
   
 End
 

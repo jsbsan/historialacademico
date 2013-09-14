@@ -1,23 +1,14 @@
-PROPERTY idRelacion AS Integer 
-PRIVATE hidRelacion AS Integer
-
 PROPERTY idAlumno AS Integer 
 PRIVATE hidAlumno AS Integer
 
-PROPERTY idAsignatura AS Integer 
-PRIVATE hidAsignatura AS Integer
+PROPERTY idEstadoCurso AS Integer 
+PRIVATE hidEstadoCurso AS Integer
 
-PROPERTY Observacion AS String 
-PRIVATE hObservacion AS String
-
-PROPERTY idEstadoAsignatura AS Integer 
-PRIVATE hidEstadoAsignatura AS Integer
+PROPERTY idCurso AS Integer 
+PRIVATE hidCurso AS Integer
 
 PROPERTY idExpediente AS Integer 
 PRIVATE hidExpediente AS Integer
-
-PROPERTY nota AS Single 
-PRIVATE hnota AS Single
 
 PROPERTY campo AS string[] 
 PRIVATE hcampo AS new string[]
@@ -28,14 +19,6 @@ PRIVATE hcampotipo AS new string[]
 PROPERTY campovisible AS string[] 
 PRIVATE hcampovisible AS new string[]
 
-PRIVATE FUNCTION idRelacion_read() AS Integer
- RETURN hidRelacion 
-END 
- 
-PRIVATE SUB idRelacion_write(Valor AS Integer)
- hidRelacion= Valor 
-END  
- 
 PRIVATE FUNCTION idAlumno_read() AS Integer
  RETURN hidAlumno 
 END 
@@ -44,28 +27,20 @@ PRIVATE SUB idAlumno_write(Valor AS Integer)
  hidAlumno= Valor 
 END  
  
-PRIVATE FUNCTION idAsignatura_read() AS Integer
- RETURN hidAsignatura 
+PRIVATE FUNCTION idEstadoCurso_read() AS Integer
+ RETURN hidEstadoCurso 
 END 
  
-PRIVATE SUB idAsignatura_write(Valor AS Integer)
- hidAsignatura= Valor 
+PRIVATE SUB idEstadoCurso_write(Valor AS Integer)
+ hidEstadoCurso= Valor 
 END  
  
-PRIVATE FUNCTION Observacion_read() AS String
- RETURN hObservacion 
+PRIVATE FUNCTION idCurso_read() AS Integer
+ RETURN hidCurso 
 END 
  
-PRIVATE SUB Observacion_write(Valor AS String)
- hObservacion= Valor 
-END  
- 
-PRIVATE FUNCTION idEstadoAsignatura_read() AS Integer
- RETURN hidEstadoAsignatura 
-END 
- 
-PRIVATE SUB idEstadoAsignatura_write(Valor AS Integer)
- hidEstadoAsignatura= Valor 
+PRIVATE SUB idCurso_write(Valor AS Integer)
+ hidCurso= Valor 
 END  
  
 PRIVATE FUNCTION idExpediente_read() AS Integer
@@ -74,14 +49,6 @@ END
  
 PRIVATE SUB idExpediente_write(Valor AS Integer)
  hidExpediente= Valor 
-END  
- 
-PRIVATE FUNCTION nota_read() AS Single
- RETURN hnota 
-END 
- 
-PRIVATE SUB nota_write(Valor AS Single)
- hnota= Valor 
 END  
  
 PRIVATE FUNCTION campo_read() AS string[]

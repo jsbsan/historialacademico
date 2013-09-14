@@ -1,588 +1,827 @@
 ' Gambas class file
-
-Public Function Total() As Integer 
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "SELECT idRelacion FROM Relacion" 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Intentar obtener lista")
-    Return -1 
-  Endif 
-  Return Val(Str$(mRs.Count)) 
-  
+PUBLIC FUNCTION Total() AS integer 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+    SQLString  = "SELECT idRelacion FROM Relacion" 
+try    mRs = conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Intentar obtener lista")
+  return -1 
+endif 
+RETURN val(Str$(mRs.Count)) 
 End 
 
-Public Function registrar(NuevaRelacion As RelacionVO) As Boolean
-  
-  Dim conectar As New Conexion
+PUBLIC function registrar( NuevaRelacion as RelacionVO) as boolean
+  Dim conectar as new conexion
   Dim SQLString As String
-  
-  conectar.Conexion()
-  SQLString = "INSERT INTO Relacion(idRelacion,idAlumno,idCurso,Observacion) Values ("
-  SQLString &= "Null" 
-  SQLString &= ",'" & NuevaRelacion.idAlumno & "'"
-  SQLString &= ",'" & NuevaRelacion.idCurso & "'"
-  SQLString &= ",'" & NuevaRelacion.Observacion & "')"
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Intentar insertar datos, revise ID,  " & "\nError:  " & error.text)
-    Return False 
-  Endif 
-  conectar.desconectar() 
-  Return True 
-  
-End  
+   conectar.Conexion()
+SQLString = "INSERT INTO Relacion(idRelacion,idAlumno,idAsignatura,Observacion,idEstadoAsignatura,idExpediente,nota) Values ("
+SQLString &= "Null" 
+SQLString &= ",'" & NuevaRelacion.idAlumno & "'"
+SQLString &= ",'" & NuevaRelacion.idAsignatura & "'"
+SQLString &= ",'" & NuevaRelacion.Observacion & "'"
+SQLString &= ",'" & NuevaRelacion.idEstadoAsignatura & "'"
+SQLString &= ",'" & NuevaRelacion.idExpediente & "'"
+SQLString &= ",'" & NuevaRelacion.nota & "')"
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Intentar insertar datos, revise ID,  " & "\nError:  "   & error.text )
+  return false 
+endif 
+conectar.desconectar() 
+ return true 
+ 
+END  
 
-Public Function ModificarIdRelacion(editado As Integer, NuevaRelacion As RelacionVO) As Boolean
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  SQLString = "UPDATE  Relacion SET "
-  SQLString &= "idAlumno='" & NuevaRelacion.idAlumno 
-  SQLString &= "', idCurso='" & NuevaRelacion.idCurso 
-  SQLString &= "', Observacion='" & NuevaRelacion.Observacion & "'" 
-  SQlString &= " WHERE idRelacion='" & editado & "'" 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Modificar datos ")
-    Return False
-  Else 
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End  
+PUBLIC FUNCTION ModificarIdRelacion(editado as Integer,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idAlumno='" & NuevaRelacion.idAlumno 
+SQLString &= "', idAsignatura='" & NuevaRelacion.idAsignatura 
+SQLString &= "', Observacion='" & NuevaRelacion.Observacion 
+SQLString &= "', idEstadoAsignatura='" & NuevaRelacion.idEstadoAsignatura 
+SQLString &= "', idExpediente='" & NuevaRelacion.idExpediente 
+SQLString &= "', nota='" & NuevaRelacion.nota & "'" 
+SQlString &= " WHERE idRelacion='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function ModificarIdAlumno(editado As Integer, NuevaRelacion As RelacionVO) As Boolean
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  SQLString = "UPDATE  Relacion SET "
-  SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
-  SQLString &= "', idCurso='" & NuevaRelacion.idCurso 
-  SQLString &= "', Observacion='" & NuevaRelacion.Observacion & "'" 
-  SQlString &= " WHERE idAlumno='" & editado & "'" 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Modificar datos ")
-    Return False
-  Else 
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End  
+PUBLIC FUNCTION ModificarIdAlumno(editado as Integer,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
+SQLString &= "', idAsignatura='" & NuevaRelacion.idAsignatura 
+SQLString &= "', Observacion='" & NuevaRelacion.Observacion 
+SQLString &= "', idEstadoAsignatura='" & NuevaRelacion.idEstadoAsignatura 
+SQLString &= "', idExpediente='" & NuevaRelacion.idExpediente 
+SQLString &= "', nota='" & NuevaRelacion.nota & "'" 
+SQlString &= " WHERE idAlumno='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function ModificarIdCurso(editado As Integer, NuevaRelacion As RelacionVO) As Boolean
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  SQLString = "UPDATE  Relacion SET "
-  SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
-  SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
-  SQLString &= "', Observacion='" & NuevaRelacion.Observacion & "'" 
-  SQlString &= " WHERE idCurso='" & editado & "'" 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Modificar datos ")
-    Return False
-  Else 
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End  
+PUBLIC FUNCTION ModificarIdAsignatura(editado as Integer,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
+SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
+SQLString &= "', Observacion='" & NuevaRelacion.Observacion 
+SQLString &= "', idEstadoAsignatura='" & NuevaRelacion.idEstadoAsignatura 
+SQLString &= "', idExpediente='" & NuevaRelacion.idExpediente 
+SQLString &= "', nota='" & NuevaRelacion.nota & "'" 
+SQlString &= " WHERE idAsignatura='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function ModificarObservacion(editado As String, NuevaRelacion As RelacionVO) As Boolean
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  SQLString = "UPDATE  Relacion SET "
-  SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
-  SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
-  SQLString &= "', idCurso='" & NuevaRelacion.idCurso & "'"
-  SQlString &= " WHERE Observacion='" & editado & "'" 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Modificar datos ")
-    Return False
-  Else 
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End  
+PUBLIC FUNCTION ModificarObservacion(editado as String,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
+SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
+SQLString &= "', idAsignatura='" & NuevaRelacion.idAsignatura 
+SQLString &= "', idEstadoAsignatura='" & NuevaRelacion.idEstadoAsignatura 
+SQLString &= "', idExpediente='" & NuevaRelacion.idExpediente 
+SQLString &= "', nota='" & NuevaRelacion.nota & "'" 
+SQlString &= " WHERE Observacion='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function BorrarIdRelacion(valor As Integer) As Boolean 
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  sqlstring = "DELETE FROM Relacion WHERE idRelacion=" & Str$(valor) 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: " & error.text)
-    Return False
-  Else
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End
+PUBLIC FUNCTION ModificarIdEstadoAsignatura(editado as Integer,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
+SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
+SQLString &= "', idAsignatura='" & NuevaRelacion.idAsignatura 
+SQLString &= "', Observacion='" & NuevaRelacion.Observacion 
+SQLString &= "', idExpediente='" & NuevaRelacion.idExpediente 
+SQLString &= "', nota='" & NuevaRelacion.nota & "'" 
+SQlString &= " WHERE idEstadoAsignatura='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function BorrarIdAlumno(valor As Integer) As Boolean 
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  sqlstring = "DELETE FROM Relacion WHERE idAlumno=" & Str$(valor) 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: " & error.text)
-    Return False
-  Else
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End
+PUBLIC FUNCTION ModificarIdExpediente(editado as Integer,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
+SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
+SQLString &= "', idAsignatura='" & NuevaRelacion.idAsignatura 
+SQLString &= "', Observacion='" & NuevaRelacion.Observacion 
+SQLString &= "', idEstadoAsignatura='" & NuevaRelacion.idEstadoAsignatura 
+SQLString &= "', nota='" & NuevaRelacion.nota & "'" 
+SQlString &= " WHERE idExpediente='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function BorrarIdCurso(valor As Integer) As Boolean 
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  sqlstring = "DELETE FROM Relacion WHERE idCurso=" & Str$(valor) 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: " & error.text)
-    Return False
-  Else
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End
+PUBLIC FUNCTION ModificarNota(editado as Single,NuevaRelacion as RelacionVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  Relacion SET "
+SQLString &= "idRelacion='" & NuevaRelacion.idRelacion 
+SQLString &= "', idAlumno='" & NuevaRelacion.idAlumno 
+SQLString &= "', idAsignatura='" & NuevaRelacion.idAsignatura 
+SQLString &= "', Observacion='" & NuevaRelacion.Observacion 
+SQLString &= "', idEstadoAsignatura='" & NuevaRelacion.idEstadoAsignatura 
+SQLString &= "', idExpediente='" & NuevaRelacion.idExpediente & "'"
+SQlString &= " WHERE nota='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
 
-Public Function BorrarObservacion(valor As String) As Boolean 
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  
-  conectar.Conexion()
-  sqlstring = "DELETE FROM Relacion WHERE Observacion='" & valor & "'" 
-  Try conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: " & error.text)
-    Return False
-  Else
-    conectar.desconectar() 
-    Return True
-  Endif 
-  
-End
+PUBLIC function BorrarIdRelacion( valor AS Integer ) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE idRelacion=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarIgualIdRelacion(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idRelacion like '" & valor & "' "
-  Else 
-    SQlString &= " WHERE idRelacion like '" & valor & "'   Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BorrarIdAlumno( valor AS Integer) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE idAlumno=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarIgualIdAlumno(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idAlumno like '" & valor & "' "
-  Else 
-    SQlString &= " WHERE idAlumno like '" & valor & "'   Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BorrarIdAsignatura( valor AS Integer) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE idAsignatura=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarMenorQueIdAlumno(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idAlumno<" & valor 
-  Else 
-    SQlString &= " WHERE idAlumno<" & valor & "   Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BorrarObservacion( valor AS String) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE Observacion='" & valor & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarMayorQueIdAlumno(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idAlumno>" & valor  
-  Else 
-    SQlString &= " WHERE idAlumno>" & valor & "  Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BorrarIdEstadoAsignatura( valor AS Integer) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE idEstadoAsignatura=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarEntreIdAlumno(valorMin As Integer, valorMax As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idAlumno BETWEEN " & valorMin & " And " & valorMax  
-  Else 
-    SQlString &= " WHERE idAlumno BETWEEN " & valorMin & " And " & valorMax & " Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BorrarIdExpediente( valor AS Integer) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE idExpediente=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarIgualIdCurso(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idCurso like '" & valor & "' "
-  Else 
-    SQlString &= " WHERE idCurso like '" & valor & "'   Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BorrarNota( valor AS Single) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM Relacion WHERE nota=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
 
-Public Function BuscarMenorQueIdCurso(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idCurso<" & valor 
-  Else 
-    SQlString &= " WHERE idCurso<" & valor & "   Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BuscarIgualIdRelacion( valor AS integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idRelacion like '" & valor & "' "
+else 
+   SQlString &= " WHERE idRelacion like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
 
-Public Function BuscarMayorQueIdCurso(valor As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idCurso>" & valor  
-  Else 
-    SQlString &= " WHERE idCurso>" & valor & "  Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BuscarIgualIdAlumno( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAlumno like '" & valor & "' "
+else 
+   SQlString &= " WHERE idAlumno like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
 
-Public Function BuscarEntreIdCurso(valorMin As Integer, valorMax As Integer, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE idCurso BETWEEN " & valorMin & " And " & valorMax  
-  Else 
-    SQlString &= " WHERE idCurso BETWEEN " & valorMin & " And " & valorMax & " Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BuscarMenorQueIdAlumno( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAlumno<" & valor 
+else 
+   SQlString &= " WHERE idAlumno<" & valor & "   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
 
-Public Function BuscarContenidoObservacion(valor As String, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE Observacion like '%" & valor & "%' "
-  Else 
-    SQlString &= " WHERE Observacion like '%" & valor & "%'  Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError:  " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BuscarMayorQueIdAlumno( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAlumno>" & valor  
+else 
+   SQlString &= " WHERE idAlumno>" & valor & "  Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
 
-Public Function BuscarIgualObservacion(valor As String, Optional CampoOrden As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
-  conectar.Conexion()
-  SQLString = "Select * From Relacion"
-  If CampoOrden = Null Then 
-    SQlString &= " WHERE Observacion like '" & valor & "' "
-  Else 
-    SQlString &= " WHERE Observacion like '" & valor & "'   Order by " & CampoOrden
-  Endif 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then 
-    Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text)
-  Else 
-    Return mRs
-  Endif 
-  
-End  
+PUBLIC function BuscarEntreIdAlumno( valorMin AS Integer, valorMax AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAlumno BETWEEN " & valorMin & " And " & valorMax  
+else 
+   SQlString &= " WHERE idAlumno BETWEEN " & valorMin & " And " & valorMax & " Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
 
-Public Function sql(consulta As String) As Result
-  
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-  
+PUBLIC function BuscarIgualIdAsignatura( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAsignatura like '" & valor & "' "
+else 
+   SQlString &= " WHERE idAsignatura like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarMenorQueIdAsignatura( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAsignatura<" & valor 
+else 
+   SQlString &= " WHERE idAsignatura<" & valor & "   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarMayorQueIdAsignatura( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAsignatura>" & valor  
+else 
+   SQlString &= " WHERE idAsignatura>" & valor & "  Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarEntreIdAsignatura( valorMin AS Integer, valorMax AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idAsignatura BETWEEN " & valorMin & " And " & valorMax  
+else 
+   SQlString &= " WHERE idAsignatura BETWEEN " & valorMin & " And " & valorMax & " Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarContenidoObservacion( valor AS String,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE Observacion like '%" & valor & "%' "
+else 
+   SQlString &= " WHERE Observacion like '%" & valor & "%'  Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError:  "   & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarIgualObservacion( valor AS String,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE Observacion like '" & valor & "' "
+else 
+   SQlString &= " WHERE Observacion like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarIgualIdEstadoAsignatura( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idEstadoAsignatura like '" & valor & "' "
+else 
+   SQlString &= " WHERE idEstadoAsignatura like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarMenorQueIdEstadoAsignatura( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idEstadoAsignatura<" & valor 
+else 
+   SQlString &= " WHERE idEstadoAsignatura<" & valor & "   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarMayorQueIdEstadoAsignatura( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idEstadoAsignatura>" & valor  
+else 
+   SQlString &= " WHERE idEstadoAsignatura>" & valor & "  Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarEntreIdEstadoAsignatura( valorMin AS Integer, valorMax AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idEstadoAsignatura BETWEEN " & valorMin & " And " & valorMax  
+else 
+   SQlString &= " WHERE idEstadoAsignatura BETWEEN " & valorMin & " And " & valorMax & " Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarIgualIdExpediente( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idExpediente like '" & valor & "' "
+else 
+   SQlString &= " WHERE idExpediente like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarMenorQueIdExpediente( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idExpediente<" & valor 
+else 
+   SQlString &= " WHERE idExpediente<" & valor & "   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarMayorQueIdExpediente( valor AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idExpediente>" & valor  
+else 
+   SQlString &= " WHERE idExpediente>" & valor & "  Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarEntreIdExpediente( valorMin AS Integer, valorMax AS Integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE idExpediente BETWEEN " & valorMin & " And " & valorMax  
+else 
+   SQlString &= " WHERE idExpediente BETWEEN " & valorMin & " And " & valorMax & " Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarIgualNota( valor AS Single,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From Relacion"
+If CampoOrden=null then 
+   SQlString &= " WHERE nota like '" & valor & "' "
+else 
+   SQlString &= " WHERE nota like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function sql( consulta AS string) As result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
   conectar.Conexion()
-  Try mRs = conectar.hconn.Exec(consulta) 
-  If Error Then message.info("Consulta erronea, revisela")
-  Return mRs 
-  
+try mRs=conectar.hconn.Exec(consulta) 
+If error then message.info("Consulta erronea, revisela")
+return mRs 
+END 
+
+PUBLIC Function informe() as string
+ dim texto as string
+print "Base de datos: CursosAlumnos"
+print "        Tabla: Relacion"
+print "             Campo: idRelacion Tipo: Null"
+print "             Campo: idAlumno Tipo: Integer"
+print "             Campo: idAsignatura Tipo: Integer"
+print "             Campo: Observacion Tipo: String"
+print "             Campo: idEstadoAsignatura Tipo: Integer"
+print "             Campo: idExpediente Tipo: Integer"
+print "             Campo: nota Tipo: Single"
+ texto= "Base_de_datos:|CursosAlumnos|"
+ texto &= "Tabla:|Relacion"
+ texto &= "|campo:|idRelacion|tipo:|Null"
+ texto &= "|campo:|idAlumno|tipo:|Integer"
+ texto &= "|campo:|idAsignatura|tipo:|Integer"
+ texto &= "|campo:|Observacion|tipo:|String"
+ texto &= "|campo:|idEstadoAsignatura|tipo:|Integer"
+ texto &= "|campo:|idExpediente|tipo:|Integer"
+ texto &= "|campo:|nota|tipo:|Single"
+ Return texto 
+end
+
+PUBLIC Function gridFormatearColumnas(grid AS GridView) as gridview
+   WITH grid 
+      .header = 3 
+      .rows.count = 0 
+      .columns.count = 7 
+      .Columns[0].title = "idRelacion"
+      .Columns[0].width = 80
+      .Columns[1].title = "idAlumno"
+      .Columns[1].width = 80
+      .Columns[2].title = "idAsignatura"
+      .Columns[2].width = 80
+      .Columns[3].title = "Observacion"
+      .Columns[3].width = 80
+      .Columns[4].title = "idEstadoAsignatura"
+      .Columns[4].width = 80
+      .Columns[5].title = "idExpediente"
+      .Columns[5].width = 80
+      .Columns[6].title = "nota"
+      .Columns[6].width = 80
+      .font.name = "Sans"
+      .font.size = 10 
+      .Background = 16777215 
+      .Foreground = 0 
+   END WITH
+ Return grid 
+END
+
+PUBLIC FUNCTION gridFormatearFilas(grid AS GridView) AS gridview  
+   WITH grid  
+      .header = 3 
+      .rows.count =7
+      .columns.count = 2  
+      .Columns[0].title = "Campos"  
+      .Columns[1].title = "Registro"  
+      .font.name = "Sans"
+      .font.size = 10 
+      .Background = 16777215 
+      .Foreground = 0 
+   END WITH
+      grid[0,0].text = "idRelacion" 
+      grid[0,0].background = color.lightgray  
+      grid[1,0].text = "idAlumno" 
+      grid[1,0].background = color.lightgray  
+      grid[2,0].text = "idAsignatura" 
+      grid[2,0].background = color.lightgray  
+      grid[3,0].text = "Observacion" 
+      grid[3,0].background = color.lightgray  
+      grid[4,0].text = "idEstadoAsignatura" 
+      grid[4,0].background = color.lightgray  
+      grid[5,0].text = "idExpediente" 
+      grid[5,0].background = color.lightgray  
+      grid[6,0].text = "nota" 
+      grid[6,0].background = color.lightgray  
+ Return grid 
+END
+
+PUBLIC SUB contenido() as result 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+     SQLString  = "SELECT * FROM Relacion" 
+     try mRs = conectar.hconn.Exec(SQLString) 
+If error then message.info("Consulta erronea, revisela")
+RETURN mRs 
 End 
 
-Public Function informe() As String
-  
-  Dim texto As String
+PUBLIC FUNCTION mostrarRegistro(numero AS Integer, grid AS GridView, OPTIONAL sqlcadena AS String) AS Result
+DIM resultado AS Result
+IF sqlcadena = NULL THEN 
+resultado = contenido()
+ELSE 
+resultado = sql(sqlcadena)
+ENDIF 
+resultado.MoveTo(numero)
+TRY grid[0, 1].text = Str$(resultado!idRelacion)
+TRY grid[1, 1].text = Str$(resultado!idAlumno)
+TRY grid[2, 1].text = Str$(resultado!idAsignatura)
+TRY grid[3, 1].text = Str$(resultado!Observacion)
+TRY grid[4, 1].text = Str$(resultado!idEstadoAsignatura)
+TRY grid[5, 1].text = Str$(resultado!idExpediente)
+TRY grid[6, 1].text = Str$(resultado!nota)
+END
 
-  Print "Base de datos: CursosAlumnos"
-  Print "        Tabla: Relacion"
-  Print "             Campo: idRelacion Tipo: Null"
-  Print "             Campo: idAlumno Tipo: Integer"
-  Print "             Campo: idCurso Tipo: Integer"
-  Print "             Campo: Observacion Tipo: String"
-  texto = "Base_de_datos:|CursosAlumnos|"
-  texto &= "Tabla:|Relacion"
-  texto &= "|campo:|idRelacion|tipo:|Null"
-  texto &= "|campo:|idAlumno|tipo:|Integer"
-  texto &= "|campo:|idCurso|tipo:|Integer"
-  texto &= "|campo:|Observacion|tipo:|String"
-  Return texto 
-  
-End
-
-Public Function gridFormatearColumnas(grid As GridView) As Gridview
-  
-  With grid 
-    .header = 3 
-    .rows.count = 0 
-    .columns.count = 4 
-    .Columns[0].title = "idRelacion"
-    .Columns[0].width = 80
-    .Columns[1].title = "idAlumno"
-    .Columns[1].width = 80
-    .Columns[2].title = "idCurso"
-    .Columns[2].width = 80
-    .Columns[3].title = "Observacion"
-    .Columns[3].width = 80
-    .font.name = "Sans"
-    .font.size = 10 
-    .Background = 16777215 
-    .Foreground = 0 
-  End With
-  Return grid 
-  
-End
-
-Public Function gridFormatearFilas(grid As GridView) As Gridview  
-  
-  With grid  
-    .header = 3 
-    .rows.count = 4
-    .columns.count = 2  
-    .Columns[0].title = "Campos"  
-    .Columns[1].title = "Registro"  
-    .font.name = "Sans"
-    .font.size = 10 
-    .Background = 16777215 
-    .Foreground = 0 
-  End With
-  grid[0, 0].text = "idRelacion" 
-  grid[0, 0].background = color.lightgray  
-  grid[1, 0].text = "idAlumno" 
-  grid[1, 0].background = color.lightgray  
-  grid[2, 0].text = "idCurso" 
-  grid[2, 0].background = color.lightgray  
-  grid[3, 0].text = "Observacion" 
-  grid[3, 0].background = color.lightgray  
-  Return grid 
-
-End
-
-Public Sub contenido() As Result 
-
-  Dim conectar As New Conexion
-  Dim SQLString As String
-  Dim mRs As Result
-
-  conectar.Conexion()
-  SQLString = "SELECT * FROM Relacion" 
-  Try mRs = conectar.hconn.Exec(SQLString) 
-  If Error Then message.info("Consulta erronea, revisela")
-  Return mRs 
-
-End 
-
-Public Function mostrarRegistro(numero As Integer, grid As GridView, Optional sqlcadena As String) As Result
-
-  Dim resultado As Result
-  If sqlcadena = Null Then 
-    resultado = contenido()
-  Else 
-    resultado = sql(sqlcadena)
-  Endif 
-  resultado.MoveTo(numero)
-  Try grid[0, 1].text = Str$(resultado!idRelacion)
-  Try grid[1, 1].text = Str$(resultado!idAlumno)
-  Try grid[2, 1].text = Str$(resultado!idCurso)
-  Try grid[3, 1].text = Str$(resultado!Observacion)
-
-End
-
-Public Function GridResultanteSQL(res As Result, grid As GridView) As Gridview  
-
-  Dim columna As Integer
-  Dim hField As ResultField
-  Dim a As Integer
-  Dim fila As Integer
-  'defino la regilla
-  With grid 
-    .header = 3 
-    .rows.count = 0 
-    Try .columns.count = res.Fields.Count 
-    columna = -1
-    For Each hField In res.Fields
+PUBLIC FUNCTION GridResultanteSQL(res AS result, grid AS GridView) AS gridview  
+DIM columna AS Integer
+DIM hField AS ResultField
+DIM a AS Integer
+DIM fila AS Integer
+'defino la regilla
+   WITH grid 
+      .header = 3 
+      .rows.count = 0 
+ try     .columns.count = res.Fields.Count 
+      columna = -1
+       FOR EACH hField IN res.Fields
       columna = columna + 1
-      Try .Columns[columna].title = Str$(hField.name)
-    Next 
-    .font.name = "Sans"
-    .font.size = 10
-    .Background = 16777215 
-    .Foreground = 0 
-  End With
-  'NO HACE FALTA:relleno los datos procedentes de la consulta en las filas...
-  'Grid.Rows.count = res.Count
-  ' fila = -1
-  '  DO WHILE res.Available
-  '   INC fila
-  '    FOR a = 0 TO grid.columns.count - 1
-  '    'PRINT grid.Columns[a].title
+ try     .Columns[columna].title = Str$(hField.name)
+       NEXT 
+       .font.name = "Sans"
+      .font.size = 10
+      .Background = 16777215 
+      .Foreground = 0 
+   END WITH
+'NO HACE FALTA:relleno los datos procedentes de la consulta en las filas...
+'Grid.Rows.count = res.Count
+' fila = -1
+'  DO WHILE res.Available
+'   INC fila
+'    FOR a = 0 TO grid.columns.count - 1
+'    'PRINT grid.Columns[a].title
 '     grid[fila, a].text = res[grid.Columns[a].title] ' nombre 'grid.Columns[a].title]
 '    NEXT 
 '    res.MoveNext()
 '  LOOP
- Return grid 
-End
+ RETURN grid 
+END
 

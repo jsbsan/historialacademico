@@ -3,16 +3,16 @@
 Public controlAcceso As FControlAcceso
 Public fprincipal As FormPrincipal
 Public falumno As FormAlumno
-Public fcurso As FormCurso
-Public fExpCurso As FormExpedienteCurso
+Public fasignatura As FormAsignatura
+Public fExpasignatura As FormExpedienteAsignatura
 Public fexpAlumno As FormExpedienteAlumno
 Public cone As Conexion
-Public eligecurso As FormEligeCurso
+Public eligeasignatura As FormEligeasignatura
 Public eligeAlumno As FormEligeAlumno
 Public log As Logica
 
 Public rutainformes As String
-Public rutaTrabajo As String = User.home & "/.CursoAlumnos/"
+Public rutaTrabajo As String = main.rutaTrabajo
 
 Private usuarioActual As String
 Private passwordActual As String
@@ -59,9 +59,9 @@ Public Function anadirAlumno(DatosAlumnos As AlumnoVO) As Boolean
   
 End
 
-Public Function anadirCurso(Datos As CursoVO) As Boolean
+Public Function anadirasignatura(Datos As AsignaturaVO) As Boolean
   
-  Return log.validarAnnadirCurso(Datos)
+  Return log.validarAnnadirasignatura(Datos)
   
 End
 
@@ -77,9 +77,9 @@ Public Function ContenidoRelacionesIdAlumnos(IdAlumno As Integer) As Result
   
 End
 
-Public Function ContenidoRelacionesIdCurso(IdCurso As Integer) As Result
+Public Function ContenidoRelacionesIdasignatura(Idasignatura As Integer) As Result
   
-  Return log.mostrarRelacionesIdCurso(IdCurso)
+  Return log.mostrarRelacionesIdasignatura(Idasignatura)
   
 End
 
@@ -89,9 +89,9 @@ Public Function modificarIdAlumno(datos As Alumnovo) As Boolean
   
 End
 
-Public Function modificarIdCurso(datos As CursoVO) As Boolean
+Public Function modificarIdasignatura(datos As AsignaturaVO) As Boolean
   
-  Return log.ModificarIdCurso(datos) 
+  Return log.ModificarIdasignatura(datos) 
   
 End
 
@@ -124,18 +124,18 @@ End
 
 '-----------------------------------------------------------
 '
-Public Function ContenidoCurso() As Result
+Public Function Contenidoasignatura() As Result
   
-  Return log.ContenidoCursosOrdenados()
-  'Return log.ContenidoCurso()
+  Return log.ContenidoasignaturasOrdenados()
+  'Return log.Contenidoasignatura()
   
 End
 
-Public Function BuscarIdCurso(id As Integer) As CursoVO
+Public Function BuscarIdasignatura(id As Integer) As AsignaturaVO
   
-  'si borro un curso tambien tengo que borrar las apariciones que haga en la tabla relaciones...
+  'si borro un asignatura tambien tengo que borrar las apariciones que haga en la tabla relaciones...
   
-  Return log.BuscarIdCurso(id)
+  Return log.BuscarIdasignatura(id)
   
 End
 
@@ -145,13 +145,13 @@ Public Function BuscarIdalumno(id As Integer) As AlumnoVO
   
 End
 
-Public Function borrarAlumnoDeCurso(idcurso As Integer) As Boolean
+Public Function borrarAlumnoDeasignatura(idasignatura As Integer) As Boolean
   
-  Return log.BorrarRelacionCurso(idcurso)
+  Return log.BorrarRelacionasignatura(idasignatura)
   
 End
 
-Public Function borrarAlumnoDeCursoIdAlumno(idalumno As Integer) As Boolean
+Public Function borrarAlumnoDeasignaturaIdAlumno(idalumno As Integer) As Boolean
   
   Return log.BorrarRelacionAlumno(idalumno) 
   

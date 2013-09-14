@@ -1,0 +1,269 @@
+' Gambas class file
+PUBLIC FUNCTION Total() AS integer 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+    SQLString  = "SELECT idEstadoCurso FROM DetalleEstadoCurso" 
+try    mRs = conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Intentar obtener lista")
+  return -1 
+endif 
+RETURN val(Str$(mRs.Count)) 
+End 
+
+PUBLIC function registrar( NuevaDetalleEstadoCurso as DetalleEstadoCursoVO) as boolean
+  Dim conectar as new conexion
+  Dim SQLString As String
+   conectar.Conexion()
+SQLString = "INSERT INTO DetalleEstadoCurso(idEstadoCurso,Nombre) Values ("
+SQLString &= "Null" 
+SQLString &= ",'" & NuevaDetalleEstadoCurso.Nombre & "')"
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Intentar insertar datos, revise ID,  " & "\nError:  "   & error.text )
+  return false 
+endif 
+conectar.desconectar() 
+ return true 
+ 
+END  
+
+PUBLIC FUNCTION ModificarIdEstadoCurso(editado as Integer,NuevaDetalleEstadoCurso as DetalleEstadoCursoVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  DetalleEstadoCurso SET "
+SQLString &= "Nombre='" & NuevaDetalleEstadoCurso.Nombre & "'"
+SQlString &= " WHERE idEstadoCurso='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
+
+PUBLIC FUNCTION ModificarNombre(editado as String,NuevaDetalleEstadoCurso as DetalleEstadoCursoVO) as boolean
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+SQLString = "UPDATE  DetalleEstadoCurso SET "
+SQLString &= "idEstadoCurso='" & NuevaDetalleEstadoCurso.idEstadoCurso & "'"
+SQlString &= " WHERE Nombre='" & editado & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al Modificar datos ")
+ return false
+else 
+conectar.desconectar() 
+ return true
+ENDIF 
+END  
+
+PUBLIC function BorrarIdEstadoCurso( valor AS Integer ) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM DetalleEstadoCurso WHERE idEstadoCurso=" & str$(valor) 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
+
+PUBLIC function BorrarNombre( valor AS String) as boolean 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     conectar.Conexion()
+sqlstring="DELETE FROM DetalleEstadoCurso WHERE Nombre='" & valor & "'" 
+Try conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+  Message.Error(" Se ha producido un ERROR al intentar Borrar datos, revise ID , " & "\nError: "   & error.text)
+ return false
+else
+conectar.desconectar() 
+ return true
+ENDIF 
+END
+
+PUBLIC function BuscarIgualIdEstadoCurso( valor AS integer,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From DetalleEstadoCurso"
+If CampoOrden=null then 
+   SQlString &= " WHERE idEstadoCurso like '" & valor & "' "
+else 
+   SQlString &= " WHERE idEstadoCurso like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarContenidoNombre( valor AS String,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From DetalleEstadoCurso"
+If CampoOrden=null then 
+   SQlString &= " WHERE Nombre like '%" & valor & "%' "
+else 
+   SQlString &= " WHERE Nombre like '%" & valor & "%'  Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError:  "   & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function BuscarIgualNombre( valor AS String,optional CampoOrden as string ) as result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+SQLString="Select * From DetalleEstadoCurso"
+If CampoOrden=null then 
+   SQlString &= " WHERE Nombre like '" & valor & "' "
+else 
+   SQlString &= " WHERE Nombre like '" & valor & "'   Order by " & CampoOrden
+endif 
+Try mRs=conectar.hconn.Exec(SQLString) 
+IF ERROR THEN 
+Message.Error(" Se ha producido un ERROR al Buscar datos, " & "\nError: " & error.text )
+else 
+return mRs
+ENDIF 
+END  
+
+PUBLIC function sql( consulta AS string) As result
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+  conectar.Conexion()
+try mRs=conectar.hconn.Exec(consulta) 
+If error then message.info("Consulta erronea, revisela")
+return mRs 
+END 
+
+PUBLIC Function informe() as string
+ dim texto as string
+print "Base de datos: CursosAlumnos"
+print "        Tabla: DetalleEstadoCurso"
+print "             Campo: idEstadoCurso Tipo: Null"
+print "             Campo: Nombre Tipo: String"
+ texto= "Base_de_datos:|CursosAlumnos|"
+ texto &= "Tabla:|DetalleEstadoCurso"
+ texto &= "|campo:|idEstadoCurso|tipo:|Null"
+ texto &= "|campo:|Nombre|tipo:|String"
+ Return texto 
+end
+
+PUBLIC Function gridFormatearColumnas(grid AS GridView) as gridview
+   WITH grid 
+      .header = 3 
+      .rows.count = 0 
+      .columns.count = 2 
+      .Columns[0].title = "idEstadoCurso"
+      .Columns[0].width = 80
+      .Columns[1].title = "Nombre"
+      .Columns[1].width = 80
+      .font.name = "Sans"
+      .font.size = 10 
+      .Background = 16777215 
+      .Foreground = 0 
+   END WITH
+ Return grid 
+END
+
+PUBLIC FUNCTION gridFormatearFilas(grid AS GridView) AS gridview  
+   WITH grid  
+      .header = 3 
+      .rows.count =2
+      .columns.count = 2  
+      .Columns[0].title = "Campos"  
+      .Columns[1].title = "Registro"  
+      .font.name = "Sans"
+      .font.size = 10 
+      .Background = 16777215 
+      .Foreground = 0 
+   END WITH
+      grid[0,0].text = "idEstadoCurso" 
+      grid[0,0].background = color.lightgray  
+      grid[1,0].text = "Nombre" 
+      grid[1,0].background = color.lightgray  
+ Return grid 
+END
+
+PUBLIC SUB contenido() as result 
+     Dim conectar as new conexion
+     Dim SQLString as string
+     Dim mRs as result
+     conectar.Conexion()
+     SQLString  = "SELECT * FROM DetalleEstadoCurso" 
+     try mRs = conectar.hconn.Exec(SQLString) 
+If error then message.info("Consulta erronea, revisela")
+RETURN mRs 
+End 
+
+PUBLIC FUNCTION mostrarRegistro(numero AS Integer, grid AS GridView, OPTIONAL sqlcadena AS String) AS Result
+DIM resultado AS Result
+IF sqlcadena = NULL THEN 
+resultado = contenido()
+ELSE 
+resultado = sql(sqlcadena)
+ENDIF 
+resultado.MoveTo(numero)
+TRY grid[0, 1].text = Str$(resultado!idEstadoCurso)
+TRY grid[1, 1].text = Str$(resultado!Nombre)
+END
+
+PUBLIC FUNCTION GridResultanteSQL(res AS result, grid AS GridView) AS gridview  
+DIM columna AS Integer
+DIM hField AS ResultField
+DIM a AS Integer
+DIM fila AS Integer
+'defino la regilla
+   WITH grid 
+      .header = 3 
+      .rows.count = 0 
+ try     .columns.count = res.Fields.Count 
+      columna = -1
+       FOR EACH hField IN res.Fields
+      columna = columna + 1
+ try     .Columns[columna].title = Str$(hField.name)
+       NEXT 
+       .font.name = "Sans"
+      .font.size = 10
+      .Background = 16777215 
+      .Foreground = 0 
+   END WITH
+'NO HACE FALTA:relleno los datos procedentes de la consulta en las filas...
+'Grid.Rows.count = res.Count
+' fila = -1
+'  DO WHILE res.Available
+'   INC fila
+'    FOR a = 0 TO grid.columns.count - 1
+'    'PRINT grid.Columns[a].title
+'     grid[fila, a].text = res[grid.Columns[a].title] ' nombre 'grid.Columns[a].title]
+'    NEXT 
+'    res.MoveNext()
+'  LOOP
+ RETURN grid 
+END
+

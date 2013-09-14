@@ -9,7 +9,7 @@
     AutoResize = True
     Text = ("Cursos Disponibles....")
   }
-  { GridViewCurso GridView
+  { GridViewAsignatura GridView
     MoveScaled(1,5,57,52)
   }
   { ToolButtonAceptar ToolButton

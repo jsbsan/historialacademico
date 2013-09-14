@@ -1,6 +1,6 @@
 ' Gambas module file
 
-Public rutaTrabajo As String = User.home & "/.CursoAlumnos/"
+Public rutaTrabajo As String = User.home & "/.HistorialAcademico/"
 
 Public Sub main()
   
@@ -10,15 +10,15 @@ Public Sub main()
   Dim ControladorAplicacion As New Controlador
   Dim FormularioControlAcceso As New FControlAcceso
   Dim FormularioPrincipal As New FormPrincipal
-  Dim fcurso As New FormCurso
+  Dim fasignatura As New Formasignatura
   Dim falumno As New FormAlumno
-  Dim fexpcurso As New FormExpedienteCurso
+  Dim fexpasignatura As New FormExpedienteasignatura
   Dim fexpAlumno As New FormExpedienteAlumno
   Dim logicatmp As New Logica
-  Dim eligeCurso As New FormEligeCurso
+  Dim eligeasignatura As New FormEligeasignatura
   Dim eligeAlumno As New FormEligeAlumno
   
-  eligeCurso.Persistent = True
+  eligeasignatura.Persistent = True
   eligeAlumno.Persistent = True
   
   'modulos / Clases Estaticas
@@ -28,21 +28,21 @@ Public Sub main()
   FormularioControlAcceso.ControladorAplicacion = ControladorAplicacion
   FormularioPrincipal.ControladorAplicacion = ControladorAplicacion
   falumno.ControladorAplicacion = ControladorAplicacion
-  fcurso.ControladorAplicacion = ControladorAplicacion
-  fexpcurso.ControladorAplicacion = ControladorAplicacion
+  fasignatura.ControladorAplicacion = ControladorAplicacion
+  fexpasignatura.ControladorAplicacion = ControladorAplicacion
   fexpAlumno.ControladorAplicacion = ControladorAplicacion
   logicatmp.ControladorAplicacion = ControladorAplicacion
-  eligeCurso.ControladorAplicacion = ControladorAplicacion
+  eligeasignatura.ControladorAplicacion = ControladorAplicacion
   eligeAlumno.ControladorAplicacion = ControladorAplicacion
   
   ControladorAplicacion.controlAcceso = FormularioControlAcceso
   ControladorAplicacion.Fprincipal = FormularioPrincipal
   ControladorAplicacion.falumno = falumno
-  ControladorAplicacion.fcurso = fcurso
-  ControladorAplicacion.fExpCurso = fexpcurso
+  ControladorAplicacion.fasignatura = fasignatura
+  ControladorAplicacion.fExpasignatura = fexpasignatura
   ControladorAplicacion.fexpAlumno = fexpAlumno
   ControladorAplicacion.log = Logicatmp
-  ControladorAplicacion.eligeCurso = eligeCurso
+  ControladorAplicacion.eligeasignatura = eligeasignatura
   ControladorAplicacion.eligeAlumno = eligeAlumno
   
   'inicio directorios
@@ -70,11 +70,11 @@ Public Sub main()
   falumno.ControladorAplicacion = Null
   ControladorAplicacion.falumno = Null
   
-  fcurso.ControladorAplicacion = Null
-  ControladorAplicacion.fcurso = Null
+  fasignatura.ControladorAplicacion = Null
+  ControladorAplicacion.fasignatura = Null
   
-  fexpcurso.ControladorAplicacion = Null
-  ControladorAplicacion.fExpCurso = Null
+  fexpasignatura.ControladorAplicacion = Null
+  ControladorAplicacion.fExpasignatura = Null
   
   fexpAlumno.ControladorAplicacion = Null
   ControladorAplicacion.fexpAlumno = Null
@@ -82,8 +82,8 @@ Public Sub main()
   logicatmp.ControladorAplicacion = Null
   ControladorAplicacion.log = Null
   
-  eligeCurso.ControladorAplicacion = Null
-  ControladorAplicacion.eligeCurso = Null
+  eligeasignatura.ControladorAplicacion = Null
+  ControladorAplicacion.eligeasignatura = Null
   
   eligeAlumno.ControladorAplicacion = Null
   ControladorAplicacion.eligeAlumno = Null
@@ -92,8 +92,8 @@ Public Sub main()
   eligeAlumno = Null
   logicatmp = Null
   fexpAlumno = Null
-  fexpcurso = Null
-  fcurso = Null
+  fexpasignatura = Null
+  fasignatura = Null
   falumno = Null
   FormularioPrincipal = Null
   FormularioControlAcceso = Null
@@ -104,11 +104,13 @@ Public Sub main()
 End
 
 Public Sub iniciarDirectoriosYArchivos(controladorApli As Controlador)
-  
+
+  Dim a As Integer
+  Dim tabla As New String[]
   Dim con As New Conexion
   'defino ruta de trabajo
   
-  ControladorApli.rutaTrabajo = User.home & "/.CursoAlumnos/"
+  ControladorApli.rutaTrabajo = rutaTrabajo '
   'creo el directorio de trabajo si no existe
   If Exist(ControladorApli.rutaTrabajo) Then 
   Else
@@ -121,10 +123,25 @@ Public Sub iniciarDirectoriosYArchivos(controladorApli As Controlador)
   Else
     Copy "CursosAlumnosVacia" To ControladorApli.rutaTrabajo & "/CursosAlumnos"
     'añado tablas...
-    Try con.Conexion()
-    Try con.hconn.Exec("CREATE TABLE Curso (idCurso INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Detalle TEXT)")
-    Try con.hconn.Exec("Create TABLE Relacion(idRelacion INTEGER PRIMARY KEY AUTOINCREMENT, idAlumno NUMERIC, idCurso NUMERIC, Observacion TEXT)")
-    Try con.hconn.Exec("Create TABLE Alumno(RutaFoto TEXT, idAlumno INTEGER PRIMARY KEY AUTOINCREMENT, Apellido TEXT, Nombre TEXT, Documento TEXT, FechaNacimiento DATE, Domicilio TEXT, Telefono TEXT, Nacionalidad TEXT, EscOrigen TEXT, Legajo TEXT); ")
+    con.Conexion()
+    tabla.add("CREATE TABLE EstadoCurso( idAlumno INTEGER, idEstadoCurso INTEGER PRIMARY KEY AUTOINCREMENT, idCurso INTEGER, idExpediente INTEGER)") 
+    tabla.add("CREATE TABLE DetalleEstadoCurso(idEstadoCurso INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT)")
+    tabla.add("CREATE TABLE Asignatura(idAsignatura INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Detalle TEXT, idCurso INTEGER)")
+    tabla.add("CREATE TABLE Curso(idCurso INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Detalle TEXT, idDivision INTEGER)")
+    tabla.add("CREATE TABLE Division(idDivision INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT)") 
+    tabla.add("CREATE TABLE Expediente(idExpediente INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT)")
+    tabla.add("CREATE TABLE EstadoAsignatura(idEstadoAsignatura INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT)")  
+    tabla.add("CREATE TABLE Relacion(idRelacion INTEGER PRIMARY KEY AUTOINCREMENT, idAlumno INTEGER, idAsignatura INTEGER, Observacion TEXT, idEstadoAsignatura INTEGER, idExpediente INTEGER, nota NUMERIC)") 
+    tabla.add("CREATE TABLE Alumno(RutaFoto TEXT, idAlumno INTEGER PRIMARY KEY AUTOINCREMENT, Apellido TEXT, Nombre TEXT, Documento TEXT, FechaNacimiento DATE, Domicilio TEXT, Telefono TEXT, Nacionalidad TEXT, EscOrigen TEXT, Legajo TEXT)")
+    
+    For a = 0 To tabla.Max
+      con.hconn.Exec(tabla[a])
+    Next
+    
+    'con.hconn.Exec("CREATE TABLE asignatura(idasignatura INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Detalle TEXT)")
+    'con.hconn.Exec("CREATE TABLE asignatura(idasignatura INTEGER PRIMARY KEY AUTOINCREMENT, Nombre TEXT, Detalle TEXT)")
+    'con.hconn.Exec("Create TABLE Relacion(idRelacion INTEGER PRIMARY KEY AUTOINCREMENT, idAlumno NUMERIC, idasignatura NUMERIC, Observacion TEXT)")
+    'con.hconn.Exec("Create TABLE Alumno(RutaFoto TEXT, idAlumno INTEGER PRIMARY KEY AUTOINCREMENT, Apellido TEXT, Nombre TEXT, Documento TEXT, FechaNacimiento DATE, Domicilio TEXT, Telefono TEXT, Nacionalidad TEXT, EscOrigen TEXT, Legajo TEXT); ")
     If Error Then 
       Message.Info("Se ha producido un error al intentar crear las tablas" & gb.CrLf & "Error: " & Error.Text)
       Return

@@ -1,16 +1,16 @@
 ' Gambas class file
 
+Property idRelacion As Integer 
+Private hidRelacion As Integer
+
+Property idAlumno As Integer 
+Private hidAlumno As Integer
+
 Property idCurso As Integer 
 Private hidCurso As Integer
 
-Property Nombre As String 
-Private hNombre As String
-
-Property Detalle As String 
-Private hDetalle As String
-
-Property idDivision As Integer 
-Private hidDivision As Integer
+Property Observacion As String 
+Private hObservacion As String
 
 Property campo As String[] 
 Private hcampo As New String[]
@@ -20,6 +20,30 @@ Private hcampotipo As New String[]
 
 Property campovisible As String[] 
 Private hcampovisible As New String[]
+
+Private Function idRelacion_read() As Integer
+  
+  Return hidRelacion 
+  
+End 
+
+Private Sub idRelacion_write(Valor As Integer)
+  
+  hidRelacion = Valor 
+  
+End  
+
+Private Function idAlumno_read() As Integer
+  
+  Return hidAlumno 
+  
+End 
+
+Private Sub idAlumno_write(Valor As Integer)
+  
+  hidAlumno = Valor 
+  
+End  
 
 Private Function idCurso_read() As Integer
   
@@ -33,39 +57,15 @@ Private Sub idCurso_write(Valor As Integer)
   
 End  
 
-Private Function Nombre_read() As String
+Private Function Observacion_read() As String
   
-  Return hNombre 
-  
-End 
-
-Private Sub Nombre_write(Valor As String)
-  
-  hNombre = Valor 
-  
-End  
-
-Private Function Detalle_read() As String
-  
-  Return hDetalle 
+  Return hObservacion 
   
 End 
 
-Private Sub Detalle_write(Valor As String)
+Private Sub Observacion_write(Valor As String)
   
-  hDetalle = Valor 
-  
-End  
-
-Private Function idDivision_read() As Integer
-  
-  Return hidDivision 
-  
-End 
-
-Private Sub idDivision_write(Valor As Integer)
-  
-  hidDivision = Valor 
+  hObservacion = Valor 
   
 End  
 
