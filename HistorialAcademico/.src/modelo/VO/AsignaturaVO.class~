@@ -1,0 +1,77 @@
+PROPERTY idAsignatura AS Integer 
+PRIVATE hidAsignatura AS Integer
+
+PROPERTY Nombre AS String 
+PRIVATE hNombre AS String
+
+PROPERTY Detalle AS String 
+PRIVATE hDetalle AS String
+
+PROPERTY idCurso AS Integer 
+PRIVATE hidCurso AS Integer
+
+PROPERTY campo AS string[] 
+PRIVATE hcampo AS new string[]
+
+PROPERTY campotipo AS string[] 
+PRIVATE hcampotipo AS new string[]
+
+PROPERTY campovisible AS string[] 
+PRIVATE hcampovisible AS new string[]
+
+PRIVATE FUNCTION idAsignatura_read() AS Integer
+ RETURN hidAsignatura 
+END 
+ 
+PRIVATE SUB idAsignatura_write(Valor AS Integer)
+ hidAsignatura= Valor 
+END  
+ 
+PRIVATE FUNCTION Nombre_read() AS String
+ RETURN hNombre 
+END 
+ 
+PRIVATE SUB Nombre_write(Valor AS String)
+ hNombre= Valor 
+END  
+ 
+PRIVATE FUNCTION Detalle_read() AS String
+ RETURN hDetalle 
+END 
+ 
+PRIVATE SUB Detalle_write(Valor AS String)
+ hDetalle= Valor 
+END  
+ 
+PRIVATE FUNCTION idCurso_read() AS Integer
+ RETURN hidCurso 
+END 
+ 
+PRIVATE SUB idCurso_write(Valor AS Integer)
+ hidCurso= Valor 
+END  
+ 
+PRIVATE FUNCTION campo_read() AS string[]
+ RETURN hcampo 
+END 
+ 
+PRIVATE SUB campo_write(Valor AS string[])
+ hcampo= Valor 
+END  
+ 
+PRIVATE FUNCTION campotipo_read() AS string[]
+ RETURN hcampotipo 
+END 
+ 
+PRIVATE SUB campotipo_write(Valor AS string[])
+ hcampotipo= Valor 
+END  
+ 
+PRIVATE FUNCTION campovisible_read() AS string[]
+ RETURN hcampovisible 
+END 
+ 
+PRIVATE SUB campovisible_write(Valor AS string[])
+ hcampovisible= Valor 
+END  
+ 

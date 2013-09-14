@@ -91,9 +91,9 @@
       Text = ("Cursos")
       Picture = Picture["icon:/16/book"]
       { HBox2 HBox
-        MoveScaled(1,1,75,4)
+        MoveScaled(2,1,78,4)
         { ToolButtonAnadirCurso ToolButton
-          MoveScaled(-1,0,14,4)
+          MoveScaled(1,0,14,4)
           Font = Font["Arial,-2"]
           Text = ("Añadir")
           Picture = Picture["icon:/16/add"]
@@ -252,7 +252,7 @@
           Border = Border.Plain
         }
         { Label6 Label
-          MoveScaled(8,7,37,4)
+          MoveScaled(7,5,37,4)
           Text = ("Ruta donde se Guardan los Informes:")
         }
         Index = 3

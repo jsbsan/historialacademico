@@ -26,16 +26,16 @@ msgstr ""
 msgid "Contraseña:"
 msgstr ""
 
-#: FControlAcceso.form:39 FormAlumno.form:155 FormCalendario.form:18
-#: FormCurso.form:40 FormElegirFichero.form:23 FormEligeAlumno.form:33
-#: FormEligeCurso.form:26 FormExpedienteAlumno.form:98
-#: FormExpedienteCurso.form:84 FormInput.form:23
+#: FControlAcceso.form:39 FormAlumno.form:155 FormAsignatura.form:40
+#: FormCalendario.form:18 FormElegirFichero.form:23 FormEligeAlumno.form:33
+#: FormEligeAsignatura.form:26 FormExpedienteAlumno.form:98
+#: FormExpedienteAsignatura.form:84 FormInput.form:23
 msgid "Aceptar"
 msgstr ""
 
-#: FControlAcceso.form:46 FormAlumno.form:148 FormCurso.form:33
-#: FormElegirFichero.form:31 FormEligeAlumno.form:40 FormEligeCurso.form:33
-#: FormInput.form:31
+#: FControlAcceso.form:46 FormAlumno.form:148 FormAsignatura.form:33
+#: FormElegirFichero.form:31 FormEligeAlumno.form:40
+#: FormEligeAsignatura.form:33 FormInput.form:31
 msgid "Cancelar"
 msgstr ""
 
@@ -99,16 +99,16 @@ msgstr ""
 msgid "Se ha producido un error al intentar añadir el nuevo alumno"
 msgstr ""
 
-#: FormCurso.form:19
+#: FormAsignatura.form:19
 msgid "Nombre del curso:"
 msgstr ""
 
-#: FormCurso.form:28
+#: FormAsignatura.form:28
 msgid "Detalle"
 msgstr ""
 
-#: FormCurso.class:34
-msgid "Se ha producido un error al intentar añadir el nuevo curso"
+#: FormAsignatura.class:34
+msgid "Se ha producido un error al intentar añadir el nuevo asignatura"
 msgstr ""
 
 #: FormElegirFichero.form:44
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Buscar....."
 msgstr ""
 
-#: FormEligeCurso.form:17
+#: FormEligeAsignatura.form:17
 msgid "Cursos Disponibles...."
 msgstr ""
 
@@ -183,7 +183,7 @@ msgstr ""
 msgid "Borrarle de un  Curso"
 msgstr ""
 
-#: FormExpedienteAlumno.form:86 FormExpedienteCurso.form:76
+#: FormExpedienteAlumno.form:86 FormExpedienteAsignatura.form:76
 msgid "Editar Observaciones"
 msgstr ""
 
@@ -191,35 +191,35 @@ msgstr ""
 msgid "Editar Alumno"
 msgstr ""
 
-#: FormExpedienteAlumno.form:122 FormExpedienteCurso.form:102
+#: FormExpedienteAlumno.form:122 FormExpedienteAsignatura.form:102
 msgid "Imprimir"
 msgstr ""
 
-#: FormExpedienteAlumno.form:131 FormExpedienteCurso.form:111
+#: FormExpedienteAlumno.form:131 FormExpedienteAsignatura.form:111
 msgid "Borrar Observaciones"
 msgstr ""
 
-#: FormExpedienteCurso.form:25
+#: FormExpedienteAsignatura.form:25
 msgid "Curso:"
 msgstr ""
 
-#: FormExpedienteCurso.form:36
+#: FormExpedienteAsignatura.form:36
 msgid "Detalles:"
 msgstr ""
 
-#: FormExpedienteCurso.form:47
+#: FormExpedienteAsignatura.form:47
 msgid "Alumnos en el curso:"
 msgstr ""
 
-#: FormExpedienteCurso.form:58
+#: FormExpedienteAsignatura.form:58
 msgid "Añadir Alumno"
 msgstr ""
 
-#: FormExpedienteCurso.form:67
+#: FormExpedienteAsignatura.form:67
 msgid "Borrar Alumno"
 msgstr ""
 
-#: FormExpedienteCurso.form:93
+#: FormExpedienteAsignatura.form:93
 msgid "Editar Curso"
 msgstr ""
 

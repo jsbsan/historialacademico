@@ -1,0 +1,154 @@
+PROPERTY RutaFoto AS String 
+PRIVATE hRutaFoto AS String
+
+PROPERTY idAlumno AS Integer 
+PRIVATE hidAlumno AS Integer
+
+PROPERTY Apellido AS String 
+PRIVATE hApellido AS String
+
+PROPERTY Nombre AS String 
+PRIVATE hNombre AS String
+
+PROPERTY Documento AS String 
+PRIVATE hDocumento AS String
+
+PROPERTY FechaNacimiento AS Date 
+PRIVATE hFechaNacimiento AS Date
+
+PROPERTY Domicilio AS String 
+PRIVATE hDomicilio AS String
+
+PROPERTY Telefono AS String 
+PRIVATE hTelefono AS String
+
+PROPERTY Nacionalidad AS String 
+PRIVATE hNacionalidad AS String
+
+PROPERTY EscOrigen AS String 
+PRIVATE hEscOrigen AS String
+
+PROPERTY Legajo AS String 
+PRIVATE hLegajo AS String
+
+PROPERTY campo AS string[] 
+PRIVATE hcampo AS new string[]
+
+PROPERTY campotipo AS string[] 
+PRIVATE hcampotipo AS new string[]
+
+PROPERTY campovisible AS string[] 
+PRIVATE hcampovisible AS new string[]
+
+PRIVATE FUNCTION RutaFoto_read() AS String
+ RETURN hRutaFoto 
+END 
+ 
+PRIVATE SUB RutaFoto_write(Valor AS String)
+ hRutaFoto= Valor 
+END  
+ 
+PRIVATE FUNCTION idAlumno_read() AS Integer
+ RETURN hidAlumno 
+END 
+ 
+PRIVATE SUB idAlumno_write(Valor AS Integer)
+ hidAlumno= Valor 
+END  
+ 
+PRIVATE FUNCTION Apellido_read() AS String
+ RETURN hApellido 
+END 
+ 
+PRIVATE SUB Apellido_write(Valor AS String)
+ hApellido= Valor 
+END  
+ 
+PRIVATE FUNCTION Nombre_read() AS String
+ RETURN hNombre 
+END 
+ 
+PRIVATE SUB Nombre_write(Valor AS String)
+ hNombre= Valor 
+END  
+ 
+PRIVATE FUNCTION Documento_read() AS String
+ RETURN hDocumento 
+END 
+ 
+PRIVATE SUB Documento_write(Valor AS String)
+ hDocumento= Valor 
+END  
+ 
+PRIVATE FUNCTION FechaNacimiento_read() AS Date
+ RETURN hFechaNacimiento 
+END 
+ 
+PRIVATE SUB FechaNacimiento_write(Valor AS Date)
+ hFechaNacimiento= Valor 
+END  
+ 
+PRIVATE FUNCTION Domicilio_read() AS String
+ RETURN hDomicilio 
+END 
+ 
+PRIVATE SUB Domicilio_write(Valor AS String)
+ hDomicilio= Valor 
+END  
+ 
+PRIVATE FUNCTION Telefono_read() AS String
+ RETURN hTelefono 
+END 
+ 
+PRIVATE SUB Telefono_write(Valor AS String)
+ hTelefono= Valor 
+END  
+ 
+PRIVATE FUNCTION Nacionalidad_read() AS String
+ RETURN hNacionalidad 
+END 
+ 
+PRIVATE SUB Nacionalidad_write(Valor AS String)
+ hNacionalidad= Valor 
+END  
+ 
+PRIVATE FUNCTION EscOrigen_read() AS String
+ RETURN hEscOrigen 
+END 
+ 
+PRIVATE SUB EscOrigen_write(Valor AS String)
+ hEscOrigen= Valor 
+END  
+ 
+PRIVATE FUNCTION Legajo_read() AS String
+ RETURN hLegajo 
+END 
+ 
+PRIVATE SUB Legajo_write(Valor AS String)
+ hLegajo= Valor 
+END  
+ 
+PRIVATE FUNCTION campo_read() AS string[]
+ RETURN hcampo 
+END 
+ 
+PRIVATE SUB campo_write(Valor AS string[])
+ hcampo= Valor 
+END  
+ 
+PRIVATE FUNCTION campotipo_read() AS string[]
+ RETURN hcampotipo 
+END 
+ 
+PRIVATE SUB campotipo_write(Valor AS string[])
+ hcampotipo= Valor 
+END  
+ 
+PRIVATE FUNCTION campovisible_read() AS string[]
+ RETURN hcampovisible 
+END 
+ 
+PRIVATE SUB campovisible_write(Valor AS string[])
+ hcampovisible= Valor 
+END  
+ 

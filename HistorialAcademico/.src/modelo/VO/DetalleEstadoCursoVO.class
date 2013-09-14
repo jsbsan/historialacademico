@@ -1,16 +1,10 @@
 ' Gambas class file
 
-Property idCurso As Integer 
-Private hidCurso As Integer
+Property idEstadoCurso As Integer 
+Private hidEstadoCurso As Integer
 
 Property Nombre As String 
 Private hNombre As String
-
-Property Detalle As String 
-Private hDetalle As String
-
-Property idDivision As Integer 
-Private hidDivision As Integer
 
 Property campo As String[] 
 Private hcampo As New String[]
@@ -21,15 +15,15 @@ Private hcampotipo As New String[]
 Property campovisible As String[] 
 Private hcampovisible As New String[]
 
-Private Function idCurso_read() As Integer
+Private Function idEstadoCurso_read() As Integer
   
-  Return hidCurso 
+  Return hidEstadoCurso 
   
 End 
 
-Private Sub idCurso_write(Valor As Integer)
+Private Sub idEstadoCurso_write(Valor As Integer)
   
-  hidCurso = Valor 
+  hidEstadoCurso = Valor 
   
 End  
 
@@ -45,30 +39,6 @@ Private Sub Nombre_write(Valor As String)
   
 End  
 
-Private Function Detalle_read() As String
-  
-  Return hDetalle 
-  
-End 
-
-Private Sub Detalle_write(Valor As String)
-  
-  hDetalle = Valor 
-  
-End  
-
-Private Function idDivision_read() As Integer
-  
-  Return hidDivision 
-  
-End 
-
-Private Sub idDivision_write(Valor As Integer)
-  
-  hidDivision = Valor 
-  
-End  
-
 Private Function campo_read() As String[]
   
   Return hcampo 
@@ -78,13 +48,13 @@ End
 Private Sub campo_write(Valor As String[])
   
   hcampo = Valor 
-
+  
 End  
 
 Private Function campotipo_read() As String[]
-
+  
   Return hcampotipo 
-
+  
 End 
 
 Private Sub campotipo_write(Valor As String[])
@@ -98,7 +68,7 @@ Private Function campovisible_read() As String[]
   Return hcampovisible 
 
 End 
- 
+
 Private Sub campovisible_write(Valor As String[])
  hcampovisible = Valor 
 End  

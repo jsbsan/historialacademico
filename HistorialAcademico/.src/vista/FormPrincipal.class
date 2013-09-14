@@ -1,7 +1,7 @@
 ' Gambas class file
 
 Private resultadoAlumno As Result
-Private resultadoCurso As Result
+Private resultadoAsignatura As Result
 
 Public ControladorAplicacion As Controlador
 
@@ -9,14 +9,14 @@ Public Sub Form_Open()
   'formatear gridviews...
   
   Dim alu As New Alumnodao
-  Dim curs As New Cursodao
+  Dim asignatura As New AsignaturaDAO
   
   Me.Title = ("Historial Académico")
   TextLabelAcercaDe.text &= "<br> Version " & Application.Version
   alu.gridFormatearColumnas(GridViewAlumno)
   regillaAlumno()
-  curs.gridFormatearColumnas(GridViewCurso)
-  regillaCurso()
+  '  curs.gridFormatearColumnas(GridViewCurso)
+  ' regillaCurso()
   ListBoxInforme.Add("Lista de Alumnos")
   ListBoxInforme.Add("Lista de Alumnos con los cursos que participan")
   ListBoxInforme.Add("Lista de Cursos")
@@ -78,15 +78,6 @@ End
 
 Public Sub ToolButtonAnadirCurso_Click()
   
-  Dim nuevoCurso As New CursoVO
-  
-  nuevoCurso.idCurso = 0
-  ControladorAplicacion.fcurso.tmpcurso = nuevoCurso
-  ControladorAplicacion.fcurso.showmodal()
-  ControladorAplicacion.fcurso.tmpcurso = Null
-  'relleno el gridview de datos...
-  RefrescarDatosCursos()
-  
 End
 
 Public Sub ToolButtonEditar_Click()
@@ -110,21 +101,6 @@ Public Sub ToolButtonEditar_Click()
 End
 
 Public Sub ToolButtonEditarCurso_Click()
-  
-  Dim cur As New CursoVO
-  
-  If GridViewCurso.row = -1 Then 
-    Message.Info("Seleccione un curso")
-  Else
-    cur = ControladorAplicacion.BuscarIdCurso(Val(GridViewCurso[GridViewCurso.row, 0].Text))
-    ControladorAplicacion.fcurso.TmpCurso = cur
-    ControladorAplicacion.fcurso.TmpCurso.idCurso = GridViewCurso[GridViewCurso.row, 0].Text
-    ControladorAplicacion.fcurso.showmodal()
-    ControladorAplicacion.fcurso.TmpCurso = Null
-    'relleno el gridview de datos...
-    
-    RefrescarDatosCursos()
-  Endif  
   
 End
 
@@ -152,26 +128,6 @@ Public Sub ToolButtonBorrar_Click()
 End
 
 Public Sub ToolButtonBorrarCurso_Click()
-  
-  Dim valor As Integer
-  
-  If GridViewcurso.row = -1 Then 
-    'no puedo editar ya que no esta el cursor puesto en el gridvies
-    Message.Info("Seleccione un curso")
-  Else
-    valor = Message.Question("¿quieres borrar un curso? " & gb.CrLf & "Si lo borras, borraras los datos de los alumnos que lo han cursado", "aceptar", "cancelar")
-    If valor = 1 Then 
-      If ControladorAplicacion.log.borrarIdCurso(Val(GridViewCurso[GridViewCurso.row, 0].Text)) Then 
-        
-        'relleno el gridview de datos...
-        RefrescarDatosCursos()
-      Else
-        Message.Info("Ha habido un problema al borrar el alumno")
-      Endif
-      
-    Endif
-    
-  Endif
   
 End
 
@@ -230,20 +186,6 @@ Public Sub ButtonCambiarClave_Click()
 End
 
 Public Sub ToolButtonFichaCurso_Click()
-  
-  Dim cur As New CursoVO
-  
-  If GridViewCurso.row = -1 Then 
-    'no puedo editar ya que no esta el cursor puesto en el gridvies
-    Message.Info("Seleccione un curso")
-  Else
-    cur = ControladorAplicacion.BuscarIdCurso(Val(GridViewCurso[GridViewCurso.row, 0].Text))
-    ControladorAplicacion.fExpCurso.TmpCurso = cur
-    'para parsar el id del curso elegido...
-    cur.idCurso = Val(GridViewCurso[GridViewCurso.row, 0].Text)
-    ControladorAplicacion.fExpCurso.ShowModal()
-    RefrescarDatosCursos()
-  Endif
   
 End
 
@@ -335,17 +277,17 @@ End
 
 Public Sub RefrescarDatosCursos()
   
-  resultadoCurso = ControladorAplicacion.ContenidoCurso()
+  resultadoAsignatura = ControladorAplicacion.Contenidoasignatura()
   GridViewCurso.Rows.count = 0 'lo ponemos a cero el numero de filas
-  GridViewCurso.Rows.count = resultadoCurso.count 'actualizamso al resultado de la consulta
+  GridViewCurso.Rows.count = resultadoAsignatura.count 'actualizamso al resultado de la consulta
   
 End
 
 Public Sub GridViewCurso_Data(row As Integer, column As Integer)
   ' este evento se encarga de dibujar los datos en el gridviews, para que aparezcan en la pantalla.
   
-  resultadoCurso.MoveTo(row)
-  GridViewCurso.Data.text = Str(resultadoCurso[GridViewCurso.Columns[column].text])
+  resultadoAsignatura.MoveTo(row)
+  GridViewCurso.Data.text = Str(resultadoAsignatura[GridViewCurso.Columns[column].text])
   
   ' colorea la fila, según sea par o impar
   If row = GridViewCurso.row Then 
@@ -364,8 +306,6 @@ Public Sub ToolButtonImprimirListaAlumnos_Click()
 End
 
 Public Sub ToolButtonImprimirListaCursos_Click()
-  
-  Imprimir.ListaCusos()
   
 End
 
@@ -386,11 +326,6 @@ Private Sub regillaAlumno()
 End
 
 Private Sub regillaCurso()
-  
-  With GridViewCurso    
-    .Columns[0].width = 0
-    .Columns[1].width = 200
-  End With
   
 End
 
@@ -416,15 +351,15 @@ Public Sub ListBoxInforme_Click()
     Case 0 'Lista de Alumnos
       Imprimir.ListaAlumnos()
     Case 1 'Lista de Alumnos con los cursos que participan
-      imprimir.ListaAlumnosConCursosParticipal()
+      '  imprimir.ListaAlumnosConCursosParticipal()
     Case 2 'Lista de Cursos
-      Imprimir.ListaCusos()
+      '    Imprimir.ListaCusos()
     Case 3 ' Lista de Cursos y Alumnos que lo conforman 
       imprimir.ListaCusosConAlumnosParticipal()
     Case 4 'Expediente de Alumno determinado con lista de Cursos
       imprimir.ExpedienteDeterminadoAlumno
     Case 5 ' Expediente de Curso determinado con lista de Alumnos
-      imprimir.ExpedienteDeterminadoCurso
+      '   imprimir.ExpedienteDeterminadoCurso
   End Select
   
 End
@@ -441,15 +376,15 @@ Public Sub ToolButtonRealizarCopia_Click()
   Dim nombre, nombreFinal As String
   'creo una copia de la carpeta ./CursoAlumnos
   nombre = "Copia" & Str$(Format(Now, "yyyy-mm-dd"))
-  If Exist(User.Home & "/.CursoAlumnos/" & nombre & ".tar") Then Kill User.Home & "/.CursoAlumnos/" & nombre & ".tar"
-  Shell "cd " & User.Home & "/.CursoAlumnos ; tar --exclude FotoCarnetMyWebCam.gambas -zcf " & nombre & ".tar *"
+  If Exist(main.rutaTrabajo & "/" & nombre & ".tar") Then Kill main.rutaTrabajo & "/" & nombre & ".tar"
+  Shell "cd " & main.rutaTrabajo & " ; tar --exclude FotoCarnetMyWebCam.gambas -zcf " & nombre & ".tar *"
   Wait 0.5
   nombrefinal = nombre
   If Exist(User.home & "/" & nombre & ".tar") Then 
     nombreFinal = InputBox("Ponga otro nombre:", "Existe un fichero con el mismo nombre...", nombre & "(copia)")
     
   Endif
-  Move User.Home & "/.CursoAlumnos/" & nombre & ".tar" To User.home & "/" & nombrefinal & ".tar"
+  Move main.rutaTrabajo & "/" & nombre & ".tar" To main.rutaTrabajo & "/" & nombrefinal & ".tar"
   Message.Info("Se ha creado una copia de seguridad de los datos" & gb.CrLf & "Fichero: " & User.home & "/" & nombrefinal & ".tar")
   
 End
@@ -473,23 +408,23 @@ Public Sub ToolButtonRestaurarDatos_Click()
   Else
     Debug "Descomprimir fichero: " & Dialog.Path
     'copia el archivo al directorio 
-    If Exist(User.home & "/.CursoAlumnos/" & File.Name(Dialog.Path)) Then Kill User.home & "/.CursoAlumnos/" & File.Name(Dialog.Path)
-    Copy Dialog.path To User.home & "/.CursoAlumnos/" & File.Name(Dialog.Path)
+    If Exist(main.rutaTrabajo & "/" & File.Name(Dialog.Path)) Then Kill main.rutaTrabajo & "/" & File.Name(Dialog.Path)
+    Copy Dialog.path To main.rutaTrabajo & "/" & File.Name(Dialog.Path)
     'borro ficheros y carpetas anteriores
-    ModuleUtilidadesDisco.vaciarDirectorio(User.home & "/.CursoAlumnos/Fotos")
-    ModuleUtilidadesDisco.vaciarDirectorio(User.home & "/.CursoAlumnos/MiniFotos")
-    Kill User.home & "/.CursoAlumnos/CursosAlumnos" 'antigua base de datos
+    ModuleUtilidadesDisco.vaciarDirectorio(main.rutaTrabajo & "/Fotos")
+    ModuleUtilidadesDisco.vaciarDirectorio(main.rutaTrabajo & "/MiniFotos")
+    Kill main.rutaTrabajo & "/CursosAlumnos" 'antigua base de datos
     Wait 0.5
     'extraido datos
     
-    Shell "cd " & User.Home & "/.CursoAlumnos ; tar -xf '" & File.Name(Dialog.path) & "'"
+    Shell "cd " & main.rutaTrabajo & " ; tar -xf '" & File.Name(Dialog.path) & "'"
     Wait 0.5
     'relleno el gridview de datos...
     RefrescarDatosAlumnos()
     RefrescarDatosCursos()
     IconPanelMenu.index = 1
     Message.Info("Restaurada la copia de datos")
-    Kill User.Home & "/.CursoAlumnos/" & File.Name(Dialog.Path)
+    Kill main.rutaTrabajo & "/" & File.Name(Dialog.Path)
   Endif
   
 End
