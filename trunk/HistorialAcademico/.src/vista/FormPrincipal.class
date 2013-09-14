@@ -2,6 +2,8 @@
 
 Private resultadoAlumno As Result
 Private resultadoAsignatura As Result
+Private resultadoExpediente As Result
+Private resultadoDivision As Result
 
 Public ControladorAplicacion As Controlador
 
@@ -10,11 +12,24 @@ Public Sub Form_Open()
   
   Dim alu As New Alumnodao
   Dim asignatura As New AsignaturaDAO
+  Dim expe As New ExpedienteDAO
+  Dim divi As New DivisionDAO
+  Dim curso As New CursoDAO
+  Dim asig As New AsignaturaDAO
   
   Me.Title = ("Historial Académico")
   TextLabelAcercaDe.text &= "<br> Version " & Application.Version
+  
+  asig.gridFormatearColumnas(TableViewAsignatura)
   alu.gridFormatearColumnas(GridViewAlumno)
+  expe.gridFormatearColumnas(TableViewExpediente)
+  divi.gridFormatearColumnas(TableViewDivision)
+  curso.gridFormatearColumnas(TableViewCurso)
+  
   regillaAlumno()
+  regillaExpediente()
+  regilladivision()
+  
   '  curs.gridFormatearColumnas(GridViewCurso)
   ' regillaCurso()
   ListBoxInforme.Add("Lista de Alumnos")
@@ -42,7 +57,10 @@ Public Sub Form_Open()
   RefrescarDatosAlumnos()
   'relleno el gridview de datos...
   RefrescarDatosCursos()
-  
+  'relleno el tableview de expendientes
+  refrescarDatosExpedientes()
+  refrescarDatosDivision()
+
 End
 
 'para el tema de dimensionado del formulario
@@ -51,10 +69,10 @@ Public Sub Form_Resize()
   IconPanelMenu.W = Me.w - IconPanelMenu.X
   IconPanelMenu.h = Me.H - IconPanelMenu.y - 10
   
-  GridViewAlumno.w = Me.w - GridViewAlumno.X - IconPanelMenu.X - 30 - 130
+  GridViewAlumno.w = Me.w - GridViewAlumno.X - IconPanelMenu.X - 30 - 150
   GridViewAlumno.h = Me.H - GridViewAlumno.y - IconPanelMenu.y - 10
   
-  GridViewCurso.w = Me.w - GridViewcurso.X - IconPanelMenu.X - 30 - 130
+  GridViewCurso.w = Me.w - GridViewcurso.X - IconPanelMenu.X - 30 - 150
   GridViewCurso.h = Me.H - GridViewCurso.y - IconPanelMenu.y - 10
   ListBoxInforme.h = Me.H - ListBoxInforme.y - IconPanelMenu.y - 10
   
@@ -329,6 +347,26 @@ Private Sub regillaCurso()
   
 End
 
+Private Sub regillaExpediente()
+  
+  With TableViewExpediente
+    .Columns[0].width = 40
+    .Rows.Height = 40
+    .Columns[1].width = 40
+    
+    .font.size = 8
+  End With
+  
+End
+
+Private Sub regilladivision()
+
+  With TableViewExpediente
+    .font.size = 8
+  End With
+  
+End
+
 '-----------------------------------------------------
 'Hacer doble click para ver los expedientes...
 Public Sub GridViewAlumno_DblClick()
@@ -440,5 +478,98 @@ Public Sub ToolButtonCambiarRutaInformes_Click()
 End
 
 Public Sub PictureBox1_MouseDown()
+  
+End
+
+Public Sub ToolButtonPlanDeEstudioAnnade_Click()
+  
+  Dim dato As New ClaseDato
+  Dim formularioInput As New FormInput
+  Dim expe As New ExpedienteVO
+  Dim divi As New DivisionVO
+  
+  Print "Pulsado: ", TabPanelPlanDeEstudios.Index
+  Select Case TabPanelPlanDeEstudios.Index
+    Case 0
+      'expediente
+      formularioInput.dato = dato
+      formularioInput.pront = "Nombre del Expediente:"
+      formularioInput.titulo = "Expediente"
+      formularioInput.Showmodal()
+      expe.Nombre = dato.tag
+      'aqui
+      If ControladorAplicacion.anadirExpediente(Expe) Then 
+        refrescarDatosExpedientes()
+      Endif
+    Case 1
+      'curso
+    Case 2
+      'divisiones
+      formularioInput.dato = dato
+      formularioInput.pront = "Nombre de la Division:"
+      formularioInput.titulo = "Divisiones"
+      formularioInput.Showmodal()
+      divi.Nombre = dato.tag
+      'aqui
+      If ControladorAplicacion.anadirDivision(divi) Then 
+        refrescarDatosDivision()
+      Endif '
+      '
+      '
+      '
+    Case 3
+      'asignatura
+      
+  End Select
+  
+End
+
+Public Sub refrescarDatosExpedientes()
+  
+  resultadoExpediente = ControladorAplicacion.ContenidoExpediente()
+  TableViewExpediente.Rows.count = 0 'lo ponemos a cero el numero de filas
+  TableViewExpediente.Rows.count = resultadoExpediente.count 'actualizamso al resultado de la consulta
+  
+End
+
+Public Sub refrescarDatosDivision()
+  
+  resultadoDivision = ControladorAplicacion.ContenidoDivision()
+  TableViewDivision.Rows.count = 0 'lo ponemos a cero el numero de filas
+  TableViewDivision.Rows.count = resultadoDivision.count 'actualizamso al resultado de la consulta
+  
+End
+
+Public Sub TableViewDivision_Data(row As Integer, column As Integer)
+  ' este evento se encarga de dibujar los datos en el gridviews, para que aparezcan en la pantalla.
+  
+  resultadoDivision.MoveTo(row)
+  
+  TableViewDivision.Data.text = Str(resultadoDivision[TableViewDivision.Columns[column].text])
+  
+  ' colorea la fila, según sea par o impar
+  If row = TableViewDivision.row Then 
+    'cursor donde esta situado en el gridview
+    TableViewDivision.Data.Background = Color.Orange
+  Else
+    If row Mod 2 = 0 Then TableViewDivision.Data.Background = Color.Cyan
+  Endif
+  
+End
+
+Public Sub TableViewExpediente_Data(row As Integer, column As Integer)
+  ' este evento se encarga de dibujar los datos en el gridviews, para que aparezcan en la pantalla.
+  
+  resultadoExpediente.MoveTo(row)
+  Print TableViewExpediente.Columns[column].text
+  TableViewExpediente.Data.text = Str(resultadoExpediente[TableViewExpediente.Columns[column].text])
+  
+  ' colorea la fila, según sea par o impar
+  If row = TableViewExpediente.row Then 
+    'cursor donde esta situado en el gridview
+    TableViewExpediente.Data.Background = Color.Orange
+  Else
+    If row Mod 2 = 0 Then TableViewExpediente.Data.Background = Color.Cyan
+  Endif
   
 End

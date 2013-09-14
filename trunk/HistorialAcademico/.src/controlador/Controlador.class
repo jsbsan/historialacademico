@@ -59,6 +59,12 @@ Public Function anadirAlumno(DatosAlumnos As AlumnoVO) As Boolean
   
 End
 
+Public Function anadirDivision(Datos As DivisionVO) As Boolean
+  
+  Return log.validarAnnadirDivision(datos)
+  
+End
+
 Public Function anadirasignatura(Datos As AsignaturaVO) As Boolean
   
   Return log.validarAnnadirasignatura(Datos)
@@ -68,6 +74,18 @@ End
 Public Function anadirRelacion(datos As RelacionVO) As Boolean
   
   Return log.validarAnnadirRela(datos)
+  
+End
+
+Public Function anadirExpediente(datos As ExpedienteVO) As Boolean
+  
+  Return log.anadirExpediente(datos)
+  
+End
+
+Public Function ContenidoExpediente() As Result
+  
+  Return log.ContenidoExpediente()
   
 End
 
@@ -128,6 +146,12 @@ Public Function Contenidoasignatura() As Result
   
   Return log.ContenidoasignaturasOrdenados()
   'Return log.Contenidoasignatura()
+  
+End
+
+Public Function ContenidoDivision() As Result
+  
+  Return log.ContenidoDivision() 
   
 End
 

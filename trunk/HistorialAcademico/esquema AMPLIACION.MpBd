@@ -48,7 +48,7 @@
 <Campo><tipo>Integer<Fin_tipo><nombre_campo>idExpediente<Fin_nombre_campo><Fin_Campo>
 <Tabla>Expediente<Fin_Tabla>
 <Campos>
-<Campo><tipo>Integer<Fin_tipo><nombre_campo>idExpediente<Fin_nombre_campo><Fin_Campo>
+<Campo><tipo>Null<Fin_tipo><nombre_campo>idExpediente<Fin_nombre_campo><Fin_Campo>
 <Campo><tipo>String<Fin_tipo><nombre_campo>Nombre<Fin_nombre_campo><Fin_Campo>
 <Tabla>Relacion<Fin_Tabla>
 <Campos>

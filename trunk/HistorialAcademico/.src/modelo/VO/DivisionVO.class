@@ -1,55 +1,75 @@
-PROPERTY idDivision AS Integer 
-PRIVATE hidDivision AS Integer
+' Gambas class file
 
-PROPERTY Nombre AS String 
-PRIVATE hNombre AS String
+Property idDivision As Integer 
+Private hidDivision As Integer
 
-PROPERTY campo AS string[] 
-PRIVATE hcampo AS new string[]
+Property Nombre As String 
+Private hNombre As String
 
-PROPERTY campotipo AS string[] 
-PRIVATE hcampotipo AS new string[]
+Property campo As String[] 
+Private hcampo As New String[]
 
-PROPERTY campovisible AS string[] 
-PRIVATE hcampovisible AS new string[]
+Property campotipo As String[] 
+Private hcampotipo As New String[]
 
-PRIVATE FUNCTION idDivision_read() AS Integer
- RETURN hidDivision 
-END 
- 
-PRIVATE SUB idDivision_write(Valor AS Integer)
- hidDivision= Valor 
-END  
- 
-PRIVATE FUNCTION Nombre_read() AS String
- RETURN hNombre 
-END 
- 
-PRIVATE SUB Nombre_write(Valor AS String)
- hNombre= Valor 
-END  
- 
-PRIVATE FUNCTION campo_read() AS string[]
- RETURN hcampo 
-END 
- 
-PRIVATE SUB campo_write(Valor AS string[])
- hcampo= Valor 
-END  
- 
-PRIVATE FUNCTION campotipo_read() AS string[]
- RETURN hcampotipo 
-END 
- 
-PRIVATE SUB campotipo_write(Valor AS string[])
- hcampotipo= Valor 
-END  
- 
-PRIVATE FUNCTION campovisible_read() AS string[]
- RETURN hcampovisible 
-END 
- 
-PRIVATE SUB campovisible_write(Valor AS string[])
- hcampovisible= Valor 
-END  
+Property campovisible As String[] 
+Private hcampovisible As New String[]
+
+Private Function idDivision_read() As Integer
+  
+  Return hidDivision 
+  
+End 
+
+Private Sub idDivision_write(Valor As Integer)
+  
+  hidDivision = Valor 
+  
+End  
+
+Private Function Nombre_read() As String
+  
+  Return hNombre 
+  
+End 
+
+Private Sub Nombre_write(Valor As String)
+  
+  hNombre = Valor 
+  
+End  
+
+Private Function campo_read() As String[]
+  
+  Return hcampo 
+  
+End 
+
+Private Sub campo_write(Valor As String[])
+  
+  hcampo = Valor 
+  
+End  
+
+Private Function campotipo_read() As String[]
+  
+  Return hcampotipo 
+  
+End 
+
+Private Sub campotipo_write(Valor As String[])
+
+  hcampotipo = Valor 
+
+End  
+
+Private Function campovisible_read() As String[]
+
+  Return hcampovisible 
+
+End 
+
+Private Sub campovisible_write(Valor As String[])
+ hcampovisible = Valor 
+End  
  

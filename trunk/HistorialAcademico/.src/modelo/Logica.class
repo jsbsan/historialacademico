@@ -40,6 +40,14 @@ Public Function validarAnnadirasignatura(datos As Asignaturavo) As Boolean
   
 End
 
+Public Function validarAnnadirDivision(datos As DivisionVO) As Boolean
+  
+  Dim midivi As New DivisionDAO
+  
+  Return midivi.registrar(datos)
+  
+End
+
 Public Function validarAnnadirRela(datos As RelacionVo) As Boolean
   
   Dim mirela As New RelacionDAO
@@ -69,6 +77,14 @@ Public Function ContenidoAlumnos() As Result
   Dim mialumno As New AlumnoDAO
   
   Return mialumno.contenido()   
+  
+End
+
+Public Function ContenidoDivision() As Result
+  
+  Dim midivi As New DivisionDAO
+  
+  Return midivi.contenido()
   
 End
 
@@ -240,5 +256,24 @@ Public Function ContenidoDocumento(dato As String) As Result
   Dim mialu As New AlumnoDAO
   
   Return mialu.BuscarContenidoDocumento(dato, "Apellido") 
+  
+End
+'-----------------------------------
+' AMPLIACION DEL PROGRAMA
+'-----------------------------------
+
+Public Function anadirExpediente(datos As ExpedienteVO) As Boolean
+  
+  Dim miexpe As New ExpedienteDAO
+  
+  Return miexpe.registrar(datos)
+  
+End
+
+Public Function ContenidoExpediente() As Result
+  
+  Dim miexpe As New ExpedienteDAO
+  
+  Return miexpe.contenido()
   
 End
